@@ -1,0 +1,9 @@
+set editing-mode vi
+set keymap vi-insert
+"\jj": vi-movement-mode
+"\C-f": forward-search-history
+"\C-r": reverse-search-history
+"\C-g": abort
+
+# C-s pause screen
+# C-q unpause screen
