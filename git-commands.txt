@@ -1,1 +1,3 @@
-git status file
+git status <file>
+git commit -m "message"
+git diff <file>
