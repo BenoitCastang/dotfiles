@@ -4,3 +4,5 @@ git add . (means everything)
 git commit
 git commit -m "message"
 git diff <file>
+git log
+git log --oneline
