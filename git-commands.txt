@@ -10,4 +10,3 @@ git log (display list of commits)
 git log --oneline
 git lp (log with all details)
 git stash (drop local changes)
-stupid line
