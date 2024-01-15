@@ -13,3 +13,4 @@ git stash (drop local changes)
 git revert <hash> (hash from git log --oneline)
 git clone url.git (download a public repository)
 .git/config to see its origin
+git remote add origin url.git (change .git/config)
