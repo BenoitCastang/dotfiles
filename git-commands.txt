@@ -3,6 +3,10 @@ git add <file>
 git add . (means everything)
 git commit
 git commit -m "message"
+git commit -a (add files then commit)
+git diff (display changes)
 git diff <file>
-git log
+git log (display list of commits)
 git log --oneline
+git lp (log with all details)
+git stash (drop local changes)

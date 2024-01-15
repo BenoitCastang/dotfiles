@@ -36,7 +36,7 @@ noremap <SrollWheelUp> <C-Y>
 " Enables mouse scrolling down
 noremap <SrollWheelDown> <C-E> 
 " Snippets and abbreviations
-imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
+" imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
 " ab pf printf("");
 
 " Config ---------------------------------------------------------------------
@@ -73,4 +73,4 @@ set noexpandtab " Tabs are not collections of spaces
 set mouse=a " Enables mouse control
 set foldmethod=indent " Sets indentation folding
 " Keeps folds open by default
-autocmd BufRead * normal zR 
+" autocmd BufRead * normal zR 
