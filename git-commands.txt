@@ -1,3 +1,4 @@
+git init (make the current directory a git repository)
 git status <file>
 git add <file>
 git add . (means everything)
@@ -11,6 +12,12 @@ git log --oneline
 git lp (log with all details)
 git stash (drop local changes)
 git revert <hash> (hash from git log --oneline)
+
+GITHUB
+
 git clone url.git (download a public repository)
 .git/config to see its origin
-git remote add origin url.git (change .git/config)
+
+Create a repository on Github
+then
+git remote add origin url.git (change origin in .git/config)
