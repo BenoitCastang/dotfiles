@@ -21,3 +21,9 @@ git clone url.git (download a public repository)
 Create a repository on Github
 then
 git remote add origin url.git (change origin in .git/config)
+then
+Pushing code to a remote repositoty needs setting up an access token
+On Github: Profile icon -> Settings -> Developer settings -> Personal access tokens -> Generate new token
+then
+git push origin master
+connect with Github username and access token as a password
