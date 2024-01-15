@@ -29,6 +29,7 @@ let mapleader = "," " Map the leader key to a comma
 imap jj <Esc>
 cmap jj <Esc>
 " nmap <C-;> :
+" z + o and z + c for opening and closing folds
 " Remove highlighting after searching
 nnoremap <F3> :noh <CR>
 " Enables mouse scrolling up
