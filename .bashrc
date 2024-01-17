@@ -127,6 +127,8 @@ alias search='sudo apt-cache search'
 
 # systemctl aliases
 alias status='systemctl status'
+alias start='systemctl start'
+alias stop='systemctl stop'
 alias enable='systemctl enable'
 alias disable='systemctl disable'
 alias restart='systemctl restart'
