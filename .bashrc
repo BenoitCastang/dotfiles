@@ -125,6 +125,12 @@ alias autoremove='sudo apt autoremove'
 alias purge='sudo apt purge'
 alias search='sudo apt-cache search'
 
+# systemctl aliases
+alias status='systemctl status'
+alias enable='systemctl enable'
+alias disable='systemctl disable'
+alias restart='systemctl restart'
+
 # cyberghost vpn aliases
 alias vpn='sudo cyberghostvpn'
 alias vpnconnect='sudo cyberghostvpn --connect --country-code'

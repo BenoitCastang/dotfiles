@@ -30,6 +30,8 @@ imap jj <Esc>
 cmap jj <Esc>
 " nmap <C-;> :
 " z + o and z + c for opening and closing folds
+" :%s/pattern/replacement/gc for substitution with confirmation on all the
+" page
 " Remove highlighting after searching
 nnoremap <F3> :noh <CR>
 " Enables mouse scrolling up
