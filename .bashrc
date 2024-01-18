@@ -103,9 +103,10 @@ if [ -x /usr/bin/dircolors ]; then
   alias dir='dir --color=auto'
   alias vdir='vdir -h --color=auto'
 
-  alias grep='grep --color=auto'
+	alias grep='grep -ni --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
+
 fi
 
 # colored GCC warnings and errors
@@ -125,26 +126,31 @@ alias autoremove='sudo apt autoremove'
 alias purge='sudo apt purge'
 alias search='sudo apt-cache search'
 
-# systemctl aliases
+# systemctl aliases - units systemd management
 alias status='systemctl status'
 alias start='systemctl start'
 alias stop='systemctl stop'
-alias enable='systemctl enable'
-alias disable='systemctl disable'
+alias enable='systemctl enable' # will start automatically at startup
+alias disable='systemctl disable' # won't start automatically at startup
 alias restart='systemctl restart'
+
+# LOGS
+# cat /var/log/syslog
+# dmesg Hardware logs
+# tail -f <file> Display lines as they arrive
+# journalctl -u <service> Diplay logs of a service
+# journalctl -fu <service> Follow logs of a service
 
 # cyberghost vpn aliases
 alias vpn='sudo cyberghostvpn'
 alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 
-# grep aliases
-alias grep='grep -ni --color=auto'
-
 # MONITORING
 
-alias free='free -h' # ram free
+alias free='free -h' # free ram - display ram usage
+alias ram='free -h' 
 # alias df='sudo df -h'
-alias df='df -h' # disk free
+alias df='df -h' # disk free - display disk usage
 alias mem="htop" # general state
 alias uptime='uptime' # uptime + load average
 # alias du='du -hsc *'
@@ -155,11 +161,13 @@ alias tree='tree -a'
 # rsync aliases
 alias rsync='rsync -ravh'
 
+# compression aliases
+alias compress="tar -czvf"
+alias extract="tar -xvf"
+
 # miscellaneous aliases
 alias date="date; ncal"
 alias music="cmus"
-alias compress="tar -czvf"
-alias extract="tar -xvf"
 # alias man="tldr" # command man to go over it
 # alias rm="rm -i"
 alias srcprofile="source ~/.profile"
