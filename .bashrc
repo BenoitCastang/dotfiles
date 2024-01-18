@@ -202,6 +202,10 @@ alias lamp='cd /opt/lampp/ && sudo ./lampp start'
 alias mysql='/opt/lampp/bin/mysql -p test'
 alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 
+# git aliases
+alias gs='git status'
+alias gc='git commit -a'
+
 HISTCONTROL=ignoreboth
 
 export VISUAL=vim
