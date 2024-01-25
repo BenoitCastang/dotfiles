@@ -13,7 +13,6 @@ silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 \ https://raw.github.com/junegunn/vim-plug/master/plug.vim
 autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 call plug#begin()
 Plug 'vim-scripts/symfony'
 Plug 'vim-airline/vim-airline'
@@ -21,6 +20,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
+" PlugInstall to install all plugins
 
 " Mapping -------------------------------------------------------------------------
 
@@ -47,12 +47,14 @@ noremap <SrollWheelDown> <C-E>
 colorscheme symfony
 " Changing some symfony defaults
 highlight Normal ctermbg=none
-highlight LineNr ctermbg=none
+highlight LineNr ctermbg=none ctermfg=7
 highlight Statement ctermbg=none
 highlight NonText ctermbg=none
 highlight Pmenu ctermfg=15 ctermbg=none
 highlight PmenuSel ctermfg=0 ctermbg=15
 highlight PmenuSbar ctermfg=15 ctermbg=none
+syntax match YellowHeader /^######.*/ contained
+highlight link YellowHeader Special
 " airline theme
 let g:airline_theme='serene'
 set relativenumber
@@ -76,4 +78,4 @@ set noexpandtab " Tabs are not collections of spaces
 set mouse=a " Enables mouse control
 set foldmethod=indent " Sets indentation folding
 " Keeps folds open by default
-" autocmd BufRead * normal zR 
+autocmd BufRead * normal zR 
