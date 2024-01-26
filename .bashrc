@@ -116,22 +116,13 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-###### SYSTEM TRAY NETWORK ICON ON PLASMA ######
-
-# apt install plasma-nm
-# systemctl enable systemd-networkd
-# reboot
-
-###### System information ######
-
-# cat /etc/os-release - Show current Linux system infos
-# uname -r # show current version of the Linux kernel
-alias uname='uname -a'
+## ALIASES
 
 # some more ls aliases
 alias ll='ls -Alh'
 alias la='ls -A'
 alias l='ls -CF'
+alias pgrep='pgrep -l'
 
 # apt aliases
 alias update='sudo apt update'
@@ -150,28 +141,19 @@ alias enable='systemctl enable' # will start automatically at startup
 alias disable='systemctl disable' # won't start automatically at startup
 alias restart='systemctl restart'
 
-# LOGS
-# cat /var/log/syslog
-# dmesg Hardware logs
-# tail -f <file> Display lines as they arrive
-# journalctl -u <service> Diplay logs of a service
-# journalctl -fu <service> Follow logs of a service
-
 # cyberghost vpn aliases
 alias vpn='sudo cyberghostvpn'
 alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 
-# MONITORING
-
+# monitoring aliases
 alias free='free -h' # free ram - display ram usage
 alias ram='free -h' 
+alias uname='uname -a'
 # alias df='sudo df -h'
 alias df='df -h' # disk free - display disk usage
 alias mem="htop" # general state
 alias uptime='uptime' # uptime + load average
 # alias du='du -hsc *'
-# lscpu # display processor infos
-# lsblk # display disks and partitions
 
 # tree aliases
 alias tree='tree -a'
@@ -223,105 +205,3 @@ alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 # git aliases
 alias gs='git status'
 alias gc='git commit -a'
-
-###### WC ######
-
-# wc -l # Count number of lines
-# wc -c # Count number of characters
-# wc -w # Count number of words
-
-###### CUT ######
-
-# echo "orange,banana,apple" | cut -d ',' -f 2
-
-###### REV ######
-
-# echo "file" | rev # Reverts letters order
-
-###### MANAGING USERS ######
-
-# /ect/passwd # List of users
-# x refers to the hidden password
-# uid = numerical representation of a user
-# Users under 1000 are not in the login screen
-# /etc/shadow # Password hashes
-# /ect/group # List of groups
-# groups [user] # Display groups of a user
-# su [user] # Switch user
-# su # Switch to root
-# logout # Log out command
-# adduser [username] # Create a user
-# passwd # Change password command
-# userdel # Remove user
-# userdel -r # Remove user and delete home directory
-# groupadd [groupname] # Create a group
-# usermod -aG [groupname] [username] # Add a user to a group (needs re log to take effect)
-# gpasswd -d [username] [groupname] # Remove user from a group
-# groupdel [groupname] # Delete a group
-
-###### DISPLAY MANAGER ######
-
-# apt install lightdm/gdm3
-# dpkg-reconfigure lightmdm/gdm3
-# reboot
-
-###### MANAGE PROCESSES ######
-
-# pgrep <processname> # Display process id
-# pgrep -l <processname> # Display process id and name
-alias pgrep='pgrep -l'
-# pgrep -a <processname> # Display process id and bin path
-# pgrep -u <username> # Display processes of one user
-# kill <processid> # Kill process giving its id
-# killall <processname> # Kill process giving its name
-# killall -s <signal> <processname> # Send signal to a process giving its name
-
-###### FIND COMMAND ######
-
-# find [path] <pattern>
-# find -name <pattern> # Search exact name pattern
-# find -type f
-# find -type d
-# find -mtime 7 # time of last modification: one week
-# find -mtime -7 # time of last modification: less than a week
-# find -mtime +7 # time of last modification: more than a week
-# find -readable # is readable by the current user
-# find -writable # is writable by the current user
-# find -executable # is executable by the current user
-# find -size -10k
-# find -size 10M
-# find -size +10G
-
-###### STREAMS ######
-
-# 0 stdin: standard input
-# 1> stdout: standard output # redirects not errors only
-# 2> stderr: standard error # redirects errors only
-# /dev/null # Files there are deleted
-
-###### HISTORY ######
-
-# history # show every command of the history
-# !500 # execute command number 500 of the history
-# "\C-f": forward-search-history
-# "\C-r": reverse-search-history
-# "\C-g": abort
-# space before a command # command doesnt go into history
-
-###### SHELL VARIABLES ######
-
-# $# # Number of arguments
-# $0 # Full name of the script
-# $1, $2 # Argument 1, argument 2
-# $@ # Represents all arguments
-# $? # Exit code of previous command
-# $$ # Represents the pid of the current script
-# $! # Represents the pid of the last background command
-# == # Test if two strings are exactly the same
-# myvar='myvar' # creating a variable
-# echo "This is $myvar" # echoing a variable
-# env # shows environment variables
-# export myvar # make a variable a environment variable
-# export myvar='myvar' # create a new variable and make it an environment variable
-# you must put it in bashrc to make it exist through all terminal sessions
-# mytable="banana apple pineapple"

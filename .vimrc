@@ -19,6 +19,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'https://github.com/jbgutierrez/vim-better-comments'
 call plug#end()
 " PlugInstall to install all plugins
 
@@ -32,6 +33,8 @@ cmap jj <Esc>
 " z + o and z + c for opening and closing folds
 " :%s/pattern/replacement/gc for substitution with confirmation on all the
 " page
+" add or remove one
+" change to caps or revert
 " Remove highlighting after searching
 nnoremap <F3> :noh <CR>
 " Enables mouse scrolling up
