@@ -12,8 +12,9 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-VISUAL=vim
-EDITOR=vim
+export SUDO_EDITOR=vim
+export VISUAL=vim
+export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
 
 # append to the history file, don't overwrite it
@@ -159,7 +160,7 @@ alias uptime='uptime' # uptime + load average
 alias tree='tree -a'
 
 # rsync aliases
-alias rsync='rsync -ravh'
+# alias rsync='rsync -avh'
 
 # compression aliases
 alias compress="tar -czvf"
@@ -198,6 +199,7 @@ alias bind='bind -p'
 
 # network aliases
 alias sshpcf='ssh porco@192.168.0.25' # address given to dns server in /etc/hosts
+alias linode='sudo ssh porco@linode'
 alias lamp='cd /opt/lampp/ && sudo ./lampp start'
 alias mysql='/opt/lampp/bin/mysql -p test'
 alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'

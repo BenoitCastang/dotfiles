@@ -1,114 +1,172 @@
-## MONITORING
+$? MONITORING
 
-cat /etc/os-release # Show current Linux system infos
-uname -a # Show current Linux system infos
-lscpu # display processor infos
-lsblk # display disks and partitions
+cat /etc/os-release ## Show current Linux system infos
+uname -a ## Show current Linux system infos
+lscpu ## display processor infos
+lsblk ## display disks and partitions
 
-## LOGS
+$? LOGS
 
 cat /var/log/syslog
 dmesg hardware logs
-tail -f <file> # display lines as they arrive
-journalctl -u <service> # diplay logs of a service
-journalctl -fu <service> # follow logs of a service
+tail -f <file> ## display lines as they arrive
+journalctl ## display all logs
+journalctl -f ## follow all logs
+journalctl -e ## open and jump to the end of the file
+journalctl -u <service> ## diplay logs of a service
+journalctl -fu <service> ## follow logs of a service
 
-## NETWORKING
+$? NETWORKING
 
-netstat -tulpn' # Show network traffic
-ip a - Show ip adress
+netstat -tulpn' ## Show network traffic
+ip a ## Show ip adress
 
-## MANAGING USERS
+$? MANAGING USERS
 
-/ect/passwd # List of users
+/ect/passwd ## List of users
 x refers to the hidden password
 uid = numerical representation of a user
 Users under 1000 are not in the login screen
-/etc/shadow # Password hashes
-/ect/group # List of groups
-groups [user] # Display groups of a user
-su [user] # Switch user
-su # Switch to root
-logout # Log out command
-adduser [username] # Create a user
-passwd # Change password command
-userdel # Remove user
-userdel -r # Remove user and delete home directory
-groupadd [groupname] # Create a group
-usermod -aG [groupname] [username] # Add a user to a group (needs re log to take effect)
-gpasswd -d [username] [groupname] # Remove user from a group
-groupdel [groupname] # Delete a group
+/etc/shadow ## Password hashes
+/ect/group ## List of groups
+groups [user] ## Display groups of a user
+su [user] ## Switch user
+su - [user] ## Switch user resetting the environment
+su ## Switch to root
+logout ## Log out command
+adduser [username] ## Create a user
+passwd ## Change password command
+userdel ## Remove user
+userdel -r ## Remove user and delete home directory
+groupadd [groupname] ## Create a group
+usermod -aG [groupname] [username] ## Add a user to a group (needs re log to take effect)
+gpasswd -d [username] [groupname] ## Remove user from a group
+groupdel [groupname] ## Delete a group
 
-## MANAGING PROCESSES
+$? SUDO
 
-pgrep <processname> # Display process id
-pgrep -l <processname> # Display process id and name
-pgrep -a <processname> # Display process id and bin path
-pgrep -u <username> # Display processes of one user
-kill <processid> # Kill process giving its id
-killall <processname> # Kill process giving its name
-killall -s <signal> <processname> # Send signal to a process giving its name
+sudo -l ## Show rights of the sudo group
+/etc/sudoers ## file for sudo rules
+sudo visudo ## edit /etc/sudoers file
+sudo update-alternatives --config editor ## edit visudo editor
+%sudo ALL=(ALL:ALL) ALL ## basic sudo config line
+## the % means its a group
+## first ALL means all hosts
+## second ALL means switching to all users is allowed
+## third ALL means switching to all groups is allowed
+## fourth ALL means executing all commands is allowed
+%sudo ALL=(ALL:ALL) /usr/bin/apt,/usr/bin/rm ##  restricting commands
+%sudo ALL=(ALL:ALL) NOPASSWD: ALL ##  use sudo without password
 
-## WC
+$? SSH
 
-wc -l # Count number of lines
-wc -c # Count number of characters
-wc -w # Count number of words
+sudo ssh user@host ## connect through ssh
+/ect/ssh/sshd_config ## config file for ssh server
+PermitRootLogin yes/no ## disable root login from ssh (but not then connected to the machine), need systemctl restart ssh then logout to take effect (test ssh connexion before logging out after any ssh config change)
+PasswordAuthentication no ## disable possibility to connect via password, public key is necessary (caution: set public key access before)
 
-## CUT
+$? SCP
 
-echo "orange,banana,apple" | cut -d ',' -f 2
+sudo scp <file> user@host: ## transfer a file to a host via ssh
+sudo scp -r <directory> user@host: ## transfer a directory to a host via ssh
+sudo scp user@host:<file> <destination> ## reverse transfer from remote to local
 
-## REV
+$? RSYNC
 
-echo "file" | rev # Reverts letters order
+sudo rsync <file> user@host: ## transfer a file to a host via ssh
+sudo rsync -v <file> user@host: ## show files transfered
+sudo rsync -r <directory> user@host: ## transfer a directory
+sudo rsync -l <file> user@host: ## allow symlinks transfer
+sudo rsync -p <file> user@host: ## keep permissions
+sudo rsync -t <file> user@host: ## preserve modification times
+sudo rsync -g <file> user@host: ## preserve groups
+sudo rsync -o <file> user@host: ## preserve owners
+sudo rsync --devices <file> user@host: ## preserve device files
+sudo rsync --specials <file> user@host: ## preserve special files
+sudo rsync -D <file> user@host: ## same as --devices --specials
+sudo rsync -a <file> user@host: ## same as --rlptgoD
+sudo rsync -z <file> user@host: ## compress file data during the transfer
+sudo rsync -h <file> user@host: ## output numbers in a human-readable format
+sudo rsync -progress <file> user@host: ## show progress during transfer
+sudo rsync --remove-source-files <file> user@host: ## works as mv, deletes source files
+sudo rsync --dry-run <file> user@host: ## works as a test, shows what would be the output of the command
 
-## FIND COMMAND
+$? MANAGING PROCESSES
+
+pgrep <processname> ## Display process id
+pgrep -l <processname> ## Display process id and name
+pgrep -a <processname> ## Display process id and bin path
+pgrep -u <username> ## Display processes of one user
+kill <processid> ## Kill process giving its id
+killall <processname> ## Kill process giving its name
+killall -s <signal> <processname> ## Send signal to a process giving its name
+
+$? WC
+
+wc -l ## Count number of lines
+wc -c ## Count number of characters
+wc -w ## Count number of words
+
+$? CUT
+
+echo "orange,banana,apple" | cut -d ',' -f 2 ## Keep only field 2, fields being seperated by comma
+
+$? REV
+
+echo "file" | rev ## Reverts letters order
+
+$? FIND COMMAND
 
 find [path] <pattern>
-find -name <pattern> # Search exact name pattern
+find -name <pattern> ## Search exact name pattern
 find -type f
 find -type d
-find -mtime 7 # time of last modification: one week
-find -mtime -7 # time of last modification: less than a week
-find -mtime +7 # time of last modification: more than a week
-find -readable # is readable by the current user
-find -writable # is writable by the current user
-find -executable # is executable by the current user
+find -mtime 7 ## time of last modification: one week
+find -mtime -7 ## time of last modification: less than a week
+find -mtime +7 ## time of last modification: more than a week
+find -readable ## is readable by the current user
+find -writable ## is writable by the current user
+find -executable ## is executable by the current user
 find -size -10k
 find -size 10M
 find -size +10G
 
-## STREAMS
+$? STREAMS
 
 0 stdin: standard input
-1> stdout: standard output # redirects not errors only
-2> stderr: standard error # redirects errors only
-/dev/null # Files there are deleted
+1> stdout: standard output ## redirects not errors only
+2> stderr: standard error ## redirects errors only
+/dev/null ## Files there are deleted
 
-## HISTORY
+$? HISTORY
 
-history # show every command of the history
-500 # execute command number 500 of the history
+history ## show every command of the history
+500 ## execute command number 500 of the history
 "\C-f": forward-search-history
 "\C-r": reverse-search-history
 "\C-g": abort
-space before a command # command doesnt go into history
+space before a command ## command doesnt go into history
 
-## SHELL VARIABLES
+$? SHELL VARIABLES
 
-$# # Number of arguments
-$0 # Full name of the script
-$1, $2 # Argument 1, argument 2
-$@ # Represents all arguments
-$? # Exit code of previous command
-$$ # Represents the pid of the current script
-$! # Represents the pid of the last background command
-== # Test if two strings are exactly the same
-myvar='myvar' # creating a variable
-echo "This is $myvar" # echoing a variable
-env # shows environment variables
-export myvar # make a variable a environment variable
-export myvar='myvar' # create a new variable and make it an environment variable
+- $# ## Number of arguments
+- $0 ## Full name of the script
+- $1, $2 ## Argument 1, argument 2
+- $@ ## Represents all arguments
+- $? ## Exit code of previous command
+- $$ ## Represents the pid of the current script
+- $! ## Represents the pid of the last background command
+== ## Test if two strings are exactly the same
+myvar='myvar' ## creating a variable
+echo "This is $myvar" ## echoing a variable
+env ## shows environment variables
+export myvar ## make a variable a environment variable
+export myvar='myvar' ## create a new variable and make it an environment variable
 you must put it in bashrc to make it exist through all terminal sessions
 mytable="banana apple pineapple"
+
+$? TIME
+
+timedatectl ## Show current timezone
+timedatectl list-timezones ## Show all timezones
+sudo timedatectl set-timezone Europe/Paris ## Set timezone

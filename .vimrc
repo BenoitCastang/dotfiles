@@ -17,9 +17,10 @@ call plug#begin()
 Plug 'vim-scripts/symfony'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'https://github.com/jbgutierrez/vim-better-comments'
+Plug 'jbgutierrez/vim-better-comments'
 call plug#end()
 " PlugInstall to install all plugins
 
