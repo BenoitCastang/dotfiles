@@ -1,3 +1,11 @@
+$? FILESYSTEM
+
+/usr/sbin ## 
+/usr/bin ## 
+/usr/local/sbin ## 
+/usr/local/bin ## 
+/opt ## 
+
 $? MONITORING
 
 cat /etc/os-release ## Show current Linux system infos
@@ -23,6 +31,9 @@ ip a ## Show ip adress
 
 $? MANAGING USERS
 
+whoami ## print effective username
+user ## print all real users of the system - personal alias
+users ## print the user names of users currently logged in to the user host
 /ect/passwd ## List of users
 x refers to the hidden password
 uid = numerical representation of a user
@@ -39,7 +50,8 @@ passwd ## Change password command
 userdel ## Remove user
 userdel -r ## Remove user and delete home directory
 groupadd [groupname] ## Create a group
-usermod -aG [groupname] [username] ## Add a user to a group (needs re log to take effect)
+usermod -aG groupname username ## Add a user to a group (needs re log to take effect)
+usermod -aG groupname,groupname username ## Add a user to multiple groups
 gpasswd -d [username] [groupname] ## Remove user from a group
 groupdel [groupname] ## Delete a group
 
@@ -100,6 +112,11 @@ pgrep -u <username> ## Display processes of one user
 kill <processid> ## Kill process giving its id
 killall <processname> ## Kill process giving its name
 killall -s <signal> <processname> ## Send signal to a process giving its name
+
+$? GREP
+
+grep -v ## reverted grep
+grep -c ## display only number of matches
 
 $? WC
 
@@ -170,3 +187,8 @@ $? TIME
 timedatectl ## Show current timezone
 timedatectl list-timezones ## Show all timezones
 sudo timedatectl set-timezone Europe/Paris ## Set timezone
+
+$? PROCESSES
+
+C-Z ## make a program go to the background
+fg ## make the program go back to the foreground

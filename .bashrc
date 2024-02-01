@@ -199,7 +199,7 @@ alias bind='bind -p'
 
 # network aliases
 alias sshpcf='ssh porco@192.168.0.25' # address given to dns server in /etc/hosts
-alias linode='sudo ssh porco@linode'
+alias cloud='sudo ssh porco@linode'
 alias lamp='cd /opt/lampp/ && sudo ./lampp start'
 alias mysql='/opt/lampp/bin/mysql -p test'
 alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
@@ -207,3 +207,9 @@ alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 # git aliases
 alias gs='git status'
 alias gc='git commit -a'
+
+# python aliases
+alias python='python3'
+
+# managing users aliases
+alias user='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f4'

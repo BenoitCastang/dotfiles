@@ -9,3 +9,7 @@ reboot
 apt install plasma-nm
 systemctl enable systemd-networkd
 reboot
+
+## SHORTCUTS
+
+SUPER + A ## toggles with only super key
