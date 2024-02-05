@@ -1,3 +1,9 @@
+$? MAN
+
+man command ## open man page
+man 5 command ## man page 5
+man builtins ## man for bash commands
+
 $? FILESYSTEM
 
 /usr/sbin ## 
@@ -50,8 +56,11 @@ passwd ## Change password command
 userdel ## Remove user
 userdel -r ## Remove user and delete home directory
 groupadd [groupname] ## Create a group
+usermod [OPTIONS] USERNAME
 usermod -aG groupname username ## Add a user to a group (needs re log to take effect)
 usermod -aG groupname,groupname username ## Add a user to multiple groups
+usermod -d /path/to/new/home user ## define a new home directory
+usermod -d /path/to/new/home --move-home user ## define a new home directory and rename old home
 gpasswd -d [username] [groupname] ## Remove user from a group
 groupdel [groupname] ## Delete a group
 
@@ -192,3 +201,5 @@ $? PROCESSES
 
 C-Z ## make a program go to the background
 fg ## make the program go back to the foreground
+
+$? FILESYSTEM
