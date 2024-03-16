@@ -120,6 +120,7 @@ fi
 ## ALIASES
 
 # some more ls aliases
+alias cat='cat -n'
 alias ll='ls -Alh'
 alias la='ls -A'
 alias l='ls -CF'

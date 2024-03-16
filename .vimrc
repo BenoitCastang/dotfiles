@@ -28,9 +28,12 @@ call plug#end()
 
 let mapleader = "," " Map the leader key to a comma
 " Sets jj to perform Esc input
-imap jj <Esc>
-cmap jj <Esc>
-" nmap <C-;> :
+imap kj <Esc>
+cmap kj <Esc>
+vmap <C-c> "+y
+nmap <C-v> "+p
+nmap <C-a> VggoG
+" nmap <c-;> :
 " z + o and z + c for opening and closing folds
 " :%s/pattern/replacement/gc for substitution with confirmation on all the
 " page
@@ -60,7 +63,7 @@ highlight PmenuSbar ctermfg=15 ctermbg=none
 syntax match YellowHeader /^######.*/ contained
 highlight link YellowHeader Special
 " airline theme
-let g:airline_theme='serene'
+let g:airline_theme="serene"
 set relativenumber
 set laststatus=2 " Always display a status line (it gets hidden sometimes otherwise).
 set showcmd " Show last command in the status line.

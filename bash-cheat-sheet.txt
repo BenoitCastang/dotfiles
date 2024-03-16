@@ -6,11 +6,22 @@ man builtins ## man for bash commands
 
 $? FILESYSTEM
 
-/usr/sbin ## 
-/usr/bin ## 
-/usr/local/sbin ## 
-/usr/local/bin ## 
-/opt ## 
+/sbin ## It contains essential binaries for system administration such as parted or ip
+/bin ## It contains essential binaries for all users such as ls, mv, or mkdir
+/usr/sbin ## It stores binaries for system administration such as deluser, or groupadd
+/usr/bin ## It includes most executable files — such as free, pstree, sudo or man — that can be used by all users
+/usr/local/sbin ## It is used to store locally installed programs for system administration that are not managed by the system’s package manager
+/usr/local/bin ## It serves the same purpose as /usr/local/sbin but for regular user programs
+/opt ## sometimes used to store optional third-party application
+/home/$USER/bin AND /home/$USER/.local/bin ## regular users can have their own programs in there
+/var/log ## Where the logs are, except for some service-specific logs
+/boot ## kernel place
+/etc ## general configuration files
+/home/User ## user-specifig condig files
+/proc ## running processes + system hardware
+/proc/sys ## kernel configuration
+/dev ## connected hardware devices/nodes
+/dev/null ## bit bucket: discards all information sent to it
 
 $? MONITORING
 
@@ -24,43 +35,95 @@ $? LOGS
 cat /var/log/syslog
 dmesg hardware logs
 tail -f <file> ## display lines as they arrive
+
 journalctl ## display all logs
 journalctl -f ## follow all logs
 journalctl -e ## open and jump to the end of the file
-journalctl -u <service> ## diplay logs of a service
+journalctl -u <service> ## diplay logs of a specific unit or service
 journalctl -fu <service> ## follow logs of a service
+/var/log/demsg OR dmseg ## loggin kernel on bootm before syslog is available
+journalctl -k OR --dmseg ## kernel ring buffer log
+journalctl -b OR --boot ## boot info
+
+last ## display data relevant to successful login out of /var/log/wtmp
+lastb ## display data relevant to unsuccessful login out of /var/log/btmp
 
 $? NETWORKING
 
 netstat -tulpn' ## Show network traffic
-ip a ## Show ip adress
+ping google.com ## Send echo request forever
+ping -c 3 google.com ## Send 3 echo requests
+
+ip addr show ## Show ip adress
+ip addr add 192.168.0.1/255.255.255.0 dev wlo1 ## static ip address configuration
+ip link show ## List network interfaces
+ip route show ## Show current IPv4 routing table
+ip route add default via 192.168.0.1 ## set default route
+
+/etc/hosts ## first look up for names here before contacting the dns
+/etc/resolv.conf ## contains default dns server address
+
+host google.com ## perform dns lookup
+dig google.com ## detailed dns lookup
+
+ss ## show all sockets
+ss -s ## summary
+ss -p ## show process information
+ss -4 ## show IPv4
+ss -6 ## show IPv6
+ss -t ## show tcp sockets
+ss -u ## show udp sockets
+ss -l ## show sockets listening for new connections
 
 $? MANAGING USERS
 
 whoami ## print effective username
+who ## list active logins on the system
+w ## list more information
+
+id ## get uid, gid and groups of a user
+
 user ## print all real users of the system - personal alias
 users ## print the user names of users currently logged in to the user host
+
 /ect/passwd ## List of users
-x refers to the hidden password
-uid = numerical representation of a user
-Users under 1000 are not in the login screen
+## x refers to the hidden password
+## uid = numerical representation of a user
+## gid = numerical representation of a group
 /etc/shadow ## Password hashes
+
 /ect/group ## List of groups
 groups [user] ## Display groups of a user
+o
 su [user] ## Switch user
 su - [user] ## Switch user resetting the environment
 su ## Switch to root
 logout ## Log out command
-adduser [username] ## Create a user
-passwd ## Change password command
-userdel ## Remove user
-userdel -r ## Remove user and delete home directory
+
+useradd username ## create a user
+useradd -m username ## create the user's home directory at the same time
+useradd -d /home/john john ## custom home directory, can be common with another user but must exist before
+useradd -r username ## create a system user (that does not login directly but does background tasks etc + will be under uid 1000 so not shown in the login screen)
+useradd -c comment username ## add user info
+adduser username ## Create a user, defining password and comments and creating a home directory
+
+passwd ## change password of logged in user
+passwd user ## change user's password
+
+userdel user ## Remove user
+userdel -r user ## Remove user and delete home directory
+
 groupadd [groupname] ## Create a group
+
 usermod [OPTIONS] USERNAME
 usermod -aG groupname username ## Add a user to a group (needs re log to take effect)
 usermod -aG groupname,groupname username ## Add a user to multiple groups
 usermod -d /path/to/new/home user ## define a new home directory
 usermod -d /path/to/new/home --move-home user ## define a new home directory and rename old home
+
+chsh ## change user shell interactively
+chsh -s /usr/bin/zsh ## change directly
+
 gpasswd -d [username] [groupname] ## Remove user from a group
 groupdel [groupname] ## Delete a group
 
@@ -114,10 +177,28 @@ sudo rsync --dry-run <file> user@host: ## works as a test, shows what would be t
 
 $? MANAGING PROCESSES
 
+uptime ## state of the host ## The three last digits indicate the system’s load average for the last minute, the last five minutes and the last fifteen minutes, respectively. Each of these numbers indicates how many processes were waiting either for CPU resources or for input/output operations to complete. This means that these processes were ready to run if they had received the respective resources.
+top ## Dynamic display running processes
+htop ## colored and fancier version
+atop ## exists also
+
+free ## parses /proc/meminfo and displays the amount of free and used memory in the system - default in kikibytes
+free -b ## Bytes
+free -m ## Mebibytes
+free -g ## Gibibytes
+free -h ## human-readable format
+
+ps ## Static display of processes attached to the current shell ## TIME is the cpu time taken by the process
+ps -f ## more information
+ps -u ## still more
+ps -v ## memory usage
+pstree ## Display tree of running processes
+
 pgrep <processname> ## Display process id
 pgrep -l <processname> ## Display process id and name
 pgrep -a <processname> ## Display process id and bin path
 pgrep -u <username> ## Display processes of one user
+
 kill <processid> ## Kill process giving its id
 killall <processname> ## Kill process giving its name
 killall -s <signal> <processname> ## Send signal to a process giving its name
