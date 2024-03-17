@@ -15,7 +15,8 @@ git revert <hash> ## hash from git log --oneline
 
 $? GITHUB
 
-git clone https://github.com/BenoitCastang/dotfiles ## download a public repository
+https://github.com/BenoitCastang/dotfiles
+git clone url.git  ## download a public repository
 git pull url.git ## download the changes
 .git/config to see its origin
 Create a repository on Github
