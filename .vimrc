@@ -28,8 +28,8 @@ call plug#end()
 
 let mapleader = "," " Map the leader key to a comma
 " Sets jj to perform Esc input
-imap kj <Esc>
-cmap kj <Esc>
+imap jj <Esc>
+cmap jj <Esc>
 vmap <C-c> "+y
 nmap <C-v> "+p
 nmap <C-a> VggoG
