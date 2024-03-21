@@ -15,7 +15,6 @@ git revert <hash> ## hash from git log --oneline
 
 $? GITHUB
 
-https://github.com/BenoitCastang/dotfiles
 git clone url.git  ## download a public repository
 git pull url.git ## download the changes
 .git/config to see its origin
@@ -28,3 +27,11 @@ On Github: Profile icon -> Settings -> Developer settings -> Personal access tok
 then
 git push origin master ## push the repo to github
 connect with Github username and access token as a password
+
+$? REPOS
+
+https://github.com/BenoitCastang/dotfiles
+https://github.com/BenoitCastang/python-files
+https://github.com/BenoitCastang/c-files
+https://github.com/BenoitCastang/bash-files
+https://github.com/BenoitCastang/personal-website
