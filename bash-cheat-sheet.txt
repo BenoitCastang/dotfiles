@@ -68,6 +68,9 @@ chown user file ## changer owner
 chown user:group file ## change owner and group
 chown :group file ## change group
 
+chgrp group file ## change groupe of file(s)
+chgrp - R group directory ## change recursively
+
 $? MONITORING
 
 cat /etc/os-release ## Show current Linux system infos
@@ -361,21 +364,71 @@ space before a command ## command doesnt go into history
 
 $? SHELL VARIABLES
 
-- $# ## Number of arguments
-- $0 ## Full name of the script
-- $1, $2 ## Argument 1, argument 2
-- $@ ## Represents all arguments
-- $? ## Exit code of previous command
-- $$ ## Represents the pid of the current script
-- $! ## Represents the pid of the last background command
+$# ## Number of arguments
+$0 ## Full name of the script
+$1, $2 ## Argument 1, argument 2
+$@ ## Represents all arguments
+. $? ## Exit code of previous command
+$$ ## Represents the pid of the current script
+. $! ## Represents the pid of the last background command
+
 == ## Test if two strings are exactly the same
+
 myvar='myvar' ## creating a variable
+myvar=5 ## set a variable
+myvar=$(expr 3 + 4) ## via arithmetic operation
+myvar=$((3+4)) ## arithmetic expansion
 echo "This is $myvar" ## echoing a variable
 env ## shows environment variables
 export myvar ## make a variable a environment variable
 export myvar='myvar' ## create a new variable and make it an environment variable
-you must put it in bashrc to make it exist through all terminal sessions
-mytable="banana apple pineapple"
+## you must put it in bashrc to make it exist through all terminal sessions
+
+mytable="value1 value2 value3" ## create a table
+for i in $mytable; do echo $i; done ## echo table
+
+myarray=(value1 value2 value3) ## create indexed array
+myarray[3]=value4 ## define element individually, add or modify
+myarray+=(value5) ## append element
+myarray+=value5 ## append element as string to the index 0 of the array
+unset myarray[0] ## unset element, without changing index
+echo "${myarray[3]}" ## access array element
+echo "${myarray[@]}" ## access all elements
+echo "${myarray[*]}" ## access all elements
+echo "${#myarray[@]}" ## show array length
+for element in "${myarray[@]}"; do echo "$element"; done ## echo array
+
+assoc_array=([key1]=value1 [key2]=value2) ## create associative array, hash map - wont work without declare -A
+assoc_array[key3]=value3 ## define element individually, add or modify
+assoc_array+=([key3]=value3) ## append element
+assoc_array+=value5 ## append element as string to the index 0 of the array
+unset assoc_array[key2] ## unset element, without changing index
+echo "${assoc_array[key2]}" ## access array element
+echo "${assoc_array[@]}" ## access all values
+echo "${!assoc_array[@]}" ## access all keys
+echo "${#assoc_array[@]}" ## show array length
+
+declare myvar='value' ## declare variable
+declare -r MYVAR='value' ## declare read-only variable, a constant
+declare -i int=2+3 ## declare int, allowing arithmetic operation withou expr or arithmetic expansion
+declare -a myarray=(value1 value2 value3) ## create indexed array
+declare -A assoc_array=([key1]="value1" [key2]="value2") ## create associative array
+declare -x
+declare -f
+declare -g
+declare -n
+declare -p
+declare's scoping
+
+typeset
+
+printenv
+
+env
+
+set
+
+unset
 
 $? TIME
 
@@ -424,3 +477,5 @@ ls -l ## long listing
 ls -d ## list a directory
 ls -a ## list all files
 ls -A ## list all files but . and ..
+
+type command ## show how the argument would be interpreted if used as a command name in the shell - results cans be: alias, shell keyword (if, else...), shell function, shell built-in command, file (external command, path returned)
