@@ -24,6 +24,50 @@ $? FILESYSTEM
 /dev ## connected hardware devices/nodes
 /dev/null ## bit bucket: discards all information sent to it
 
+$? FILETYPES
+
+- ## normal file
+d ## directory
+l ## soft link
+b ## block device (storage)
+c ## character device (terminal)
+s ## socket
+
+$? FILE PERMISSIONS
+
+r ## open files and read content
+w ## edit and delete files
+x ## run file as executable or script
+
+s ## set gid, on binary executable files only - grant the process resulting from executing the file access to the privileges of the group who owns the file - written ---s------
+S ## set gid, not executable by group
+s ## set uid, on binary executable files only - grant the process resulting from executing the file access to the privileges of the user who owns the file (ex: a user uses /bin/password belonging to root with root privileges) - written ------s---
+S ## set uid, not executable by user
+
+r ## read directory's content, like filenames, but not the files themselves
+w ## create or delete file in the directory, change its name, permissions or owner, even without any permission on this file
+x ## enter a directory, but not list the files
+
+t ## sticky bit - only root, directory owner and file owner can rename or delete files in the directory, regardless of other permissions - written d--------t
+T ## sticky bit, not executable by others
+s ## set gid - make every file or directory created under it inherit the group from the parent directory - written d-----s---
+
+chmod u+rw-x,g+rw-x,o+rw-x file ## symbolic mode
+chmod -R a=rw- file ## recursive mode, all files inside directory
+chmod 666 file ## numeric mode
+
+chmod +t directory ## set sticky bit
+chmod 1777 directory ## numeric mode
+chmod g+s directory ## give set gid to a directory
+chmod 2777 directory ## numeric mode
+chmod u+s file ## give set uid to a file
+chmod 4777 file ## numeric mode
+chmod 3777 directory ## set sticky bit + set gid on directory
+
+chown user file ## changer owner
+chown user:group file ## change owner and group
+chown :group file ## change group
+
 $? MONITORING
 
 cat /etc/os-release ## Show current Linux system infos
@@ -140,7 +184,7 @@ chsh -s /usr/bin/zsh ## change user's default shell, takes effect at next login
 /etc/shells ## list of available shells
 
 /ect/passwd ## List of users and infos related to accounts: username, x for hidden password, uid, gid, GECOS/comment field, home directory, shell path
-/etc/shadow ## Password infos: username, password hash, last change, minimum days, maximum days, warn days, grace period, expiration date
+/etc/shadow ## Password infos: username, password hash (! if user is locked), last change, minimum days, maximum days, warn days, grace period, expiration date
 
 passwd ## change password of logged in user
 passwd user ## change user's password
@@ -185,6 +229,8 @@ gpasswd groupname ## set password for a group - deprecated
 gpasswd -r groupname ## remove password
 
 groupdel groupname ## Delete a group
+
+groupmems -g groupname -l ## list secondary members of the group
 
 $? SUDO
 
@@ -361,7 +407,9 @@ tput cnorm ## cursor normal
 $? MISCELLANEOUS
 
 echo -n ## echo without new line
+
 sleep 1 ## wait one second
+
 read name ## prompt the user for input and store that input in a variable
 read -p "Give value" name ## make a prompt without the need of an echo
 read -n 1 foo ## read only the first character and go on
@@ -370,3 +418,9 @@ read -r name ## disables backslash escaping, useful for path reading
 read firstname lastname ## read two values
 read txt < file ## store the first line of the file in the variable
 read -t 3 value ## wait only 3 seconds for the input
+
+ls ## list files
+ls -l ## long listing
+ls -d ## list a directory
+ls -a ## list all files
+ls -A ## list all files but . and ..
