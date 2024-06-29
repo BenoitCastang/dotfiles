@@ -17,6 +17,11 @@ export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
 cd /home/porco/dotfiles && git pull https://github.com/BenoitCastang/dotfiles
+cd /home/porco/bash-files && git pull https://github.com/BenoitCastang/bash-files
+cd /home/porco/python-files && git pull https://github.com/BenoitCastang/python-files
+cd /home/porco/c-files && git pull https://github.com/BenoitCastang/c-files
+cd /home/porco/personal-website && git pull https://github.com/BenoitCastang/personal-website
+cd /home/porco
 
 # append to the history file, don't overwrite it
 shopt -s histappend
