@@ -214,4 +214,4 @@ alias gc='git commit -a'
 alias python='python3'
 
 # managing users aliases
-alias user='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f4'
+alias userls='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f4'

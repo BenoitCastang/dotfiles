@@ -3,6 +3,7 @@ $? MAN
 man command ## open man page
 man 5 command ## man page 5
 man builtins ## man for bash commands
+https://www.reddit.com/r/commandline/comments/1a9u0h/what_are_some_must_read_man_pages/
 
 $? FILESYSTEM
 
@@ -22,6 +23,53 @@ $? FILESYSTEM
 /proc/sys ## kernel configuration
 /dev ## connected hardware devices/nodes
 /dev/null ## bit bucket: discards all information sent to it
+
+$? FILETYPES
+
+- ## normal file
+d ## directory
+l ## soft link
+b ## block device (storage)
+c ## character device (terminal)
+s ## socket
+
+$? FILE PERMISSIONS
+
+r ## open files and read content
+w ## edit and delete files
+x ## run file as executable or script
+
+s ## set gid, on binary executable files only - grant the process resulting from executing the file access to the privileges of the group who owns the file - written ---s------
+S ## set gid, not executable by group
+s ## set uid, on binary executable files only - grant the process resulting from executing the file access to the privileges of the user who owns the file (ex: a user uses /bin/password belonging to root with root privileges) - written ------s---
+S ## set uid, not executable by user
+
+r ## read directory's content, like filenames, but not the files themselves
+w ## create or delete file in the directory, change its name, permissions or owner, even without any permission on this file
+x ## enter a directory, but not list the files
+
+t ## sticky bit - only root, directory owner and file owner can rename or delete files in the directory, regardless of other permissions - written d--------t
+T ## sticky bit, not executable by others
+s ## set gid - make every file or directory created under it inherit the group from the parent directory - written d-----s---
+
+chmod u+rw-x,g+rw-x,o+rw-x file ## symbolic mode
+chmod -R a=rw- file ## recursive mode, all files inside directory
+chmod 666 file ## numeric mode
+
+chmod +t directory ## set sticky bit
+chmod 1777 directory ## numeric mode
+chmod g+s directory ## give set gid to a directory
+chmod 2777 directory ## numeric mode
+chmod u+s file ## give set uid to a file
+chmod 4777 file ## numeric mode
+chmod 3777 directory ## set sticky bit + set gid on directory
+
+chown user file ## changer owner
+chown user:group file ## change owner and group
+chown :group file ## change group
+
+chgrp group file ## change groupe of file(s)
+chgrp - R group directory ## change recursively
 
 $? MONITORING
 
@@ -80,21 +128,10 @@ $? MANAGING USERS
 whoami ## print effective username
 who ## list active logins on the system
 w ## list more information
-
-id ## get uid, gid and groups of a user
-
-user ## print all real users of the system - personal alias
+id user ## get uid, gid and groups of a user
+userls ## print all real users of the system - personal alias
 users ## print the user names of users currently logged in to the user host
 
-/ect/passwd ## List of users
-## x refers to the hidden password
-## uid = numerical representation of a user
-## gid = numerical representation of a group
-/etc/shadow ## Password hashes
-
-/ect/group ## List of groups
-groups [user] ## Display groups of a user
-o
 su [user] ## Switch user
 su - [user] ## Switch user resetting the environment
 su ## Switch to root
@@ -102,30 +139,101 @@ logout ## Log out command
 
 useradd username ## create a user
 useradd -m username ## create the user's home directory at the same time
+useradd -M username ## create a user without home directory
 useradd -d /home/john john ## custom home directory, can be common with another user but must exist before
 useradd -r username ## create a system user (that does not login directly but does background tasks etc + will be under uid 1000 so not shown in the login screen)
 useradd -c comment username ## add user info
+useradd -e YYYY-MM-DD username ## set the expiry date for the account - the user cannot loginm he must concact the system administrator
+useradd -f numberofdays username ## set grace period
+useradd -g gid username ## set gid
+useradd -G group1,group2 username ## define supplementary groups
+useradd -s /bin/bash username ## set specific login shell
+useradd -u uid username ## create user with specific uid
+useradd -D ## show user creation default values
 adduser username ## Create a user, defining password and comments and creating a home directory
+
+/etc/login.defs ## config file for user creation default values: password minimum and maximum days, warn days, uid and gid min and max, create home
+/etc/default/useradd ## other config file for user creation default values: shell, home, inactive, expire, skel
+/etc/skel ## default content of home directory for new users
+
+usermod [OPTIONS] USERNAME
+usermod -l user ## rename user login name
+usermod -d /path/to/new/home user ## define a new home directory
+usermod -d /path/to/new/home -m user ## define a new home directory and rename old home (move home)
+usermod -s /bin/bash user ## change the login shell for the user
+usermod -u uid user ## change uid for the account
+usermod -g primarygroup user ## change primary group of a user
+usermod -G secondarygroup John ## set a new list of secondary groups for a user
+usermod -G secondarygroup1,sedondarygroup2 John ## set multiple groups
+usermod -aG secondarygroup username ## append secondary group to a user
+usermod -aG secondarygroup1,secondarygroup2 username ## append multiple secondary groups
+usermod -e YYYY-MM-DD user ## change account expiration date
+usermod -L user ## lock user account
+usermod -U user ## unlock user acount
+
+chfn user ## change GECOS/comment field interactively
+chfn -f fullname user ## change full name
+chfn -r room user ## change room
+chfn -w workphone user ## change work-phone
+chfn -h homephone user ## change home-phone
+chfn -o other user ## changer other info
+
+finger user ## show GECOS/comment field
+finger -l user ## long listing
+finger -s user ## short listing
+
+chsh ## change user shell interactively
+chsh -s /usr/bin/zsh ## change user's default shell, takes effect at next login
+/etc/shells ## list of available shells
+
+/ect/passwd ## List of users and infos related to accounts: username, x for hidden password, uid, gid, GECOS/comment field, home directory, shell path
+/etc/shadow ## Password infos: username, password hash (! if user is locked), last change, minimum days, maximum days, warn days, grace period, expiration date
 
 passwd ## change password of logged in user
 passwd user ## change user's password
+passwd -S user ## show password status: username, password status (P = passworded, NP = No password, L = Locked, PS = Password shadowed, stored securely), last change date, minumum and maximum days, warn days, grace period (-1 means no grace period)
+passwd -l user ## lock user password, disabling the account
+passwd -u user ## unlock user password, re-enabling the account
+passwd -d user ## delete user password, making the account password-less
+passwd -e user ## force password expiration thus password change
+passwd -n numberofdays user ## set minimum days
+passwd -x numberofdays user ## set maximum days
+passwd -w numberofdays user ## set warn days
+passwd -i numberofdays user ## set grace period (not standard, prefer chage -I)
+
+chage username ## set minimum and maximum password age, last password change, days of warning before expiration, grace period and account expiration date
+chage -l username ## show last password change, password expiration date, grace period, date of account expiration, minimum and maximum number of days between password changes, days of warning before password expiration
+chage -d last-day ## set day of last password change - 0 forces the user to change his password the next time he logs in
+chage -E YYYY-MM-DD ## set account expiration date
+chage -I numberofdays ## set the number of days of inactivity after the password has expired before the accound is locked, i.e. the grace period
+chage -m numberofdays ## minimum days between password change - prevents too frequent change
+chage -M numberofdays ## maximum number of days - after that the password must be changed
+chage -W numberofdays ## warn days - number of days before password expiration that a user begins receiving warnings to change the password
 
 userdel user ## Remove user
 userdel -r user ## Remove user and delete home directory
 
-groupadd [groupname] ## Create a group
+id ## return uid, gid (primary group) and secondary groups
+/ect/group ## List of groups: group name, password (x means not used), gid, list of supplementary members (i.e. the group is a secondary group for the user, primary groups for each user being specified in /etc/passwd)
+/etc/gshadow ## list of groups: group name, encrypted password, group administrators, group members
+groups user ## Display groups of a user
 
-usermod [OPTIONS] USERNAME
-usermod -aG groupname username ## Add a user to a group (needs re log to take effect)
-usermod -aG groupname,groupname username ## Add a user to multiple groups
-usermod -d /path/to/new/home user ## define a new home directory
-usermod -d /path/to/new/home --move-home user ## define a new home directory and rename old home
+groupadd groupname ## Create a group
+groupadd -g gid groupname ## create a group with a specified gid
+groupadd -r groupname ## create a systemgroup
 
-chsh ## change user shell interactively
-chsh -s /usr/bin/zsh ## change directly
+groupmod -n newname groupbname ## set new groupname
+groupmod -g gid groupname ## set new gid
 
-gpasswd -d [username] [groupname] ## Remove user from a group
-groupdel [groupname] ## Delete a group
+gpasswd -a username groupname ## make user secondary member of the group
+gpasswd -d username groupname ## Remove user from a group
+gpasswd -A user1,user2 groupname ## specify group administrators who can remove or add users from a group without needing root privileges
+gpasswd groupname ## set password for a group - deprecated
+gpasswd -r groupname ## remove password
+
+groupdel groupname ## Delete a group
+
+groupmems -g groupname -l ## list secondary members of the group
 
 $? SUDO
 
@@ -224,21 +332,71 @@ space before a command ## command doesnt go into history
 
 $? SHELL VARIABLES
 
-- $# ## Number of arguments
-- $0 ## Full name of the script
-- $1, $2 ## Argument 1, argument 2
-- $@ ## Represents all arguments
-- $? ## Exit code of previous command
-- $$ ## Represents the pid of the current script
-- $! ## Represents the pid of the last background command
+$# ## Number of arguments
+$0 ## Full name of the script
+$1, $2 ## Argument 1, argument 2
+$@ ## Represents all arguments
+. $? ## Exit code of previous command
+$$ ## Represents the pid of the current script
+. $! ## Represents the pid of the last background command
+
 == ## Test if two strings are exactly the same
+
 myvar='myvar' ## creating a variable
+myvar=5 ## set a variable
+myvar=$(expr 3 + 4) ## via arithmetic operation
+myvar=$((3+4)) ## arithmetic expansion
 echo "This is $myvar" ## echoing a variable
 env ## shows environment variables
 export myvar ## make a variable a environment variable
 export myvar='myvar' ## create a new variable and make it an environment variable
-you must put it in bashrc to make it exist through all terminal sessions
-mytable="banana apple pineapple"
+## you must put it in bashrc to make it exist through all terminal sessions
+
+mytable="value1 value2 value3" ## create a table
+for i in $mytable; do echo $i; done ## echo table
+
+myarray=(value1 value2 value3) ## create indexed array
+myarray[3]=value4 ## define element individually, add or modify
+myarray+=(value5) ## append element
+myarray+=value5 ## append element as string to the index 0 of the array
+unset myarray[0] ## unset element, without changing index
+echo "${myarray[3]}" ## access array element
+echo "${myarray[@]}" ## access all elements
+echo "${myarray[*]}" ## access all elements
+echo "${#myarray[@]}" ## show array length
+for element in "${myarray[@]}"; do echo "$element"; done ## echo array
+
+assoc_array=([key1]=value1 [key2]=value2) ## create associative array, hash map - wont work without declare -A
+assoc_array[key3]=value3 ## define element individually, add or modify
+assoc_array+=([key3]=value3) ## append element
+assoc_array+=value5 ## append element as string to the index 0 of the array
+unset assoc_array[key2] ## unset element, without changing index
+echo "${assoc_array[key2]}" ## access array element
+echo "${assoc_array[@]}" ## access all values
+echo "${!assoc_array[@]}" ## access all keys
+echo "${#assoc_array[@]}" ## show array length
+
+declare myvar='value' ## declare variable
+declare -r MYVAR='value' ## declare read-only variable, a constant
+declare -i int=2+3 ## declare int, allowing arithmetic operation withou expr or arithmetic expansion
+declare -a myarray=(value1 value2 value3) ## create indexed array
+declare -A assoc_array=([key1]="value1" [key2]="value2") ## create associative array
+declare -x
+declare -f
+declare -g
+declare -n
+declare -p
+declare's scoping
+
+typeset
+
+printenv
+
+env
+
+set
+
+unset
 
 $? TIME
 
@@ -251,4 +409,41 @@ $? PROCESSES
 C-Z ## make a program go to the background
 fg ## make the program go back to the foreground
 
-$? FILESYSTEM
+$? TPUT
+
+tput ## terminal put
+
+tput setaf 1 ## set ansi foreground red
+tput setab 2 ## set ansi background red
+
+tput cup 0 0 ## cursor position first line first column
+tput cup $(tput lines) ## last line, beginning of line
+tput cup $(tput lines) $(($(tput cols) - 1)) ## last line, end of line
+tput cup 0 $(($(tput cols) - 1)) ## first line, end of line
+tput cup $(($(tput lines) / 2)) $((($(tput cols) / 2) - 1)) ## center of screen
+
+tput civis ## cursor invisible
+tput cnorm ## cursor normal
+
+$? MISCELLANEOUS
+
+echo -n ## echo without new line
+
+sleep 1 ## wait one second
+
+read name ## prompt the user for input and store that input in a variable
+read -p "Give value" name ## make a prompt without the need of an echo
+read -n 1 foo ## read only the first character and go on
+read -s name ## silent the input to not display it
+read -r name ## disables backslash escaping, useful for path reading
+read firstname lastname ## read two values
+read txt < file ## store the first line of the file in the variable
+read -t 3 value ## wait only 3 seconds for the input
+
+ls ## list files
+ls -l ## long listing
+ls -d ## list a directory
+ls -a ## list all files
+ls -A ## list all files but . and ..
+
+type command ## show how the argument would be interpreted if used as a command name in the shell - results cans be: alias, shell keyword (if, else...), shell function, shell built-in command, file (external command, path returned)
