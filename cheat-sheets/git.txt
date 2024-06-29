@@ -1,7 +1,9 @@
 git init ## make the current directory a git repository
 git status [file] ## show changes
 git add <file> ## add files to the repo
-git add . ## add every files
+git add . ## add every files in working directory
+git add -u ## update all files throughout the project, including deletions
+git add -u path ## update only path
 git commit ## make a commit
 git commit -m "message" ## make a commit with message
 git commit -a ## add files then commit

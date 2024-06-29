@@ -216,6 +216,7 @@ alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 alias gs='git status'
 alias gc='git commit -a'
 alias push='git push origin master'
+alias commit='git add -u; git commit'
 
 # python aliases
 alias python='python3'
