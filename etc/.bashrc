@@ -16,12 +16,18 @@ export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
-cd /home/porco/dotfiles && git pull https://github.com/BenoitCastang/dotfiles
-cd /home/porco/bash-files && git pull https://github.com/BenoitCastang/bash-files
-cd /home/porco/python-files && git pull https://github.com/BenoitCastang/python-files
-cd /home/porco/c-files && git pull https://github.com/BenoitCastang/c-files
-cd /home/porco/personal-website && git pull https://github.com/BenoitCastang/personal-website
-cd /home/porco
+update_repository() {
+  if [ -d /home/porco/$1 ]; then
+		cd /home/porco/$1 && git pull https://github.com/BenoitCastang/$1;
+	else
+	 	echo -e "\e[33mRepository $1 not found.\e[0m" && cd && git clone https://github.com/BenoitCastang/$1 && cd;
+	fi
+}
+update_repository dotfiles
+update_repository bash-files
+update_repository python-files
+update_repository c-files
+update_repository personal-website
 
 # append to the history file, don't overwrite it
 shopt -s histappend
