@@ -1,0 +1,27 @@
+tmux list-sessions
+tmux ls
+## See list of open tmux sessions
+
+tmux attach-session -t session-name
+tmux -a -t session-name
+## Enter target open session
+
+ctrl-u + d
+## Detach session - leaving it without ending it
+
+rename-session new-session-name
+tmux rename-session -t current-name new-name
+## Rename session
+
+exit
+ctrl-d
+## Close current unit from smaller to wider -  pane then window then session
+
+tmux kill-session -t session-name
+## End target session
+
+tmux kill-server
+## End all sessions
+
+tmux switch-client -t session-name
+## Enter target open session without detaching from current session

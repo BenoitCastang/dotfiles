@@ -16,6 +16,7 @@ export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
+# setxkbmap fr -variant lafayette
 update_repository() {
   if [ -d /home/porco/$1 ]; then
 		cd /home/porco/$1
@@ -31,7 +32,7 @@ update_repository dotfiles
 update_repository bash-files
 update_repository python-files
 update_repository c-files
-# update_repository personal-website
+update_repository personal-website
 check_dotfiles() {
 	if [ ! -L /home/porco/$1 ]; then
 	 	echo -e "\e[33mCreating $1...\e[0m"
