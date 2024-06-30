@@ -18,16 +18,31 @@ export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
 update_repository() {
   if [ -d /home/porco/$1 ]; then
-		cd /home/porco/$1 && git pull https://github.com/BenoitCastang/$1;
+		cd /home/porco/$1
+		git pull https://github.com/BenoitCastang/$1
 	else
-	 	echo -e "\e[33mRepository $1 not found.\e[0m" && cd && git clone https://github.com/BenoitCastang/$1 && cd;
+	 	echo -e "\e[33mRepository $1 not found.\e[0m"
+		cd
+		git clone https://github.com/BenoitCastang/$1
 	fi
+	cd
 }
 update_repository dotfiles
 update_repository bash-files
 update_repository python-files
 update_repository c-files
-update_repository personal-website
+# update_repository personal-website
+check_dotfiles() {
+	if [ ! -L /home/porco/$1 ]; then
+	 	echo -e "\e[33mCreating $1...\e[0m"
+		test -e $1 && rm $1
+		ln -s /home/porco/dotfiles/etc/$1 /home/porco/$1
+	fi
+}
+check_dotfiles .bashrc
+check_dotfiles .inputrc
+check_dotfiles .tmux.conf
+check_dotfiles .vimrc
 
 # append to the history file, don't overwrite it
 shopt -s histappend
