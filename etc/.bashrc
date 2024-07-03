@@ -148,7 +148,7 @@ fi
 ## ALIASES
 
 # some more ls aliases
-alias cat='cat -n'
+# alias cat='cat -n'
 alias ll='ls -Alh'
 alias la='ls -A'
 alias l='ls -CF'
@@ -164,12 +164,21 @@ alias purge='sudo apt purge'
 alias search='sudo apt-cache search'
 
 # systemctl aliases - units systemd management
-alias status='systemctl status'
-alias start='systemctl start'
-alias stop='systemctl stop'
-alias enable='systemctl enable' # will start automatically at startup
-alias disable='systemctl disable' # won't start automatically at startup
-alias restart='systemctl restart'
+ctlstop() {
+	sudo systemctl stop $1
+	echo -e "\e[33mService $1 has stopped."
+	systemctl status $1
+}
+ctlstart() {
+	sudo systemctl start $1
+	echo -e "\e[33mService $1 has started."
+	systemctl status $1
+}
+ctlrestart() {
+	sudo systemctl restart $1
+	echo -e "\e[33mService $1 has restarted."
+		systemctl status $1
+}
 
 # cyberghost vpn aliases
 alias vpn='sudo cyberghostvpn'
@@ -184,6 +193,7 @@ alias df='df -h' # disk free - display disk usage
 alias mem="htop" # general state
 alias uptime='uptime' # uptime + load average
 # alias du='du -hsc *'
+alias dmesg='sudo dmesg -T'
 
 # tree aliases
 alias tree='tree -a'

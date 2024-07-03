@@ -25,3 +25,8 @@ tmux kill-server
 
 tmux switch-client -t session-name
 ## Enter target open session without detaching from current session
+
+ctrl-u [ ## Enter copy mode
+space ## Highlight text
+enter ## copy text and leave copy mode
+ctrl-u ] ## paste text

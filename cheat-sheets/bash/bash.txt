@@ -78,24 +78,6 @@ uname -a ## Show current Linux system infos
 lscpu ## display processor infos
 lsblk ## display disks and partitions
 
-$? LOGS
-
-cat /var/log/syslog
-dmesg hardware logs
-tail -f <file> ## display lines as they arrive
-
-journalctl ## display all logs
-journalctl -f ## follow all logs
-journalctl -e ## open and jump to the end of the file
-journalctl -u <service> ## diplay logs of a specific unit or service
-journalctl -fu <service> ## follow logs of a service
-/var/log/demsg OR dmseg ## loggin kernel on bootm before syslog is available
-journalctl -k OR --dmseg ## kernel ring buffer log
-journalctl -b OR --boot ## boot info
-
-last ## display data relevant to successful login out of /var/log/wtmp
-lastb ## display data relevant to unsuccessful login out of /var/log/btmp
-
 $? NETWORKING
 
 netstat -tulpn' ## Show network traffic
