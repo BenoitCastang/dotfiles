@@ -14,6 +14,9 @@ git log --oneline ## short display
 git lp ## log with all details
 git stash ## drop local changes
 git revert <hash> ## hash from git log --oneline
+git branch ## list branches in local repository
+git checkout branch ## switch to a branch
+git checkout -b master ## create branch
 
 $? GITHUB
 
