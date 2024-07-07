@@ -24,10 +24,8 @@ ssh-keygen ## generate keys, do not do it when already having one
 authorized_keys ## file to create on the server in /home/user/.ssh/ and put the public key in it
 ssh-copy-id porco@debian1 ## copy public key in /home/user/.ssh/authorized_keys
 ssh-copy-id -i /home/porco/.ssh/id_rsa.pub porco@debian1 ## manually input public key file
+check /home/user is not writable for group and others
 /etc/ssh/ssh_config ## system-wide config file
-	PubkeyAuthentication yes
-	AuthorizedKeysFile .ssh/authorized_keys
-## then sudo systemctl restart sshd
 
 /etc/ssh/ssh_config ## system-wide config file
 /ect/ssh/sshd_config ## config file for ssh server

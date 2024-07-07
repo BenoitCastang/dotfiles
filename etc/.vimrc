@@ -32,7 +32,7 @@ imap jj <Esc>
 cmap jj <Esc>
 vmap <C-c> "+y
 nmap <C-v> "+p
-nmap <C-a> VggoG
+" nmap <C-a> VggoG
 " nmap <c-;> :
 " z + o and z + c for opening and closing folds
 " :%s/pattern/replacement/gc for substitution with confirmation on all the
