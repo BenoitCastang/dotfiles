@@ -17,6 +17,7 @@ export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
 # setxkbmap fr -variant lafayette
+clear
 update_repository() {
   if [ -d /home/porco/$1 ]; then
 		cd /home/porco/$1
