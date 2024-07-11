@@ -15,17 +15,20 @@ Host server2
 	User spidergirl
 
 /home/user/.ssh/known_hosts ## stores fingerprints of the server, fingerprint is asked when first connection to a server is attempted
-/home/user/.ssh/known_hosts.old ## 
+/home/user/.ssh/known_hosts.old ## old version, just in case
 /etc/hosts ## manual dns resolutions
 
-public key ## 
-private key ## 
+public key ## the key stored on the server to connect to it
+private key ## the key that is compared to the public key to authenticate, you can only go from private to public - if private key is compromised, everyone has access
 ssh-keygen ## generate keys, do not do it when already having one
+ssh-keygen -t ed25519 ## choose other type of key than rsa
+ssh-keygen -C comment ## add a comment at the end of the public key, default is user@client
 authorized_keys ## file to create on the server in /home/user/.ssh/ and put the public key in it
 ssh-copy-id porco@debian1 ## copy public key in /home/user/.ssh/authorized_keys
 ssh-copy-id -i /home/porco/.ssh/id_rsa.pub porco@debian1 ## manually input public key file
+ssh -i /home/porco/.ssh/id_rsa.pub porco@debian1 ## manually select key to connect to the server
+ssh-add id_ed25519 ## add the private key to the cache so it does not ask for passphrase (ssh-agent must be running)
 check /home/user is not writable for group and others
-/etc/ssh/ssh_config ## system-wide config file
 
 /etc/ssh/ssh_config ## system-wide config file
 /ect/ssh/sshd_config ## config file for ssh server

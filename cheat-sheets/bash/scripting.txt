@@ -1,4 +1,0 @@
-
-echo -e
-colors 
-things about scripting on chagpt
