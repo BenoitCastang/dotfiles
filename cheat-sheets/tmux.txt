@@ -30,3 +30,7 @@ ctrl-u [ ## Enter copy mode
 space ## Highlight text
 enter ## copy text and leave copy mode
 ctrl-u ] ## paste text
+
+ctrl-u % ## split tab vertically
+ctrl-u " ## split tab horizontally
+ctrl-u z ## zoom active pane
