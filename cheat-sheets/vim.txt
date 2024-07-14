@@ -1,6 +1,0 @@
-:h[elp] {command} | only ## open help fullscreen
-CTRL-] ## jump to a subject
-:ec[ho] {message} ## echo a message
-:echom[sg] {message} ## echo a message that remains in the message-history
-:mes[sages] ## show message-history 
-" This is a comment

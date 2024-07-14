@@ -20,7 +20,7 @@ PATH="$PATH:$HOME/coding/bash/"
 clear
 update_repository() {
   if [ -d /home/porco/$1 ]; then
-		cd /home/porco/$1
+		cd ~/$1
 		git pull https://github.com/BenoitCastang/$1
 	else
 	 	echo -e "\e[33mRepository $1 not found.\e[0m"
@@ -30,15 +30,16 @@ update_repository() {
 	cd
 }
 update_repository dotfiles
+update_repository cheatsheets
 update_repository bash-files
 update_repository python-files
 update_repository c-files
 update_repository personal-website
 check_dotfiles() {
-	if [ ! -L /home/porco/$1 ]; then
+	if [ ! -L ~/$1 ]; then
 	 	echo -e "\e[33mCreating $1...\e[0m"
 		test -e $1 && rm $1
-		ln -s /home/porco/dotfiles/etc/$1 /home/porco/$1
+		ln -s ~/dotfiles/$1 ~/$1
 	fi
 }
 check_dotfiles .bashrc
@@ -249,7 +250,7 @@ alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 alias gs='git status'
 alias gc='git commit -a'
 alias push='git push origin main'
-alias commit='git add -u; git commit'
+alias commit='git add -u && git add . && git commit'
 
 # python aliases
 alias python='python3'
