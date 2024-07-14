@@ -1,0 +1,8 @@
+dpkg -i package ## install a .deb package
+dpkg -i --force package ## install package even if dependencies requirements are not met
+dpkg -r package ## remove package leaving configuration files
+dpkg -P package ## remove package plus configuration files
+dpkg -I package ## get info about package
+dpkg -L package ## get a list of every file installed by a specific package
+dpkg-query -S file ## see which packet owns the file
+dpkg-reconfigure packet ## reinstall a packet
