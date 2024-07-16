@@ -17,9 +17,26 @@ export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:$HOME/coding/bash/"
 # setxkbmap fr -variant lafayette
+# set -x # enable shell debugging mode
+
 clear
+eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage ssh key authentication
+
+# check if software is installed, install it if not
+check_software() {
+	if ! which $1 > /dev/null 2>&1; then
+		echo "$1 is not installed. Installing..."
+		sudo apt-get install -y $1
+	fi
+}
+
+check_software vim
+check_software keychain
+check_software ansible
+
+# check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
-  if [ -d /home/porco/$1 ]; then
+  if [ -d ~/$1 ]; then
 		cd ~/$1
 		git pull https://github.com/BenoitCastang/$1
 	else
@@ -29,12 +46,15 @@ update_repository() {
 	fi
 	cd
 }
+
 update_repository dotfiles
 update_repository cheatsheets
 update_repository bash-files
 update_repository python-files
 update_repository c-files
 update_repository personal-website
+
+# check if symlink to dotfile exists on the home directory, create it if not
 check_dotfiles() {
 	if [ ! -L ~/$1 ]; then
 	 	echo -e "\e[33mCreating $1...\e[0m"
@@ -42,10 +62,19 @@ check_dotfiles() {
 		ln -s ~/dotfiles/$1 ~/$1
 	fi
 }
+
 check_dotfiles .bashrc
 check_dotfiles .inputrc
 check_dotfiles .tmux.conf
 check_dotfiles .vimrc
+
+sysinfo() {
+	echo blop
+}
+
+search() {
+	grep -ni --color=auto $1 ~/cheatsheets/*
+}
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -163,7 +192,7 @@ alias install='sudo apt install -y'
 alias uninstall='sudo apt purge'
 alias autoremove='sudo apt autoremove'
 alias purge='sudo apt purge'
-alias search='sudo apt-cache search'
+# alias search='sudo apt-cache search'
 
 # systemctl aliases - units systemd management
 ctlstop() {
