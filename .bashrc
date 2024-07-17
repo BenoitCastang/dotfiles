@@ -268,9 +268,6 @@ alias tmuxsrc='source ~/.tmux.conf'
 alias bind='bind -p'
 
 # network aliases
-alias sshpcf='ssh porco@192.168.0.25' # address given to dns server in /etc/hosts
-# alias debian1='sudo ssh porco@debian1'
-# alias debian2='sudo ssh porco@debian2'
 alias lamp='cd /opt/lampp/ && sudo ./lampp start'
 alias mysql='/opt/lampp/bin/mysql -p test'
 alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
