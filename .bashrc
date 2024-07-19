@@ -68,10 +68,6 @@ check_dotfiles .inputrc
 check_dotfiles .tmux.conf
 check_dotfiles .vimrc
 
-sysinfo() {
-	echo blop
-}
-
 search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
@@ -195,20 +191,23 @@ alias purge='sudo apt purge'
 # alias search='sudo apt-cache search'
 
 # systemctl aliases - units systemd management
+ctlstatus() {
+	systemctl status $1
+}
 ctlstop() {
 	sudo systemctl stop $1
 	echo -e "\e[33mService $1 has stopped."
-	systemctl status $1
+	ctlstatus $1
 }
 ctlstart() {
 	sudo systemctl start $1
 	echo -e "\e[33mService $1 has started."
-	systemctl status $1
+	ctlstatus $1
 }
 ctlrestart() {
 	sudo systemctl restart $1
 	echo -e "\e[33mService $1 has restarted."
-		systemctl status $1
+	ctlstatus $1
 }
 
 # cyberghost vpn aliases
