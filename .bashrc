@@ -242,6 +242,7 @@ alias music="cmus"
 # alias rm="rm -i"
 alias srcprofile="source ~/.profile"
 alias back="cd $OLDPWD"
+alias vmm="sudo virt-manager"
 
 # c aliases
 alias compile='gcc -std=c17 -g -Wall -Werror'
