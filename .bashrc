@@ -192,23 +192,33 @@ alias purge='sudo apt purge'
 # alias search='sudo apt-cache search'
 
 # systemctl aliases - units systemd management
-ctlstatus() {
+statusctl() {
 	systemctl status $1
 }
-ctlstop() {
+stopctl() {
 	sudo systemctl stop $1
 	echo -e "\e[33mService $1 has stopped."
-	ctlstatus $1
+	statusctl $1
 }
-ctlstart() {
+startctl() {
 	sudo systemctl start $1
 	echo -e "\e[33mService $1 has started."
-	ctlstatus $1
+	statusctl $1
 }
-ctlrestart() {
+restartctl() {
 	sudo systemctl restart $1
 	echo -e "\e[33mService $1 has restarted."
-	ctlstatus $1
+	statusctl $1
+}
+enablectl() {
+	sudo systemctl enable $1
+	echo -e "\e[33mService $1 was enabled."
+	statusctl $1
+}
+disablectl() {
+	sudo systemctl disable $1
+	echo -e "\e[33mService $1 was disabled."
+	statusctl $1
 }
 
 # cyberghost vpn aliases
@@ -275,7 +285,6 @@ alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 
 # git aliases
 alias gs='git status'
-alias gc='git commit -a'
 alias push='git push origin main'
 alias commit='git add -u && git add . && git commit'
 
