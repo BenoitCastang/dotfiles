@@ -25,11 +25,12 @@ eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage
 # check if software is installed, install it if not
 check_software() {
 	if ! which $1 > /dev/null 2>&1; then
-		echo "$1 is not installed. Installing..."
+		echo -e "\e[33m$1 is not installed. Installing...\e[0m"
 		sudo apt-get install -y $1
 	fi
 }
 
+check_software curl
 check_software vim
 check_software keychain
 check_software ansible
