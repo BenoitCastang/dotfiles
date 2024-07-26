@@ -184,11 +184,12 @@ alias pgrep='pgrep -l'
 
 # apt aliases
 alias update='sudo apt update'
-alias upgrade='sudo apt update && sudo apt autoremove -y && sudo apt dist-upgrade'
+alias upgrade='sudo apt dist-upgrade'
 alias install='sudo apt install -y'
 alias remove='sudo apt remove'
 alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove -y'
+
 up() {
 	sudo apt update 
 	echo -e "\e[32mPackage sources updated.\e[0m"
