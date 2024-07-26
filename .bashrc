@@ -184,16 +184,24 @@ alias pgrep='pgrep -l'
 
 # apt aliases
 alias update='sudo apt update'
-alias upgrade='sudo apt upgrade'
+alias upgrade='sudo apt update && sudo apt autoremove -y && sudo apt dist-upgrade'
 alias install='sudo apt install -y'
-alias uninstall='sudo apt purge'
-alias autoremove='sudo apt autoremove'
+alias remove='sudo apt remove'
 alias purge='sudo apt purge'
-# alias search='sudo apt-cache search'
+alias autoremove='sudo apt autoremove -y'
+up() {
+	sudo apt update 
+	echo -e "\e[32mPackage sources updated.\e[0m"
+	sudo apt autoremove -y
+	echo -e "\e[32mUnnecessary packages autoremoved.\e[0m"
+	sudo apt dist-upgrade
+	echo -e "\e[32mPackages and dependencies updated.\e[0m"
+}
 
 # systemctl aliases - units systemd management
 statusctl() {
 	systemctl status $1
+	echo -e "\e[33mService $1 has stopped."
 }
 stopctl() {
 	sudo systemctl stop $1
