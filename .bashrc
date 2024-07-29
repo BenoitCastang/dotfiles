@@ -20,7 +20,6 @@ PATH="$PATH:$HOME/coding/bash/"
 # set -x # enable shell debugging mode
 
 clear
-eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage ssh key authentication
 
 # check if software is installed, install it if not
 check_software() {
@@ -73,6 +72,19 @@ check_dotfiles .vimrc
 search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
+
+eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage ssh key authentication
+
+up() {
+	sudo apt update 
+	echo -e "\e[32mPackage sources updated.\e[0m"
+	sudo apt autoremove -y
+	echo -e "\e[32mUnnecessary packages autoremoved.\e[0m"
+	sudo apt dist-upgrade -y
+	echo -e "\e[32mPackages and dependencies updated.\e[0m"
+}
+
+up
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -190,15 +202,6 @@ alias install='sudo apt install -y'
 alias remove='sudo apt remove'
 alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove -y'
-
-up() {
-	sudo apt update 
-	echo -e "\e[32mPackage sources updated.\e[0m"
-	sudo apt autoremove -y
-	echo -e "\e[32mUnnecessary packages autoremoved.\e[0m"
-	sudo apt dist-upgrade
-	echo -e "\e[32mPackages and dependencies updated.\e[0m"
-}
 
 # systemctl aliases - units systemd management
 statusctl() {
