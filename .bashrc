@@ -49,6 +49,7 @@ update_repository() {
 }
 
 update_repository dotfiles
+update_repository ansible
 update_repository cheatsheets
 update_repository bash-files
 update_repository python-files
