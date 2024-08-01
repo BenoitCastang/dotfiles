@@ -84,7 +84,7 @@ up() {
 	echo -e "\e[32mPackages and dependencies updated.\e[0m"
 }
 
-up
+# up
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -206,7 +206,6 @@ alias autoremove='sudo apt autoremove -y'
 # systemctl aliases - units systemd management
 statusctl() {
 	systemctl status $1
-	echo -e "\e[33mService $1 has stopped."
 }
 stopctl() {
 	sudo systemctl stop $1
@@ -221,6 +220,11 @@ startctl() {
 restartctl() {
 	sudo systemctl restart $1
 	echo -e "\e[33mService $1 has restarted."
+	statusctl $1
+}
+reloadctl() {
+	sudo systemctl reload $1
+	echo -e "\e[33mService $1 was reloaded."
 	statusctl $1
 }
 enablectl() {
