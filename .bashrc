@@ -309,4 +309,11 @@ alias commit='git add -u && git add . && git commit'
 alias python='python3'
 
 # managing users aliases
-alias userls='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f4'
+alias lsuser='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f4'
+alias lsgroup='for user in $(lsuser); do echo $(groups $user); done'
+lspasswd() {
+	printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "USER" "STATUS" "LAST" "MIN" "MAX" "WARN" "GRACE"
+	for user in $(lsuser); do
+		printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "$(sudo passwd -S $user | cut -d " " -f 1)" "$(sudo passwd -S $user | cut -d " " -f 2)" "$(sudo passwd -S $user | cut -d " " -f 3)" "$(sudo passwd -S $user | cut -d " " -f 4)" "$(sudo passwd -S $user | cut -d " " -f 5)" "$(sudo passwd -S $user | cut -d " " -f 6)" "$(sudo passwd -S $user | cut -d " " -f 7)"
+	done
+}
