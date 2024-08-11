@@ -247,7 +247,7 @@ alias free='free -h' # free ram - display ram usage
 alias ram='free -h' 
 alias uname='uname -a'
 # alias df='sudo df -h'
-alias df='df -h' # disk free - display disk usage
+# alias df='df -h' # disk free - display disk usage
 alias mem="htop" # general state
 alias uptime='uptime' # uptime + load average
 # alias du='du -hsc *'
@@ -283,6 +283,7 @@ alias compile='gcc -std=c17 -g -Wall -Werror'
 # alias hw='gcc -g -Wall /home/porco/c/packt/helloworld/helloworld.c -o /home/porco/helloworld && /home/porco/helloworld'
 
 #bash aliases
+alias c='clear'
 alias profile='vim ~/.profile'
 alias fstab='sudo vim /etc/fstab'
 alias bashrc='vim ~/.bashrc'
