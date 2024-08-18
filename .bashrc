@@ -15,7 +15,7 @@ HISTCONTROL=ignoreboth
 export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
-PATH="$PATH:$HOME/coding/bash/"
+PATH="$PATH:/home/porco/bash-files"
 # setxkbmap fr -variant lafayette
 # set -x # enable shell debugging mode
 
