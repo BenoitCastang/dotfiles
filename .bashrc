@@ -33,6 +33,8 @@ check_software curl
 check_software vim
 check_software keychain
 check_software ansible
+check_software tree
+check_software ncdu
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -264,7 +266,6 @@ alias compress="tar -czvf"
 alias extract="tar -xvf"
 
 # miscellaneous aliases
-alias date="date; ncal"
 alias music="cmus"
 # alias man="tldr" # command man to go over it
 # alias rm="rm -i"
