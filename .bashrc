@@ -21,6 +21,14 @@ PATH="$PATH:/home/porco/bash-files"
 
 clear
 
+draw() {
+	clear
+	tput sc
+	tput cup $1 $(($2*2))
+  echo -en "\e[47m  \e[0m"
+	tput rc
+}
+
 # check if software is installed, install it if not
 check_software() {
 	if ! which $1 > /dev/null 2>&1; then
@@ -29,12 +37,18 @@ check_software() {
 	fi
 }
 
+check_software git
+check_software ssh
 check_software curl
 check_software vim
+check_software tmux
+check_software snapd
+check_software htop
 check_software keychain
 check_software ansible
 check_software tree
 check_software ncdu
+check_software neofetch
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
