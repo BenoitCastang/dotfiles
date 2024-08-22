@@ -315,6 +315,7 @@ alias vimsrc='source ~/.vimrc'
 alias inputsrc='bind -f ~/.inputrc'
 alias tmuxsrc='source ~/.tmux.conf'
 alias bind='bind -p'
+alias lshost='hostnamectl status'
 
 # network aliases
 alias lamp='cd /opt/lampp/ && sudo ./lampp start'
