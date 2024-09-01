@@ -264,14 +264,10 @@ alias vpn='sudo cyberghostvpn'
 alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 
 # monitoring aliases
-alias free='free -h' # free ram - display ram usage
-alias ram='free -h' 
+alias free='free -h'
 alias uname='uname -a'
-# alias df='sudo df -h'
-alias df='df -h | grep -v tmpfs' # disk free - display disk usage
-alias mem="htop" # general state
-alias uptime='uptime' # uptime + load average
-# alias du='du -hsc *'
+alias df='df -h | grep -v tmpfs'
+alias du='sudo du -hs * .* 2> /dev/null'
 alias dmesg='sudo dmesg -T'
 
 # tree aliases
