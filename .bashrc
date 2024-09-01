@@ -198,7 +198,7 @@ if [ -x /usr/bin/dircolors ]; then
   alias dir='dir --color=auto'
   alias vdir='vdir -h --color=auto'
 
-	alias grep='grep -ni --color=auto'
+	alias grep='grep -i --color=auto'
   alias fgrep='fgrep --color=auto' # like grep -F : grep but "fixed strings" ie eliminating metacharacters as * or .
 	alias egrep='egrep --color=auto' # like grep -E : grep plus the extend support of regular expressions (+, ?, |, parenthesis etc)
 
@@ -268,7 +268,7 @@ alias free='free -h' # free ram - display ram usage
 alias ram='free -h' 
 alias uname='uname -a'
 # alias df='sudo df -h'
-# alias df='df -h' # disk free - display disk usage
+alias df='df -h | grep -v tmpfs' # disk free - display disk usage
 alias mem="htop" # general state
 alias uptime='uptime' # uptime + load average
 # alias du='du -hsc *'
