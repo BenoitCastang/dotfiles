@@ -225,35 +225,35 @@ alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove -y'
 
 # systemctl aliases - units systemd management
-statusctl() {
+status() {
 	systemctl status $1
 }
-stopctl() {
+stop() {
 	sudo systemctl stop $1
 	echo -e "\e[33mService $1 has stopped."
 	statusctl $1
 }
-startctl() {
+start() {
 	sudo systemctl start $1
 	echo -e "\e[33mService $1 has started."
 	statusctl $1
 }
-restartctl() {
+restart() {
 	sudo systemctl restart $1
 	echo -e "\e[33mService $1 has restarted."
 	statusctl $1
 }
-reloadctl() {
+reload() {
 	sudo systemctl reload $1
 	echo -e "\e[33mService $1 was reloaded."
 	statusctl $1
 }
-enablectl() {
+enable() {
 	sudo systemctl enable $1
 	echo -e "\e[33mService $1 was enabled."
 	statusctl $1
 }
-disablectl() {
+disable() {
 	sudo systemctl disable $1
 	echo -e "\e[33mService $1 was disabled."
 	statusctl $1
