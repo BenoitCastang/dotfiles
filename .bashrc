@@ -317,6 +317,7 @@ alias lshost='hostnamectl status'
 alias lamp='cd /opt/lampp/ && sudo ./lampp start'
 alias mysql='/opt/lampp/bin/mysql -p test'
 alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
+alias nc='nc -v'
 
 # git aliases
 alias gs='git status'
