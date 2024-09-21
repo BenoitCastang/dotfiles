@@ -231,32 +231,32 @@ status() {
 stop() {
 	sudo systemctl stop $1
 	echo -e "\e[33mService $1 has stopped."
-	statusctl $1
+	status $1
 }
 start() {
 	sudo systemctl start $1
 	echo -e "\e[33mService $1 has started."
-	statusctl $1
+	status $1
 }
 restart() {
 	sudo systemctl restart $1
 	echo -e "\e[33mService $1 has restarted."
-	statusctl $1
+	status $1
 }
 reload() {
 	sudo systemctl reload $1
 	echo -e "\e[33mService $1 was reloaded."
-	statusctl $1
+	status $1
 }
 enable() {
 	sudo systemctl enable $1
 	echo -e "\e[33mService $1 was enabled."
-	statusctl $1
+	status $1
 }
 disable() {
 	sudo systemctl disable $1
 	echo -e "\e[33mService $1 was disabled."
-	statusctl $1
+	status $1
 }
 
 # cyberghost vpn aliases
