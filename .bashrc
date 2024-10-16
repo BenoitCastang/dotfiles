@@ -31,7 +31,7 @@ draw() {
 
 # check if software is installed, install it if not
 check_software() {
-	if $(hostnamectl | grep system | grep hat); then
+	if hostnamectl | grep system | grep hat > /dev/null 2>&1; then
 		echo RED HAT
 	else
 		if [[ $1 == "snapd" ]]; then # special treatment for snap
