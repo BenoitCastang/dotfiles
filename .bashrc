@@ -33,7 +33,7 @@ draw() {
 check_software() {
 	. /etc/os-release
 	if [[ $ID = "rhel" ]]; then
-		if ! sudo dnf repolist | grep epel; then 
+		if ! echo /etc/yum.repos.d/*epel*; then 
 			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
 			sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 		fi
