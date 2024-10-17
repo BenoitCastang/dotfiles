@@ -31,8 +31,15 @@ draw() {
 
 # check if software is installed, install it if not
 check_software() {
-	if hostnamectl | grep system | grep hat > /dev/null 2>&1; then
-		echo RED HAT
+	. /etc/os-release
+	if [[ $ID = "rhel" ]]; then
+		if ! which $1 > /dev/null 2>&1; then
+			if [[ $1 == "ansible" ]]; then
+				sudo dnf install -y ansible-core
+			else
+				sudo dnf install -y $1
+			fi
+		fi
 	else
 		if [[ $1 == "snapd" ]]; then # special treatment for snap
 			if ! which snap > /dev/null 2>&1; then
@@ -44,9 +51,8 @@ check_software() {
 			sudo apt-get install -y $1
 		fi
 	fi
-	}
+}
 
-check_software git
 check_software ssh
 check_software curl
 check_software vim
