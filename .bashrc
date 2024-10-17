@@ -33,8 +33,10 @@ draw() {
 check_software() {
 	. /etc/os-release
 	if [[ $ID = "rhel" ]]; then
-		sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
-		sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+		if ! sudo dnf repolist | grep epel; then 
+			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+			sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+		fi
 		if ! which $1 > /dev/null 2>&1; then
 			if [[ $1 == "ansible" ]]; then
 				sudo dnf install -y ansible-core
