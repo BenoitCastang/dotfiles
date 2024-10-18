@@ -110,16 +110,8 @@ search() {
 
 eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage ssh key authentication
 
-up() {
-	sudo apt update 
-	echo -e "\e[32mPackage sources updated.\e[0m"
-	sudo apt autoremove -y
-	echo -e "\e[32mUnnecessary packages autoremoved.\e[0m"
-	sudo apt dist-upgrade -y
-	echo -e "\e[32mPackages and dependencies updated.\e[0m"
-}
-
-# up
+# system update cron job added if not on the crontab
+crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * sudo apt update; sudo apt autoremove -y; sudo apt dist-upgrade -y") | crontab
 
 # append to the history file, don't overwrite it
 shopt -s histappend
