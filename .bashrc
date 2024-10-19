@@ -12,12 +12,13 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-export SUDO_EDITOR=vim
-export VISUAL=vim
-export EDITOR=vim
-PATH="$PATH:/home/porco/bash-files"
+SUDO_EDITOR=nvim
+VISUAL=nvim
+EDITOR=nvim
+PATH="$PATH:/home/porco/bash-files/"
 # setxkbmap fr -variant lafayette
 # set -x # enable shell debugging mode
+q
 
 clear
 
@@ -215,6 +216,7 @@ fi
 
 ## ALIASES
 
+# alias vim='nvim'
 # some more ls aliases
 # alias cat='cat -n'
 alias ll='ls -Alh'
