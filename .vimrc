@@ -30,6 +30,8 @@ let mapleader = "," " Map the leader key to a comma
 " Sets jj to perform Esc input
 imap jj <Esc>
 cmap jj <Esc>
+nmap : q:i
+nmap <C-s> q:iw<CR>q:i!%<CR>
 vmap <C-c> "+y
 nmap <C-v> "+p
 " nmap <C-a> VggoG
@@ -64,7 +66,7 @@ syntax match YellowHeader /^######.*/ contained
 highlight link YellowHeader Special
 " airline theme
 let g:airline_theme="serene"
-set relativenumber
+" set relativenumber
 set laststatus=2 " Always display a status line (it gets hidden sometimes otherwise).
 set showcmd " Show last command in the status line.
 set title " Updates window title

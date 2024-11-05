@@ -15,7 +15,7 @@ HISTCONTROL=ignoreboth
 SUDO_EDITOR=nvim
 VISUAL=nvim
 EDITOR=nvim
-PATH="$PATH:/home/porco/bash-files/"
+PATH="$PATH:/home/porco/bash-files/:/home/porco/test"
 # setxkbmap fr -variant lafayette
 # set -x # enable shell debugging mode
 q
@@ -69,6 +69,7 @@ check_software ansible
 check_software tree
 check_software ncdu
 check_software neofetch
+check_software ripgrep
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -217,12 +218,14 @@ fi
 ## ALIASES
 
 # alias vim='nvim'
+alias nvim='/snap/bin/nvim'
 # some more ls aliases
 # alias cat='cat -n'
 alias ll='ls -Alh'
 alias la='ls -A'
 alias l='ls -CF'
 alias pgrep='pgrep -l'
+alias gzip='gzip -v'
 
 # apt aliases
 alias update='sudo apt update'
@@ -277,6 +280,7 @@ alias uname='uname -a'
 alias df='df -h | grep -v tmpfs'
 alias du='sudo du -hs * .* 2> /dev/null'
 alias dmesg='sudo dmesg -T'
+alias ps='ps -ef'
 
 # tree aliases
 alias tree='tree -a'
@@ -336,7 +340,7 @@ alias commit='git add -u && git add . && git commit'
 alias python='python3'
 
 # managing users aliases
-alias lsuser='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f4'
+alias lsuser='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f1'
 alias lsgroup='for user in $(lsuser); do echo $(groups $user); done'
 lspasswd() {
 	printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "USER" "STATUS" "LAST" "MIN" "MAX" "WARN" "GRACE"
@@ -344,3 +348,4 @@ lspasswd() {
 		printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "$(sudo passwd -S $user | cut -d " " -f 1)" "$(sudo passwd -S $user | cut -d " " -f 2)" "$(sudo passwd -S $user | cut -d " " -f 3)" "$(sudo passwd -S $user | cut -d " " -f 4)" "$(sudo passwd -S $user | cut -d " " -f 5)" "$(sudo passwd -S $user | cut -d " " -f 6)" "$(sudo passwd -S $user | cut -d " " -f 7)"
 	done
 }
+echo BASHRC; sleep 1
