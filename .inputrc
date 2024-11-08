@@ -1,4 +1,4 @@
-set editing-mode vi
+et editing-mode vi
 set keymap vi-insert
 "\jj": vi-movement-mode
 "\C-f": forward-search-history

@@ -21,6 +21,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jbgutierrez/vim-better-comments'
+Plug 'dense-analysis/ale'
 call plug#end()
 " PlugInstall to install all plugins
 
@@ -51,7 +52,7 @@ noremap <SrollWheelDown> <C-E>
 " imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
 " ab pf printf("");
 
-" Config ---------------------------------------------------------------------
+" Colors ---------------------------------------------------------------------
 
 colorscheme symfony
 " Changing some symfony defaults
@@ -66,6 +67,18 @@ syntax match YellowHeader /^######.*/ contained
 highlight link YellowHeader Special
 " airline theme
 let g:airline_theme="serene"
+
+" ALE
+highlight ALEError ctermbg=245
+highlight ALEWarning ctermbg=245
+highlight ALEInfo ctermbg=245
+" Error, Info, and Warning are the three syntax note types
+" ALEErrorLine is the error whole line
+" ALEError is the error part only
+" ALEErrorSign is the left sign
+
+" Config ---------------------------------------------------------------------
+
 " set relativenumber
 set laststatus=2 " Always display a status line (it gets hidden sometimes otherwise).
 set showcmd " Show last command in the status line.
