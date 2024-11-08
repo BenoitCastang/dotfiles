@@ -46,14 +46,22 @@ check_software() {
 			fi
 		fi
 	else
-		if [[ $1 == "snapd" ]]; then # special treatment for snap
+		if [[ "$1" == "snapd" ]]; then # special treatment for snap
 			if ! which snap > /dev/null 2>&1; then
 				echo -e "\e[33msnap is not installed. Installing...\e[0m"
-				sudo apt-get install -y snapd
+				if [[ "$(whoami)" == "root" ]]; then
+					apt-get install -y snapd
+				else
+					sudo apt-get install -y snapd
+				fi
 			fi
-		elif ! which $1 > /dev/null 2>&1; then
+		elif ! which "$1" > /dev/null 2>&1; then
 			echo -e "\e[33m$1 is not installed. Installing...\e[0m"
-			sudo apt-get install -y $1
+			if [[ "$(whoami)" == "root" ]]; then
+				apt-get install -y "$1"
+			else
+				sudo apt-get install -y "$1"
+			fi
 		fi
 	fi
 }
