@@ -238,7 +238,7 @@ alias gzip='gzip -v'
 # apt aliases
 alias update='sudo apt update'
 alias upgrade='sudo apt dist-upgrade'
-alias install='sudo apt install -y'
+alias install='check_install'
 alias remove='sudo apt remove'
 alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove -y'
