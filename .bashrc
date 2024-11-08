@@ -78,6 +78,7 @@ check_software tree
 check_software ncdu
 check_software neofetch
 check_software ripgrep
+check_software cron
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -238,7 +239,7 @@ alias gzip='gzip -v'
 # apt aliases
 alias update='sudo apt update'
 alias upgrade='sudo apt dist-upgrade'
-alias install='check_install'
+alias install='sudo apt install -y'
 alias remove='sudo apt remove'
 alias purge='sudo apt purge'
 alias autoremove='sudo apt autoremove -y'
