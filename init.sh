@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$USER" == "root" ]]; then
+if [[ "$(whoami)" == "root" ]]; then
 	ln -s /root/dotfiles/.bashrc /root/.bashrc
 	. /root/.bashrc
 else
