@@ -348,6 +348,15 @@ alias commit='git add -u && git add . && git commit'
 # python aliases
 alias python='python3'
 
+# docker aliases
+alias dr='docker run'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias dp='docker system prune'
+alias da='docker attach'
+alias de='docker exec'
+alias di='docker images'
+
 # managing users aliases
 alias lsuser='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f1'
 alias lsgroup='for user in $(lsuser); do echo $(groups $user); done'
