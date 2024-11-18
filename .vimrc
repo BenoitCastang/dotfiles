@@ -32,9 +32,19 @@ let mapleader = "," " Map the leader key to a comma
 imap jj <Esc>
 cmap jj <Esc>
 nmap : q:i
+nmap / q/
 nmap <C-s> q:iw<CR>q:i!%<CR>
 vmap <C-c> "+y
 nmap <C-v> "+p
+nnoremap gj J
+nmap J }
+nmap K {
+nmap L $
+onoremap L $
+xnoremap L $
+nmap H ^
+onoremap H ^
+xnoremap H ^
 " nmap <C-a> VggoG
 " nmap <c-;> :
 " z + o and z + c for opening and closing folds
@@ -65,6 +75,8 @@ highlight PmenuSel ctermfg=0 ctermbg=15
 highlight PmenuSbar ctermfg=15 ctermbg=none
 syntax match YellowHeader /^######.*/ contained
 highlight link YellowHeader Special
+highlight Search ctermbg=255
+
 " airline theme
 let g:airline_theme="serene"
 

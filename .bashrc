@@ -1,58 +1,59 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-# If not running interactively, don't do anything
+# If not running interactively, don't apply bashrc config
 case $- in
 *i*) ;;
 *) return ;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
-
-SUDO_EDITOR=nvim
-VISUAL=nvim
-EDITOR=nvim
+export SUDO_EDITOR=vim
+export VISUAL=vim
+export EDITOR=vim
 PATH="$PATH:/home/porco/bash-files/:/home/porco/test"
-# setxkbmap fr -variant lafayette
-# set -x # enable shell debugging mode
-q
+set -u # strict mode
 
 clear
-
-draw() {
-	clear
-	tput sc
-	tput cup $1 $(($2*2))
-  echo -en "\e[47m  \e[0m"
-	tput rc
-}
 
 # check if software is installed, install it if not
 check_software() {
 	. /etc/os-release
-	if [[ $ID = "rhel" ]]; then
+	if [[ $ID = "rhel" ]]; then # when distribution is redhat
 		if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then 
-			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-"$(arch)"-rpms
 			sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 		fi
-		if ! which $1 > /dev/null 2>&1; then
-			if [[ $1 == "ansible" ]]; then
+		if ! which "$1" > /dev/null 2>&1; then
+			if [[ "$1" == "ansible" ]]; then
 				sudo dnf install -y ansible-core
 			else
-				sudo dnf install -y $1
+				sudo dnf install -y "$1"
 			fi
 		fi
-	else
-		if [[ "$1" == "snapd" ]]; then # special treatment for snap
+	else # when distribution is debian
+		if [[ "$1" == "snap" ]]; then # special treatment for snap
 			if ! which snap > /dev/null 2>&1; then
 				echo -e "\e[33msnap is not installed. Installing...\e[0m"
 				if [[ "$(whoami)" == "root" ]]; then
 					apt-get install -y snapd
 				else
 					sudo apt-get install -y snapd
+				fi
+			fi
+		elif [[ "$1" == "crontab" ]]; then # special treatment for crontab
+			if ! which crontab > /dev/null 2>&1; then
+				echo -e "\e[33mcrontab is not installed. Installing...\e[0m"
+				if [[ "$(whoami)" == "root" ]]; then
+					apt-get install -y cron
+				else
+					sudo apt-get install -y cron
+				fi
+			fi
+		elif [[ "$1" == "ripgrep" ]]; then # special treatment for ripgrep
+			if ! which rg > /dev/null 2>&1; then
+				echo -e "\e[33mripgrep is not installed. Installing...\e[0m"
+				if [[ "$(whoami)" == "root" ]]; then
+					apt-get install -y ripgrep
+				else
+					sudo apt-get install -y ripgrep
 				fi
 			fi
 		elif ! which "$1" > /dev/null 2>&1; then
@@ -70,7 +71,7 @@ check_software ssh
 check_software curl
 check_software vim
 check_software tmux
-check_software snapd
+check_software snap
 check_software htop
 check_software keychain
 check_software ansible
@@ -78,17 +79,18 @@ check_software tree
 check_software ncdu
 check_software neofetch
 check_software ripgrep
-check_software cron
+check_software crontab
+check_software tldr
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
-  if [ -d ~/$1 ]; then
+  if [ -d ~/"$1" ]; then
 		cd ~/$1
-		git pull https://github.com/BenoitCastang/$1
+		git pull https://github.com/BenoitCastang/"$1"
 	else
 	 	echo -e "\e[33mRepository $1 not found.\e[0m"
 		cd
-		git clone https://github.com/BenoitCastang/$1
+		git clone https://github.com/BenoitCastang/"$1"
 	fi
 	cd
 }
@@ -157,7 +159,7 @@ esac
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
+if [ -n "${force_color_prompt-}" ]; then
   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
@@ -356,6 +358,8 @@ alias dp='docker system prune'
 alias da='docker attach'
 alias de='docker exec'
 alias di='docker images'
+alias db='docker build'
+alias dps='docker ps -a'
 
 # managing users aliases
 alias lsuser='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f1'
