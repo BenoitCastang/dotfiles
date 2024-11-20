@@ -32,7 +32,7 @@ let mapleader = "," " Map the leader key to a comma
 imap jj <Esc>
 cmap jj <Esc>
 nmap : q:i
-nmap / q/
+nmap / q/i
 nmap <C-s> q:iw<CR>q:i!%<CR>
 vmap <C-c> "+y
 nmap <C-v> "+p
