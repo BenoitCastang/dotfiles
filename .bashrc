@@ -11,7 +11,7 @@ export EDITOR=vim
 PATH="$PATH:/home/porco/bash-files/:/home/porco/test"
 set -u # strict mode
 
-clear
+# clear
 
 # check if software is installed, install it if not
 check_software() {
@@ -310,6 +310,7 @@ alias music="cmus"
 alias srcprofile="source ~/.profile"
 alias back="cd $OLDPWD"
 alias vmm="sudo virt-manager"
+alias lsblk="lsblk | grep -v loop"
 
 # c aliases
 alias compile='gcc -std=c17 -g -Wall -Werror'

@@ -45,6 +45,8 @@ xnoremap L $
 nmap H ^
 onoremap H ^
 xnoremap H ^
+nmap ge :ALEEnable<CR>
+nmap gE :ALEDisable<CR>
 " nmap <C-a> VggoG
 " nmap <c-;> :
 " z + o and z + c for opening and closing folds
@@ -54,6 +56,7 @@ xnoremap H ^
 " change to caps or revert
 " Remove highlighting after searching
 nnoremap <F3> :noh <CR>
+imap <F3> jj:noh<CR>i
 " Enables mouse scrolling up
 noremap <SrollWheelUp> <C-Y> 
 " Enables mouse scrolling down
