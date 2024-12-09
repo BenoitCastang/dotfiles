@@ -312,8 +312,9 @@ alias back="cd $OLDPWD"
 alias vmm="sudo virt-manager"
 alias lsblk="lsblk | grep -v loop"
 
-# c aliases
-alias compile='gcc -std=c17 -g -Wall -Werror'
+#? c aliases
+
+# alias compile='gcc -std=c17 -g -Wall -Werror'
 # alias side='cd /opt/lampp/htdocs/www/side/c/packt'
 # alias gcce='gcc && ./hangman'
 # alias gdb='gcc && gdb -q ./hw'

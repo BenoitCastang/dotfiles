@@ -25,47 +25,64 @@ Plug 'dense-analysis/ale'
 call plug#end()
 " PlugInstall to install all plugins
 
-" Mapping -------------------------------------------------------------------------
+" MAPPING -------------------------------------------------------------------------------------------
 
-let mapleader = "," " Map the leader key to a comma
+let mapleader = " " " Map the leader key to a comma
+
 " Sets jj to perform Esc input
 imap jj <Esc>
 cmap jj <Esc>
+
+" command-line window by default
 nmap : q:i
+" search history window by default
 nmap / q/i
-nmap <C-s> q:iw<CR>q:i!%<CR>
-vmap <C-c> "+y
-nmap <C-v> "+p
-nnoremap gj J
+
+" save and run file
+nmap <leader>s :w<CR>:!clear; if [[ "%" =~ .sh$ ]]; then ./%; elif [[ "%" =~ .c$ ]]; then cfile="%"; exfile=${cfile\%.c}; gcc -g -Wall $cfile -o $exfile && ./$exfile; fi<CR>
+
+" visual block mode shortcut
+nmap <C-v> v<C-v> 
+
+" wrap lines
+nnoremap gj J 
+
+" J to go one paragraph down
 nmap J }
+omap J }
+xmap J }
+" K to go one paragraph up
 nmap K {
+omap K {
+xmap K {
+
+" L to go to the end of the line
 nmap L $
-onoremap L $
-xnoremap L $
+omap L $
+xmap L $
+" H to go to the beginning of the line
 nmap H ^
-onoremap H ^
-xnoremap H ^
+omap H ^
+xmap H ^
+
+" ALE toggle
 nmap ge :ALEEnable<CR>
 nmap gE :ALEDisable<CR>
-" nmap <C-a> VggoG
-" nmap <c-;> :
-" z + o and z + c for opening and closing folds
-" :%s/pattern/replacement/gc for substitution with confirmation on all the
-" page
-" add or remove one
-" change to caps or revert
+
 " Remove highlighting after searching
-nnoremap <F3> :noh <CR>
-imap <F3> jj:noh<CR>i
+nmap <F3> :noh <CR>
+imap <F3> jj:noh<CR>a
+
 " Enables mouse scrolling up
-noremap <SrollWheelUp> <C-Y> 
+nmap <SrollWheelUp> <C-Y> 
 " Enables mouse scrolling down
-noremap <SrollWheelDown> <C-E> 
+nmap <SrollWheelDown> <C-E> 
+
 " Snippets and abbreviations
 " imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
 " ab pf printf("");
 
-" Colors ---------------------------------------------------------------------
+" COLORS " -------------------------------------------------------------------------------------------
 
 colorscheme symfony
 " Changing some symfony defaults
@@ -92,7 +109,7 @@ highlight ALEInfo ctermbg=245
 " ALEError is the error part only
 " ALEErrorSign is the left sign
 
-" Config ---------------------------------------------------------------------
+" CONFIG " ------------------------------------------------------------------------------------------
 
 " set relativenumber
 set laststatus=2 " Always display a status line (it gets hidden sometimes otherwise).
