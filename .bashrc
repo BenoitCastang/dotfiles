@@ -8,7 +8,7 @@ HISTCONTROL=ignoreboth
 export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
-PATH="$PATH:/home/porco/bash-files/:/home/porco/test"
+PATH="$PATH:/home/porco/bash-files/:/home/porco/c-files/:/home/porco/test"
 set -u # strict mode
 
 # clear
