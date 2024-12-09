@@ -38,8 +38,11 @@ nmap : q:i
 " search history window by default
 nmap / q/i
 
+" space to run macros
+nmap <leader>j @j
+
 " save and run file
-nmap <leader>s :w<CR>:!clear; if [[ "%" =~ .sh$ ]]; then ./%; elif [[ "%" =~ .c$ ]]; then cfile="%"; exfile=${cfile\%.c}; gcc -g -Wall $cfile -o $exfile && ./$exfile; fi<CR>
+nmap <C-l> :w<CR>:!clear; if [[ "%" =~ .sh$ ]]; then ./%; elif [[ "%" =~ .c$ ]]; then cfile="%"; exfile=${cfile\%.c}; gcc -g -Wall $cfile -o $exfile && ./$exfile; fi<CR>
 
 " visual block mode shortcut
 nmap <C-v> v<C-v> 
