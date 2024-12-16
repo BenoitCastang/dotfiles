@@ -1,6 +1,6 @@
 set nocompatible " Disables Vi compatibility themes
 syntax on " Enables syntax highlighting
-filetype plugin on " Enables plugins only used with a specific type of file
+filetype plugin on " allows filetype script to detect file type and enables plugins only used with a specific type of file
 set path=~/** " :find into all directories and sub directories
 set wildmenu " Enables menu autocompletion
 
@@ -9,10 +9,12 @@ silent! helptags ALL " Loads help files for all plugins
 
 " Install vim-plug if it's not already installed.
 if empty(glob('~/.vim/autoload/plug.vim'))
-silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-\ https://raw.github.com/junegunn/vim-plug/master/plug.vim
-autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.github.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+" call list of plugins
 call plug#begin()
 Plug 'vim-scripts/symfony'
 Plug 'vim-airline/vim-airline'
@@ -23,67 +25,87 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'jbgutierrez/vim-better-comments'
 Plug 'dense-analysis/ale'
 call plug#end()
-" PlugInstall to install all plugins
 
 " MAPPING -------------------------------------------------------------------------------------------
 
 let mapleader = " " " Map the leader key to a comma
+let maplocalleader = "," " Map the leader key to a comma
 
 " Sets jj to perform Esc input
-imap jj <Esc>
-cmap jj <Esc>
+inoremap jj <esc>
+cnoremap jj <esc>
+
+" Disable arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 " command-line window by default
-nmap : q:i
+nnoremap : q:i
 " search history window by default
-nmap / q/i
+nnoremap / q/i
 
 " space to run macros
-nmap <leader>j @j
-
-" save and run file
-nmap <C-l> :w<CR>:!clear; if [[ "%" =~ .sh$ ]]; then ./%; elif [[ "%" =~ .c$ ]]; then cfile="%"; exfile=${cfile\%.c}; gcc -g -Wall $cfile -o $exfile && ./$exfile; fi<CR>
+nnoremap <leader>j @j
 
 " visual block mode shortcut
-nmap <C-v> v<C-v> 
+nnoremap <c-v> v<c-v> 
 
-" wrap lines
+"wrap lines
 nnoremap gj J 
 
 " J to go one paragraph down
-nmap J }
-omap J }
-xmap J }
-" K to go one paragraph up
-nmap K {
-omap K {
-xmap K {
+noremap J }
+" k to go one paragraph up
+noremap K {
 
 " L to go to the end of the line
-nmap L $
-omap L $
-xmap L $
+noremap L $
 " H to go to the beginning of the line
-nmap H ^
-omap H ^
-xmap H ^
+noremap H ^
+
+" marks
+noremap ma mA
+noremap 'a `A
 
 " ALE toggle
-nmap ge :ALEEnable<CR>
-nmap gE :ALEDisable<CR>
+nnoremap ge :ALEEnable<cr>
+nnoremap gE :ALEDisable<cr>
 
 " Remove highlighting after searching
-nmap <F3> :noh <CR>
-imap <F3> jj:noh<CR>a
+nnoremap <f3> :noh <cr>
+inoremap <f3> jj:noh<cr>a
 
 " Enables mouse scrolling up
-nmap <SrollWheelUp> <C-Y> 
+nnoremap <SrollWheelUp> <c-Y> 
 " Enables mouse scrolling down
-nmap <SrollWheelDown> <C-E> 
+nnoremap <SrollWheelDown> <c-E> 
 
-" Snippets and abbreviations
+" open vimrc and source it
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" ABBREVIATIONS " -------------------------------------------------------------------------------------------
+
 " imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
-" ab pf printf("");
+imap pf printf("");<esc>F"i
+abbrev btw by the way
+
+" AUTOCOMMANDS " -------------------------------------------------------------------------------------------
+
+" indent file
+" autocmd BufWritePre * :normal gg=G
+
+" save and run file
+" autocmd FileType sh nnoremap <c-l> :!clear; ./%
+autocmd FileType sh nnoremap <buffer> <c-l> :w<cr>:!clear; ./%<cr>
+autocmd FileType c nnoremap <buffer> <c-l> :w<cr>:!clear; cfile="%"; execfile=${cfile\%.c}; gcc -g -Wall $cfile -o $execfile && ./$execfile<cr>
+
 
 " COLORS " -------------------------------------------------------------------------------------------
 
