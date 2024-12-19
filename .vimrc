@@ -18,12 +18,13 @@ endif
 call plug#begin()
 Plug 'vim-scripts/symfony'
 Plug 'vim-airline/vim-airline'
-Plug 'tpope/vim-surround'
-Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 Plug 'jbgutierrez/vim-better-comments'
 Plug 'dense-analysis/ale'
+" vimgitgutter
+" vimeasymotion
 call plug#end()
 
 " MAPPING -------------------------------------------------------------------------------------------
@@ -50,14 +51,17 @@ nnoremap : q:i
 " search history window by default
 nnoremap / q/i
 
+" copy cut paste outside vim
+
+
 " space to run macros
-nnoremap <leader>j @j
+noremap <leader>j @j
 
 " visual block mode shortcut
-nnoremap <c-v> v<c-v> 
+nnoremap <c-v> v<c-v>
 
 "wrap lines
-nnoremap gj J 
+nnoremap gj J
 
 " J to go one paragraph down
 noremap J }
@@ -82,30 +86,47 @@ nnoremap <f3> :noh <cr>
 inoremap <f3> jj:noh<cr>a
 
 " Enables mouse scrolling up
-nnoremap <SrollWheelUp> <c-Y> 
+nnoremap <SrollWheelUp> <c-Y>
 " Enables mouse scrolling down
-nnoremap <SrollWheelDown> <c-E> 
+nnoremap <SrollWheelDown> <c-E>
 
 " open vimrc and source it
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
+" toggle list option
+nnoremap <leader>l :set list!<cr>
+
 " ABBREVIATIONS " -------------------------------------------------------------------------------------------
 
-" imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
-imap pf printf("");<esc>F"i
 abbrev btw by the way
+
+" imap pf <Esc>:-1read /home/porco/printf<CR>>>f"a
+augroup cmappings
+	autocmd!
+	autocmd FileType c inoremap <buffer> pf printf("");<esc>F"i
+augroup END
 
 " AUTOCOMMANDS " -------------------------------------------------------------------------------------------
 
-" indent file
-" autocmd BufWritePre * :normal gg=G
+" remove eol whitespaces automatically
+augroup whitespaceRemove
+	autocmd!
+	autocmd BufLeave * %s/\s\+$//e
+augroup END
+
+" indent file before saving
+augroup indentScript
+	autocmd!
+	autocmd BufLeave *.c,*.sh,*.bash,*.vimrc normal! gg=G
+augroup END
 
 " save and run file
-" autocmd FileType sh nnoremap <c-l> :!clear; ./%
-autocmd FileType sh nnoremap <buffer> <c-l> :w<cr>:!clear; ./%<cr>
-autocmd FileType c nnoremap <buffer> <c-l> :w<cr>:!clear; cfile="%"; execfile=${cfile\%.c}; gcc -g -Wall $cfile -o $execfile && ./$execfile<cr>
-
+augroup saveAndRun
+	autocmd!
+	autocmd FileType sh nnoremap <buffer> <c-l> :w<cr>:!clear; ./%<cr>
+	autocmd FileType c nnoremap <buffer> <c-l> :w<cr>:!clear; cfile="%"; execfile=${cfile\%.c}; gcc -g -Wall $cfile -o $execfile && ./$execfile<cr>
+augroup END
 
 " COLORS " -------------------------------------------------------------------------------------------
 
@@ -113,6 +134,7 @@ colorscheme symfony
 " Changing some symfony defaults
 highlight Normal ctermbg=none
 highlight LineNr ctermbg=none ctermfg=7
+highlight SignColumn ctermbg=none ctermfg=7
 highlight Statement ctermbg=none
 highlight NonText ctermbg=none
 highlight Pmenu ctermfg=15 ctermbg=none
@@ -121,33 +143,40 @@ highlight PmenuSbar ctermfg=15 ctermbg=none
 syntax match YellowHeader /^######.*/ contained
 highlight link YellowHeader Special
 highlight Search ctermbg=255
+highlight VertSplit ctermbg=0 ctermfg=0 cterm=none
 
 " airline theme
 let g:airline_theme="serene"
 
 " ALE
-highlight ALEError ctermbg=245
-highlight ALEWarning ctermbg=245
-highlight ALEInfo ctermbg=245
+" highlight ALEError ctermbg=none
+highlight ALEErrorSign ctermfg=9
+" highlight ALEWarning ctermbg=none
+highlight ALEWarningSign ctermfg=11
+highlight ALEInfo ctermbg=none
+highlight ALEInfoSign ctermfg=15
 " Error, Info, and Warning are the three syntax note types
+" ALEError is the error text
 " ALEErrorLine is the error whole line
-" ALEError is the error part only
-" ALEErrorSign is the left sign
+" ALEErrorSign is the SignColumn part
+let g:ale_virtualtext_cursor=0
+let g:ale_virtualtext=0
 
 " CONFIG " ------------------------------------------------------------------------------------------
 
-" set relativenumber
+set number " Displays line numbers
+set wrap " Wraps text
+set listchars=tab:>-,trail:O,eol:$,space:⋅,nbsp:+,extends:>,precedes:< " debug empty characters
+set fillchars=eob:\ ,vert:\ ,fold:\ ,foldopen:▾,foldsep:│,diff:~
 set laststatus=2 " Always display a status line (it gets hidden sometimes otherwise).
 set showcmd " Show last command in the status line.
 set title " Updates window title
-set number " Displays line numbers
 set noruler " Hides cursor position
-set wrap " Wraps text
 set scrolloff=5 " Sets lines number until edge before scrolling
 set ignorecase " Case not sensitive on searching
 set smartcase " Case sensitive on searching if capital is input
-set hlsearch " Surligne les resultats de recherche
-set incsearch " Surligne les resultats de recherche pendant la saisie
+set hlsearch " highlight search results
+set incsearch " highlight search results during input
 let loaded_matchparen=0 " Disables matching brackets highlighting
 filetype on " Enables file type detection
 set tabstop=2 "	Number of spaces tab is counted for.
@@ -157,4 +186,4 @@ set noexpandtab " Tabs are not collections of spaces
 set mouse=a " Enables mouse control
 set foldmethod=indent " Sets indentation folding
 " Keeps folds open by default
-autocmd BufRead * normal zR 
+autocmd BufRead * normal zR
