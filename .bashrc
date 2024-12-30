@@ -9,7 +9,7 @@ export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:/home/porco/bash-files/:/home/porco/c-files/:/home/porco/test"
-set -u # strict mode
+# set -u # strict mode
 
 # clear
 
@@ -17,7 +17,7 @@ set -u # strict mode
 check_software() {
 	. /etc/os-release
 	if [[ $ID = "rhel" ]]; then # when distribution is redhat
-		if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then 
+		if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then
 			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-"$(arch)"-rpms
 			sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 		fi

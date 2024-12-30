@@ -1,7 +1,7 @@
-set nocompatible " Disables Vi compatibility themes
-syntax on " Enables syntax highlighting
+set nocompatible " disables vi compatibility
+syntax enable " enables syntax highlighting
 filetype plugin on " allows filetype script to detect file type and enables plugins only used with a specific type of file
-set path=~/** " :find into all directories and sub directories
+" set path+=** " find into all directories and sub directories
 set wildmenu " Enables menu autocompletion
 
 packloadall " Loads all plugins
@@ -24,7 +24,6 @@ Plug 'tpope/vim-commentary'
 Plug 'jbgutierrez/vim-better-comments'
 Plug 'dense-analysis/ale'
 " vimgitgutter
-" vimeasymotion
 call plug#end()
 
 " MAPPING -------------------------------------------------------------------------------------------
@@ -60,7 +59,18 @@ noremap <leader>j @j
 " visual block mode shortcut
 nnoremap <c-v> v<c-v>
 
-"wrap lines
+" edit
+nnoremap <c-e> q:ie<space>
+
+" buffer
+nnoremap <c-b> q:ib<space>
+
+" tab to autocomplete
+inoremap <tab> <c-n>
+inoremap <c-f> <c-x><c-f>
+inoremap <expr> <CR> pumvisible() ? "\<C-x><C-f>" : "\<CR>"
+
+" join lines
 nnoremap gj J
 
 " J to go one paragraph down
@@ -149,9 +159,9 @@ highlight VertSplit ctermbg=0 ctermfg=0 cterm=none
 let g:airline_theme="serene"
 
 " ALE
-" highlight ALEError ctermbg=none
+highlight ALEError ctermbg=none
 highlight ALEErrorSign ctermfg=9
-" highlight ALEWarning ctermbg=none
+highlight ALEWarning ctermbg=none
 highlight ALEWarningSign ctermfg=11
 highlight ALEInfo ctermbg=none
 highlight ALEInfoSign ctermfg=15
