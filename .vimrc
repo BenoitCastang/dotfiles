@@ -53,6 +53,10 @@ nnoremap / q/i
 " copy cut paste outside vim
 
 
+" ctrl d to edit current word
+noremap <c-d> viw
+inoremap <c-d> <esc>viw
+
 " space to run macros
 noremap <leader>j @j
 

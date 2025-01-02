@@ -10,6 +10,7 @@ export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:/home/porco/bash-files/:/home/porco/c-files/:/home/porco/test"
 # set -u # strict mode
+xset r rate 300 100 # 300 milliseconds before autorepeat activates, 100 times typing by minute when autorepeating
 
 # clear
 
@@ -125,6 +126,7 @@ eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage
 
 # system update cron job added if not on the crontab
 crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * sudo apt update; sudo apt autoremove -y; sudo apt dist-upgrade -y") | crontab
+alias cron='crontab -e'
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -253,33 +255,33 @@ status() {
 }
 stop() {
 	sudo systemctl stop $1
-	echo -e "\e[33mService $1 has stopped."
 	status $1
 }
 start() {
 	sudo systemctl start $1
-	echo -e "\e[33mService $1 has started."
 	status $1
 }
 restart() {
 	sudo systemctl restart $1
-	echo -e "\e[33mService $1 has restarted."
 	status $1
 }
 reload() {
 	sudo systemctl reload $1
-	echo -e "\e[33mService $1 was reloaded."
 	status $1
 }
 enable() {
 	sudo systemctl enable $1
-	echo -e "\e[33mService $1 was enabled."
 	status $1
 }
 disable() {
 	sudo systemctl disable $1
-	echo -e "\e[33mService $1 was disabled."
 	status $1
+}
+log() {
+	sudo journalctl -u $1
+}
+daemonreload() {
+	sudo systemctl daemon-reload
 }
 
 # cyberghost vpn aliases
