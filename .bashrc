@@ -10,7 +10,7 @@ export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:/home/porco/bash-files/:/home/porco/c-files/:/home/porco/test"
 # set -u # strict mode
-xset r rate 300 100 # 300 milliseconds before autorepeat activates, 100 times typing by minute when autorepeating
+xset r rate 300 30 # 300 milliseconds before autorepeat activates, 30 times typing by minute when autorepeating
 
 # clear
 
