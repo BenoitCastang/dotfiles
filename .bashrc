@@ -10,7 +10,9 @@ export VISUAL=vim
 export EDITOR=vim
 PATH="$PATH:/home/porco/bash-files/:/home/porco/c-files/:/home/porco/test"
 # set -u # strict mode
-xset r rate 300 30 # 300 milliseconds before autorepeat activates, 30 times typing by minute when autorepeating
+if [[ "$HOSTNAME" == "pcp" ]]; then
+	xset r rate 300 30 # 300 milliseconds before autorepeat activates, 30 times typing by minute when autorepeating
+fi
 
 # clear
 
@@ -311,9 +313,8 @@ alias music="cmus"
 # alias man="tldr" # command man to go over it
 # alias rm="rm -i"
 alias srcprofile="source ~/.profile"
-alias back="cd $OLDPWD"
 alias vmm="sudo virt-manager"
-alias lsblk="lsblk | grep -v loop"
+alias lsblk="lsblk -e 7" # skip loopback devices
 
 #? c aliases
 

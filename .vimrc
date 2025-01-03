@@ -97,7 +97,7 @@ nnoremap gE :ALEDisable<cr>
 
 " Remove highlighting after searching
 nnoremap <f3> :noh <cr>
-inoremap <f3> jj:noh<cr>a
+inoremap <f3> <esc>:noh<cr>a
 
 " Enables mouse scrolling up
 nnoremap <SrollWheelUp> <c-Y>
