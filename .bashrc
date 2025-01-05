@@ -1,6 +1,6 @@
 # TASKS
 # personalize PS1 prompts
-# Make root user share dotfiles with user
+# Make root user share dotfiles with user - prompt color must be red
 # Make git sync a cron job
 
 # If not running interactively, don't apply bashrc config
@@ -182,16 +182,14 @@ shopt -s checkwinsize
 
 # if [ "$color_prompt" = yes ]; then
   prompt_color="\[\e[0m\]"
-	if [[ "$(whoami)" == "root" ]]; then
-		prompt_color="\[\e[31;1m\]"
-	else
-		if [[ "$HOSTNAME" == "debian2" ]]; then
-			prompt_color="\[\e[33;1m\]"
-		elif [[ "$HOSTNAME" == "pcp" ]]; then
-			prompt_color="\[\e[32;1m\]"
-		elif [[ "$HOSTNAME" == "kdebian12" ]]; then
-			prompt_color="\[\e[36;1m\]"
-		fi
+	if [[ "$HOSTNAME" == "debian2" ]]; then
+		prompt_color="\[\e[33;1m\]"
+	elif [[ "$HOSTNAME" == "pcp" ]]; then
+		prompt_color="\[\e[32;1m\]"
+	elif [[ "$HOSTNAME" == "kdebian12" ]]; then
+		prompt_color="\[\e[36;1m\]"
+	elif [[ "$HOSTNAME" == "rhel9" ]]; then
+		prompt_color="\[\e[35;1m\]"
 	fi
 	PS1="${prompt_color}\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
 # else
