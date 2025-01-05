@@ -1,7 +1,12 @@
+" TASKS
+" AG for vim " vim-rspec
+" vimgitgutter
+" Watch screencasts
+
 set nocompatible " disables vi compatibility
 syntax enable " enables syntax highlighting
 filetype plugin on " allows filetype script to detect file type and enables plugins only used with a specific type of file
-" set path+=** " find into all directories and sub directories
+set path+=** " find into all directories and sub directories
 set wildmenu " Enables menu autocompletion
 
 packloadall " Loads all plugins
@@ -23,7 +28,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'jbgutierrez/vim-better-comments'
 Plug 'dense-analysis/ale'
-" vimgitgutter
+Plug 'kien/ctrlp.vim'
+Plug 'preservim/nerdtree'
 call plug#end()
 
 " MAPPING -------------------------------------------------------------------------------------------
@@ -36,6 +42,7 @@ inoremap jj <esc>
 cnoremap jj <esc>
 
 " Disable arrow keys
+
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
@@ -49,6 +56,18 @@ imap <right> <nop>
 nnoremap : q:i
 " search history window by default
 nnoremap / q/i
+
+" switch to previous and next buffer
+nnoremap - :bprevious<cr>
+nnoremap + :bnext<cr>
+
+" NERDTree
+nnoremap <c-e> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+let NERDTreeQuitOnOpen=1
+
+" ctrlp
+let g:ctrlp_show_hidden=1
 
 " copy cut paste outside vim
 
@@ -64,15 +83,10 @@ noremap <leader>j @j
 nnoremap <c-v> v<c-v>
 
 " edit
-nnoremap <c-e> q:ie<space>
+" nnoremap <c-e> q:ie<space>
 
 " buffer
 nnoremap <c-b> q:ib<space>
-
-" tab to autocomplete
-inoremap <tab> <c-n>
-inoremap <c-f> <c-x><c-f>
-inoremap <expr> <CR> pumvisible() ? "\<C-x><C-f>" : "\<CR>"
 
 " join lines
 nnoremap gj J
@@ -106,10 +120,73 @@ nnoremap <SrollWheelDown> <c-E>
 
 " open vimrc and source it
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>sv :w<cr>:source $MYVIMRC<cr>o
+
+" open bashrc
+nnoremap <leader>eb :vsplit ~/.bashrc<cr>
 
 " toggle list option
 nnoremap <leader>l :set list!<cr>
+
+" autocomplete
+inoremap <tab> <c-n>
+inoremap <s-tab> <c-p>
+inoremap <c-f> <c-x><c-f>
+set shortmess+=c " remove pattern not found message
+inoremap / /<c-x><c-f><c-p>
+inoremap ~ ~/<c-x><c-f><c-p>
+inoremap a a<c-n><c-p>
+inoremap b b<c-n><c-p>
+inoremap c c<c-n><c-p>
+inoremap d d<c-n><c-p>
+inoremap e e<c-n><c-p>
+inoremap f f<c-n><c-p>
+inoremap g g<c-n><c-p>
+inoremap h h<c-n><c-p>
+inoremap i i<c-n><c-p>
+inoremap j j<c-n><c-p>
+inoremap k k<c-n><c-p>
+inoremap l l<c-n><c-p>
+inoremap m m<c-n><c-p>
+inoremap n n<c-n><c-p>
+inoremap o o<c-n><c-p>
+inoremap p p<c-n><c-p>
+" inoremap q q<c-n><c-p>
+inoremap r r<c-n><c-p>
+inoremap s s<c-n><c-p>
+inoremap t t<c-n><c-p>
+inoremap u u<c-n><c-p>
+inoremap v v<c-n><c-p>
+" inoremap w w<c-n><c-p>
+inoremap x x<c-n><c-p>
+inoremap y y<c-n><c-p>
+inoremap z z<c-n><c-p>
+inoremap A A<c-n><c-p>
+inoremap B B<c-n><c-p>
+inoremap C C<c-n><c-p>
+inoremap D D<c-n><c-p>
+inoremap E E<c-n><c-p>
+inoremap F F<c-n><c-p>
+inoremap G G<c-n><c-p>
+inoremap H H<c-n><c-p>
+inoremap I I<c-n><c-p>
+inoremap J J<c-n><c-p>
+inoremap K K<c-n><c-p>
+inoremap L L<c-n><c-p>
+inoremap M M<c-n><c-p>
+inoremap N N<c-n><c-p>
+inoremap O O<c-n><c-p>
+inoremap P P<c-n><c-p>
+inoremap Q Q<c-n><c-p>
+inoremap R R<c-n><c-p>
+inoremap S S<c-n><c-p>
+inoremap T T<c-n><c-p>
+inoremap U U<c-n><c-p>
+inoremap V V<c-n><c-p>
+inoremap W W<c-n><c-p>
+inoremap X X<c-n><c-p>
+inoremap Y Y<c-n><c-p>
+inoremap Z Z<c-n><c-p>
 
 " ABBREVIATIONS " -------------------------------------------------------------------------------------------
 
@@ -126,7 +203,7 @@ augroup END
 " remove eol whitespaces automatically
 augroup whitespaceRemove
 	autocmd!
-	autocmd BufLeave * %s/\s\+$//e
+	autocmd BufLeave *.c,*.sh,*.bash*,*.vimrc,*.txt %s/\s\+$//e
 augroup END
 
 " indent file before saving
@@ -201,3 +278,4 @@ set mouse=a " Enables mouse control
 set foldmethod=indent " Sets indentation folding
 " Keeps folds open by default
 autocmd BufRead * normal zR
+let g:ctrl_show_hidden=1 " show hidden files in ctrlp plugin

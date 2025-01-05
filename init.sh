@@ -7,5 +7,5 @@ if [[ "$(whoami)" == "root" ]]; then
 else
 	rm /home/"$USER"/.bashrc
 	ln -s /home/"$USER"/dotfiles/.bashrc /home/"USER"/.bashrc
-	. /home/"$USER"/.bashrc 
+	. /home/"$USER"/.bashrc
 fi

@@ -1,3 +1,8 @@
+# TASKS
+# personalize PS1 prompts
+# Make root user share dotfiles with user
+# Make git sync a cron job
+
 # If not running interactively, don't apply bashrc config
 case $- in
 *i*) ;;
@@ -8,13 +13,14 @@ HISTCONTROL=ignoreboth
 export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
-PATH="$PATH:/home/porco/bash-files/:/home/porco/c-files/:/home/porco/test"
+
+# add directories to PATH
+PATH="$PATH:~/bash-files/:~/c-files/:~/test" 
+
 # set -u # strict mode
 if [[ "$HOSTNAME" == "pcp" ]]; then
 	xset r rate 300 30 # 300 milliseconds before autorepeat activates, 30 times typing by minute when autorepeating
 fi
-
-# clear
 
 # check if software is installed, install it if not
 check_software() {
@@ -146,62 +152,61 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-  debian_chroot=$(cat /etc/debian_chroot)
-fi
+# if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+#   debian_chroot=$(cat /etc/debian_chroot)
+# fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
-esac
+# case "$TERM" in
+# xterm-color | *-256color) color_prompt=yes ;;
+# esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "${force_color_prompt-}" ]; then
-  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+# if [ -n "${force_color_prompt-}" ]; then
+#   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     # We have color support; assume it's compliant with Ecma-48
     # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
     # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-  else
-    color_prompt=
-  fi
-fi
+    # color_prompt=yes
+  # else
+    # color_prompt=
+  # fi
+# fi
 
-if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm* | rxvt*)
-  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-  ;;
-*) ;;
-
-esac
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# if [ "$color_prompt" = yes ]; then
+  prompt_color="\[\e[0m\]"
+	if [[ "$(whoami)" == "root" ]]; then
+		prompt_color="\[\e[31;1m\]"
+	else
+		if [[ "$HOSTNAME" == "debian2" ]]; then
+			prompt_color="\[\e[33;1m\]"
+		elif [[ "$HOSTNAME" == "pcp" ]]; then
+			prompt_color="\[\e[32;1m\]"
+		elif [[ "$HOSTNAME" == "kdebian12" ]]; then
+			prompt_color="\[\e[36;1m\]"
+		fi
+	fi
+	PS1="${prompt_color}\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
+# else
+  # PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+# fi
+# unset color_prompt force_color_prompt
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-  . ~/.bash_aliases
-fi
+# if [ -f ~/.bash_aliases ]; then
+#   . ~/.bash_aliases
+# fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -378,4 +383,3 @@ lspasswd() {
 		printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "$(sudo passwd -S $user | cut -d " " -f 1)" "$(sudo passwd -S $user | cut -d " " -f 2)" "$(sudo passwd -S $user | cut -d " " -f 3)" "$(sudo passwd -S $user | cut -d " " -f 4)" "$(sudo passwd -S $user | cut -d " " -f 5)" "$(sudo passwd -S $user | cut -d " " -f 6)" "$(sudo passwd -S $user | cut -d " " -f 7)"
 	done
 }
-echo "/home/$(whoami)/.bashrc loaded."
