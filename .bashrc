@@ -317,7 +317,7 @@ alias music="cmus"
 # alias rm="rm -i"
 alias srcprofile="source ~/.profile"
 alias vmm="sudo virt-manager"
-alias lsblk="lsblk -e 7" # skip loopback devices
+alias lsblk="lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS" # skip loopback devices
 
 #? c aliases
 

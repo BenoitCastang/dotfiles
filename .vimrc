@@ -1,13 +1,17 @@
 " TASKS
 " AG for vim " vim-rspec
-" vimgitgutter
+" vimgitgutter - git with vim
+" debugging, gcc etc
 " Watch screencasts
+" Make a video or an article about the window command and its automation
 
 set nocompatible " disables vi compatibility
 syntax enable " enables syntax highlighting
 filetype plugin on " allows filetype script to detect file type and enables plugins only used with a specific type of file
 set path+=** " find into all directories and sub directories
+
 set wildmenu " Enables menu autocompletion
+set wildmode=list:longest,full
 
 packloadall " Loads all plugins
 silent! helptags ALL " Loads help files for all plugins
@@ -54,8 +58,13 @@ imap <right> <nop>
 
 " command-line window by default
 nnoremap : q:i
+
+" escape to get out of command-line window
+autocmd CmdwinEnter * nnoremap <esc> o<cr>
+
 " search history window by default
 nnoremap / q/i
+nnoremap ? q?i
 
 " switch to previous and next buffer
 nnoremap - :bprevious<cr>
@@ -120,7 +129,7 @@ nnoremap <SrollWheelDown> <c-E>
 
 " open vimrc and source it
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :w<cr>:source $MYVIMRC<cr>o
+nnoremap <leader>sv :w<cr>:source $MYVIMRC<cr>
 
 " open bashrc
 nnoremap <leader>eb :vsplit ~/.bashrc<cr>
@@ -203,7 +212,7 @@ augroup END
 " remove eol whitespaces automatically
 augroup whitespaceRemove
 	autocmd!
-	autocmd BufLeave *.c,*.sh,*.bash*,*.vimrc,*.txt %s/\s\+$//e
+	autocmd BufLeave *.c,*.sh,*.bash*,*.vimrc,*.txt if &modifiable | %s/\s\+$//e | endif
 augroup END
 
 " indent file before saving
