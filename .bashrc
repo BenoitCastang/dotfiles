@@ -1,5 +1,6 @@
 # TASKS
 # Make it work totally for a full new computer (kvm, vlc, google chrome, ~/.config/ and ~/.local/share/) + choose what to install or download
+# set sudo to nopasswd
 # Make root user share dotfiles with user - prompt color must be red
 # Make git sync a cron job
 
@@ -130,7 +131,9 @@ search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
 
-eval $(keychain --eval --agents ssh ~/.ssh/*id*) # keychain activation to manage ssh key authentication
+if [[ "$HOSTNAME" == "pcp" ]]; then
+ 	eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
+fi
 
 # system update cron job added if not on the crontab
 crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * sudo apt update; sudo apt autoremove -y; sudo apt dist-upgrade -y") | crontab
