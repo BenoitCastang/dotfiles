@@ -1,5 +1,5 @@
 # TASKS
-# personalize PS1 prompts
+# Make it work totally for a full new computer (kvm, vlc, google chrome, ~/.config/ and ~/.local/share/) + choose what to install or download
 # Make root user share dotfiles with user - prompt color must be red
 # Make git sync a cron job
 
@@ -188,7 +188,7 @@ shopt -s checkwinsize
 		prompt_color="\[\e[32;1m\]"
 	elif [[ "$HOSTNAME" == "kdebian12" ]]; then
 		prompt_color="\[\e[36;1m\]"
-	elif [[ "$HOSTNAME" == "rhel9" ]]; then
+	elif [[ "$HOSTNAME" =~ rhel ]]; then
 		prompt_color="\[\e[35;1m\]"
 	fi
 	PS1="${prompt_color}\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "

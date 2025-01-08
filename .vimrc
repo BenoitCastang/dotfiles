@@ -144,6 +144,7 @@ inoremap <c-f> <c-x><c-f>
 set shortmess+=c " remove pattern not found message
 inoremap / /<c-x><c-f><c-p>
 inoremap ~ ~/<c-x><c-f><c-p>
+inoremap . .<c-x><c-f><c-p>
 inoremap a a<c-n><c-p>
 inoremap b b<c-n><c-p>
 inoremap c c<c-n><c-p>
