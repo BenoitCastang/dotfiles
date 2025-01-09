@@ -299,7 +299,7 @@ alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 alias free='free -h'
 alias uname='uname -a'
 alias df='df -h | grep -v tmpfs'
-alias du='du -hc * .'
+alias du='du -ha'
 alias dmesg='sudo dmesg -T'
 alias ps='ps -ef'
 
