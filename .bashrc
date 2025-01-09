@@ -1,8 +1,7 @@
 # TASKS
 # Make it work totally for a full new computer (kvm, vlc, google chrome, ~/.config/ and ~/.local/share/) + choose what to install or download
-# set sudo to nopasswd
+# Make git sync a cron job - but it has to be possible to toggle it when you want
 # Make root user share dotfiles with user - prompt color must be red
-# Make git sync a cron job
 
 # If not running interactively, don't apply bashrc config
 case $- in
@@ -300,7 +299,7 @@ alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 alias free='free -h'
 alias uname='uname -a'
 alias df='df -h | grep -v tmpfs'
-alias du='sudo du -hs * .* 2> /dev/null'
+alias du='du -hc * .'
 alias dmesg='sudo dmesg -T'
 alias ps='ps -ef'
 

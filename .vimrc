@@ -46,7 +46,6 @@ inoremap jj <esc>
 cnoremap jj <esc>
 
 " Disable arrow keys
-
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
@@ -106,7 +105,8 @@ noremap J }
 noremap K {
 
 " L to go to the end of the line
-noremap L $
+noremap L $l
+nnoremap yL y$
 " H to go to the beginning of the line
 noremap H ^
 
@@ -289,3 +289,4 @@ set foldmethod=indent " Sets indentation folding
 " Keeps folds open by default
 autocmd BufRead * normal zR
 let g:ctrl_show_hidden=1 " show hidden files in ctrlp plugin
+set virtualedit=onemore " add onw virtual space to the end of the line
