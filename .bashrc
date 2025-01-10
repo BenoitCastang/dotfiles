@@ -298,7 +298,7 @@ alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 # monitoring aliases
 alias free='free -h'
 alias uname='uname -a'
-alias df='df -h | grep -v "tmpfs\|loop\|udev"'
+alias df='df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs'
 alias du='du -ha -d1'
 alias dmesg='sudo dmesg -T'
 alias ps='ps -ef'

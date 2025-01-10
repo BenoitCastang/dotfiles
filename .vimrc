@@ -39,7 +39,13 @@ call plug#end()
 " MAPPING -------------------------------------------------------------------------------------------
 
 let mapleader = " " " Map the leader key to a comma
+" cancel space bar default behavior
+nnoremap <space> <nop>
+vnoremap <space> <nop>
+onoremap <space> <nop>
+
 let maplocalleader = "," " Map the leader key to a comma
+
 
 " Sets jj to perform Esc input
 inoremap jj <esc>
