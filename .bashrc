@@ -302,6 +302,8 @@ alias df='df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x
 alias du='du -ha -d1'
 alias dmesg='sudo dmesg -T'
 alias ps='ps -ef'
+alias lsblk="lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS" # skip loopback devices
+alias mdstat='cat /proc/mdstat'
 
 # tree aliases
 alias tree='tree -a'
@@ -319,7 +321,6 @@ alias music="cmus"
 # alias rm="rm -i"
 alias srcprofile="source ~/.profile"
 alias vmm="sudo virt-manager"
-alias lsblk="lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS" # skip loopback devices
 
 #? c aliases
 
