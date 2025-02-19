@@ -247,10 +247,16 @@ alias l='ls -CF'
 alias pgrep='pgrep -l'
 alias gzip='gzip -v'
 
-# apt aliases
+#  packages aliases
 alias update='sudo apt update'
 alias upgrade='sudo apt dist-upgrade'
-alias install='sudo apt install -y'
+install() {
+	if [[ $ID = "rhel" ]]; then
+		sudo dnf install -y "$1"
+	else
+		sudo apt install -y "$1"
+	fi
+}
 alias i='sudo apt install -y'
 alias remove='sudo apt remove'
 alias purge='sudo apt purge'
@@ -258,38 +264,39 @@ alias autoremove='sudo apt autoremove -y'
 
 # systemctl aliases - units systemd management
 status() {
-	systemctl status $1
+	systemctl status "$1"
 }
 stop() {
-	sudo systemctl stop $1
-	status $1
+	sudo systemctl stop "$1"
+	status "$1"
 }
 start() {
-	sudo systemctl start $1
-	status $1
+	sudo systemctl start "$1"
+	status "$1"
 }
 restart() {
-	sudo systemctl restart $1
-	status $1
+	sudo systemctl restart "$1"
+	status "$1"
 }
 reload() {
-	sudo systemctl reload $1
-	status $1
+	sudo systemctl reload "$1"
+	status "$1"
 }
 enable() {
-	sudo systemctl enable $1
-	status $1
+	sudo systemctl enable "$1"
+	status "$1"
 }
 disable() {
-	sudo systemctl disable $1
-	status $1
+	sudo systemctl disable "$1"
+	status "$1"
 }
 log() {
-	sudo journalctl -u $1
+	sudo journalctl -u "$1"
 }
 daemonreload() {
 	sudo systemctl daemon-reload
 }
+alias lsunit='systemctl list-unit-files'
 
 # cyberghost vpn aliases
 alias vpn='sudo cyberghostvpn'
