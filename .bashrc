@@ -126,6 +126,15 @@ check_dotfiles .inputrc
 check_dotfiles .tmux.conf
 check_dotfiles .vimrc
 
+source_dotfiles() {
+	. "$1"
+}
+
+source_dotfiles .bashrc
+source_dotfiles .inputrc
+source_dotfiles .tmux.conf
+source_dotfiles .vimrc
+
 search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
@@ -354,7 +363,7 @@ alias inputsrc='bind -f ~/.inputrc'
 alias tmuxsrc='source ~/.tmux.conf'
 alias tx='tmux'
 alias txa='tmux a -t'
-alias bind='bind -p'
+# alias bind='bind -p | column'
 alias lshost='hostnamectl status'
 
 # network aliases
@@ -362,6 +371,7 @@ alias lamp='cd /opt/lampp/ && sudo ./lampp start'
 alias mysql='/opt/lampp/bin/mysql -p test'
 alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 alias nc='nc -v'
+alias iptables='sudo iptables'
 
 # git aliases
 alias gs='git status'

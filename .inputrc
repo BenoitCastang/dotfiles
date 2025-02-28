@@ -1,9 +1,34 @@
-set editing-mode vi
-set keymap vi-insert
-"\jj": vi-movement-mode
-"\C-f": forward-search-history
-"\C-r": reverse-search-history
-"\C-g": abort
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set completion-prefix-display-length 2
+"\t" menu-complete
+"\e[Z" menu-complete-backward
+set revert-all-at-newline on
 
-# C-s pause screen
-# C-q unpause screen
+set editing-mode vi
+C-f forward-search-history
+C-r reverse-search-history
+C-g abort
+
+set keymap vi-command
+v ""
+C-v vi-edit-and-execute-command 
+"ciw" "bce"
+"ciW" "BcE"
+"diw" "bde"
+"diW" "BdE"
+"yiw" "bye"
+"yiW" "ByE"
+"dH" "d^"
+"dL" "d$"
+"cH" "c^"
+"cL" "c$"
+"yH" "y^"
+"yL" "y$"
+
+set keymap vi-insert
+"jj" vi-movement-mode
+
+set keymap vi-move
+H beginning-of-line
+L end-of-line
