@@ -126,15 +126,6 @@ check_dotfiles .inputrc
 check_dotfiles .tmux.conf
 check_dotfiles .vimrc
 
-source_dotfiles() {
-	. "$1"
-}
-
-source_dotfiles .bashrc
-source_dotfiles .inputrc
-source_dotfiles .tmux.conf
-source_dotfiles .vimrc
-
 search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
