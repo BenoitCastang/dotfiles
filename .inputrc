@@ -1,18 +1,19 @@
 set completion-ignore-case on
 set show-all-if-ambiguous on
 set completion-prefix-display-length 2
-"\t" menu-complete
-"\e[Z" menu-complete-backward
 set revert-all-at-newline on
 
 set editing-mode vi
 C-f forward-search-history
 C-r reverse-search-history
 C-g abort
+"\t" menu-complete
+"\e[Z" menu-complete-backward
 
 set keymap vi-command
 v ""
 C-v vi-edit-and-execute-command 
+o "A\\n"
 "ciw" "bce"
 "ciW" "BcE"
 "diw" "bde"
@@ -25,6 +26,7 @@ C-v vi-edit-and-execute-command
 "cL" "c$"
 "yH" "y^"
 "yL" "y$"
+o "A\\\n"
 
 set keymap vi-insert
 "jj" vi-movement-mode
