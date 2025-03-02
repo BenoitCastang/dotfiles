@@ -1,0 +1,282 @@
+# set vim as the default editor
+export SUDO_EDITOR=vim
+export VISUAL=vim
+export EDITOR=vim
+
+# add directories to PATH
+PATH="$PATH:~/bash-files/:~/c-files/:~/test" 
+
+# check if software is installed, install it if not
+check_software() {
+	. /etc/os-release
+	if [[ $ID = "rhel" ]]; then # when distribution is redhat
+		if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then
+			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-"$(arch)"-rpms
+			sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+		fi
+		if ! which "$1" > /dev/null 2>&1; then
+			if [[ "$1" == "ansible" ]]; then
+				sudo dnf install -y ansible-core
+			else
+				sudo dnf install -y "$1"
+			fi
+		fi
+	else # when distribution is debian
+		if [[ "$1" == "snap" ]]; then # special treatment for snap
+			if ! which snap > /dev/null 2>&1; then
+				echo -e "\e[33msnap is not installed. Installing...\e[0m"
+				if [[ "$(whoami)" == "root" ]]; then
+					apt-get install -y snapd
+				else
+					sudo apt-get install -y snapd
+				fi
+			fi
+		elif [[ "$1" == "crontab" ]]; then # special treatment for crontab
+			if ! which crontab > /dev/null 2>&1; then
+				echo -e "\e[33mcrontab is not installed. Installing...\e[0m"
+				if [[ "$(whoami)" == "root" ]]; then
+					apt-get install -y cron
+				else
+					sudo apt-get install -y cron
+				fi
+			fi
+		elif [[ "$1" == "ripgrep" ]]; then # special treatment for ripgrep
+			if ! which rg > /dev/null 2>&1; then
+				echo -e "\e[33mripgrep is not installed. Installing...\e[0m"
+				if [[ "$(whoami)" == "root" ]]; then
+					apt-get install -y ripgrep
+				else
+					sudo apt-get install -y ripgrep
+				fi
+			fi
+		elif ! which "$1" > /dev/null 2>&1; then
+			echo -e "\e[33m$1 is not installed. Installing...\e[0m"
+			if [[ "$(whoami)" == "root" ]]; then
+				apt-get install -y "$1"
+			else
+				sudo apt-get install -y "$1"
+			fi
+		fi
+	fi
+}
+
+check_software ssh
+check_software curl
+check_software vim
+check_software tmux
+check_software snap
+check_software htop
+check_software keychain
+check_software ansible
+check_software tree
+check_software ncdu
+check_software neofetch
+check_software ripgrep
+check_software crontab
+check_software tldr
+
+# check if repository exists on the home directory, update it if so, download it if not
+update_repository() {
+  if [ -d ~/"$1" ]; then
+		cd ~/$1
+		git pull https://github.com/BenoitCastang/"$1" > /dev/null 2>&1
+	else
+	 	echo -e "\e[33mRepository $1 not found.\e[0m"
+		cd
+		git clone https://github.com/BenoitCastang/"$1"
+	fi
+	cd
+}
+
+update_repository dotfiles
+update_repository cheatsheets
+# update_repository ansible
+# update_repository bash-files
+# update_repository python-files
+# update_repository c-files
+# update_repository personal-website
+
+# check if symlink to dotfile exists on the home directory, create it if not
+check_dotfiles() {
+	if [ ! -L ~/$1 ]; then
+	 	echo -e "\e[33mCreating $1...\e[0m"
+		test -e $1 && rm $1
+		ln -s ~/dotfiles/$1 ~/$1
+	fi
+}
+
+check_dotfiles .bashrc
+check_dotfiles .inputrc
+check_dotfiles .tmux.conf
+check_dotfiles .vimrc
+check_dotfiles .alias
+check_dotfiles .zshrc_input
+
+search() {
+	grep -ni --color=auto $1 ~/cheatsheets/* ~/dotfiles/.*
+}
+
+if [[ "$HOSTNAME" == "pcp" ]]; then
+ 	eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
+fi
+
+# system update cron job added if not on the crontab
+crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * sudo apt update; sudo apt autoremove -y; sudo apt dist-upgrade -y") | crontab
+alias cron='crontab -e'
+
+# alias vim='nvim'
+alias nvim='/snap/bin/nvim'
+# some more ls aliases
+# alias cat='cat -n'
+alias ll='ls -Alh'
+alias la='ls -A'
+alias l='ls -CF'
+alias pgrep='pgrep -l'
+alias gzip='gzip -v'
+
+#  packages aliases
+alias update='sudo apt update'
+alias upgrade='sudo apt dist-upgrade -y'
+install() {
+  sudo apt update > /dev/null 2>&1
+	if [[ $ID = "rhel" ]]; then
+		sudo dnf install -y "$1"
+	else
+		sudo apt install -y "$1"
+	fi
+}
+alias remove='sudo apt remove --purge'
+alias lsunit='systemctl list-unit-files'
+
+# cyberghost vpn aliases
+alias vpn='sudo cyberghostvpn'
+alias vpnconnect='sudo cyberghostvpn --connect --country-code'
+
+# monitoring aliases
+alias free='free -h'
+alias uname='uname -a'
+alias df='df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs'
+alias du='du -ha -d1'
+alias dmesg='sudo dmesg -T'
+alias ps='ps -ef'
+alias lsblk="lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS" # skip loopback devices
+alias mdstat='cat /proc/mdstat'
+
+# tree aliases
+alias tree='tree -a'
+
+# rsync aliases
+# alias rsync='rsync -avh'
+
+# compression aliases
+alias compress="tar -czvf"
+alias extract="tar -xvf"
+
+# miscellaneous aliases
+alias music="cmus"
+# alias man="tldr" # command man to go over it
+# alias rm="rm -i"
+alias srcprofile="source ~/.profile"
+alias vmm="sudo virt-manager"
+
+#? c aliases
+
+# alias compile='gcc -std=c17 -g -Wall -Werror'
+# alias side='cd /opt/lampp/htdocs/www/side/c/packt'
+# alias gcce='gcc && ./hangman'
+# alias gdb='gcc && gdb -q ./hw'
+# alias plusminus='/opt/lampp/htdocs/www/side/c/zero/plusminus/plusminus'
+# alias hangman='/opt/lampp/htdocs/www/side/c/hangman/hangman'
+# alias gcc-hangman='cd /opt/lampp/htdocs/www/side/c/hangman/ && gcc -g -Wall hangman.c check_letter_presence.c if_present.c if_not_present.c draw_hangman.c hide_word.c -o hangman'
+# alias hw='gcc -g -Wall /home/porco/c/packt/helloworld/helloworld.c -o /home/porco/helloworld && /home/porco/helloworld'
+
+#bash aliases
+alias c='clear'
+alias profile='vim ~/.profile'
+alias fstab='sudo vim /etc/fstab'
+alias bashrc='vim ~/.bashrc'
+alias vimrc='vim ~/.vimrc'
+alias inputrc='vim ~/.inputrc'
+alias tmuxrc='vim ~/.tmux.conf'
+alias bashsrc='source ~/.bashrc'
+alias vimsrc='source ~/.vimrc'
+alias inputsrc='bind -f ~/.inputrc'
+alias tmuxsrc='source ~/.tmux.conf'
+alias zshrc='vim ~/.zshrc'
+alias zshsrc='source ~/.zshrc'
+alias aliasrc='vim ~/.alias'
+alias tx='tmux'
+alias txa='tmux a -t'
+# alias bind='bind -p | column'
+alias lshost='hostnamectl status'
+
+# network aliases
+alias lamp='cd /opt/lampp/ && sudo ./lampp start'
+alias mysql='/opt/lampp/bin/mysql -p test'
+alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
+alias nc='nc -v'
+alias iptables='sudo iptables'
+
+# git aliases
+alias gs='git status'
+alias push='git push origin main'
+alias commit='git add -u && git add . && git commit'
+
+# python aliases
+alias python='python3'
+
+# docker aliases
+alias dr='docker run'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias dp='docker system prune'
+alias da='docker attach'
+alias de='docker exec'
+alias di='docker images'
+alias db='docker build'
+alias dps='docker ps -a'
+
+# managing users aliases
+alias lsuser='sudo cat /etc/passwd | grep -v nologin | grep -v false | grep -v sync | cut -d: -f1'
+alias lsgroup='for user in $(lsuser); do echo $(groups $user); done'
+lspasswd() {
+	printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "USER" "STATUS" "LAST" "MIN" "MAX" "WARN" "GRACE"
+	for user in $(lsuser); do
+		printf "%-10s %-7s %-12s %-5s %-15s %-10s %-10s\n" "$(sudo passwd -S $user | cut -d " " -f 1)" "$(sudo passwd -S $user | cut -d " " -f 2)" "$(sudo passwd -S $user | cut -d " " -f 3)" "$(sudo passwd -S $user | cut -d " " -f 4)" "$(sudo passwd -S $user | cut -d " " -f 5)" "$(sudo passwd -S $user | cut -d " " -f 6)" "$(sudo passwd -S $user | cut -d " " -f 7)"
+	done
+}
+
+# systemctl aliases - units systemd management
+status() {
+	systemctl status "$1"
+}
+stop() {
+	sudo systemctl stop "$1"
+	status "$1"
+}
+start() {
+	sudo systemctl start "$1"
+	status "$1"
+}
+restart() {
+	sudo systemctl restart "$1"
+	status "$1"
+}
+reload() {
+	sudo systemctl reload "$1"
+	status "$1"
+}
+enable() {
+	sudo systemctl enable "$1"
+	status "$1"
+}
+disable() {
+	sudo systemctl disable "$1"
+	status "$1"
+}
+log() {
+	sudo journalctl -u "$1"
+}
+daemonreload() {
+	sudo systemctl daemon-reload
+}
