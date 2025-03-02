@@ -105,12 +105,12 @@ update_repository() {
 }
 
 update_repository dotfiles
-update_repository ansible
 update_repository cheatsheets
-update_repository bash-files
-update_repository python-files
-update_repository c-files
-update_repository personal-website
+# update_repository ansible
+# update_repository bash-files
+# update_repository python-files
+# update_repository c-files
+# update_repository personal-website
 
 # check if symlink to dotfile exists on the home directory, create it if not
 check_dotfiles() {
