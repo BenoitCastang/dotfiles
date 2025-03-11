@@ -1,10 +1,3 @@
-" TASKS
-" AG for vim " vim-rspec
-" vimgitgutter - git with vim
-" debugging, gcc etc
-" Watch screencasts
-" Make a video or an article about the window command and its automation
-
 set nocompatible " disables vi compatibility
 syntax enable " enables syntax highlighting
 filetype plugin on " allows filetype script to detect file type and enables plugins only used with a specific type of file
@@ -105,10 +98,10 @@ nnoremap <c-b> q:ib<space>
 " join lines
 nnoremap gj J
 
-" J to go one paragraph down
-noremap J }
-" k to go one paragraph up
-noremap K {
+" J to go down faster
+noremap J 20j
+" k to go up faster
+noremap K 20k
 
 " L to go to the end of the line
 noremap L $l

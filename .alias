@@ -1,10 +1,8 @@
-# set vim as the default editor
-export SUDO_EDITOR=vim
+# set vim as the default editor export SUDO_EDITOR=vim
 export VISUAL=vim
 export EDITOR=vim
 
-# add directories to PATH
-PATH="$PATH:~/bash-files/:~/c-files/:~/test" 
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
 
 # check if software is installed, install it if not
 check_software() {
@@ -74,6 +72,15 @@ check_software neofetch
 check_software ripgrep
 check_software crontab
 check_software tldr
+check_software lsd
+
+# sudo snap install --classic nvim zelli
+
+# install zsh with zim
+# sudo rm -rf /etc/zsh/
+# check_software zsh
+# curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+# echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -108,6 +115,7 @@ check_dotfiles() {
 check_dotfiles .bashrc
 check_dotfiles .inputrc
 check_dotfiles .tmux.conf
+# check_dotfiles .tmux
 check_dotfiles .vimrc
 check_dotfiles .alias
 check_dotfiles .zshrc_input
@@ -124,13 +132,10 @@ fi
 crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * sudo apt update; sudo apt autoremove -y; sudo apt dist-upgrade -y") | crontab
 alias cron='crontab -e'
 
-# alias vim='nvim'
-alias nvim='/snap/bin/nvim'
+alias vim='nvim'
 # some more ls aliases
-# alias cat='cat -n'
+alias cat='batcat'
 alias ll='ls -Alh'
-alias la='ls -A'
-alias l='ls -CF'
 alias pgrep='pgrep -l'
 alias gzip='gzip -v'
 
@@ -145,7 +150,7 @@ install() {
 		sudo apt install -y "$1"
 	fi
 }
-alias remove='sudo apt remove --purge'
+alias remove='sudo apt remove --purge; sudo apt autoremove -y'
 alias lsunit='systemctl list-unit-files'
 
 # cyberghost vpn aliases
@@ -153,13 +158,8 @@ alias vpn='sudo cyberghostvpn'
 alias vpnconnect='sudo cyberghostvpn --connect --country-code'
 
 # monitoring aliases
-alias free='free -h'
 alias uname='uname -a'
-alias df='df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs'
-alias du='du -ha -d1'
 alias dmesg='sudo dmesg -T'
-alias ps='ps -ef'
-alias lsblk="lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS" # skip loopback devices
 alias mdstat='cat /proc/mdstat'
 
 # tree aliases
@@ -246,37 +246,27 @@ lspasswd() {
 	done
 }
 
-# systemctl aliases - units systemd management
-status() {
-	systemctl status "$1"
-}
-stop() {
-	sudo systemctl stop "$1"
-	status "$1"
-}
-start() {
-	sudo systemctl start "$1"
-	status "$1"
-}
-restart() {
-	sudo systemctl restart "$1"
-	status "$1"
-}
-reload() {
-	sudo systemctl reload "$1"
-	status "$1"
-}
-enable() {
-	sudo systemctl enable "$1"
-	status "$1"
-}
-disable() {
-	sudo systemctl disable "$1"
-	status "$1"
-}
-log() {
-	sudo journalctl -u "$1"
-}
-daemonreload() {
-	sudo systemctl daemon-reload
-}
+# systemctl shortcuts
+status() { systemctl status "$1" }
+stop() { sudo systemctl stop "$1"; status "$1" }
+start() { sudo systemctl start "$1"; status "$1" }
+restart() { sudo systemctl restart "$1"; status "$1" }
+reload() { sudo systemctl reload "$1"; status "$1" }
+enable() { sudo systemctl enable "$1"; status "$1" }
+disable() { sudo systemctl disable "$1"; status "$1" }
+log() { sudo journalctl -u "$1" }
+daemonreload() { sudo systemctl daemon-reload }
+lssystemctl() { sudo systemctl --list-unit-files }
+
+# grc functions
+ip() { grc ip $1 }
+ping() { grc ping $1 }
+nmap() { grc nmap $1 }
+ps() { grc ps $1 }
+lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
+uptime() { grc uptime }
+free() { grc free -h }
+unalias du
+unalias df
+ df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
+ du() { grc du -ha -d1 }

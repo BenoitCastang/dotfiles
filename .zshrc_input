@@ -1,5 +1,6 @@
 bindkey -v
 bindkey -M viins 'jj' vi-cmd-mode
+bindkey '^l' forward-char
 bindkey -M viins '^?' backward-delete-char
 function vi-insert-space() {
   BUFFER+=" "
