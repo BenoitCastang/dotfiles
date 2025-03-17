@@ -132,9 +132,11 @@ source ~/.zshrc_input
 source ~/.alias
 
 # open last session
-# if [ $ZELLIJ_SESSION_NAME ]; then
-# elif ! zellij ls; then
-# 	zellij
-# else
-# 	zellij a $(zellij ls | awk '{ print $1 }' | sed -E 's/\x1B\[[0-9;]*[mK]//g' | tail -n 1)
-# fi
+if [ "$HOST" = "pcp" ]; then
+  if [ $ZELLIJ_SESSION_NAME ]; then
+  elif ! zellij ls > /dev/null 2>&1; then
+    zellij
+  else
+    zellij a $(zellij ls | awk '{ print $1 }' | sed -E 's/\x1B\[[0-9;]*[mK]//g' | tail -n 1)
+  fi
+fi

@@ -144,7 +144,9 @@ alias update='sudo apt update'
 alias upgrade='sudo apt dist-upgrade -y'
 install() {
   sudo apt update > /dev/null 2>&1
-	if [[ $ID = "rhel" ]]; then
+  if [[ "$1" =~ .deb$ ]]; then
+    sudo dpkg -i "$1"
+	elif [[ $ID = "rhel" ]]; then
 		sudo dnf install -y "$1"
 	else
 		sudo apt install -y "$1"
