@@ -1,6 +1,6 @@
 # set vim as the default editor export SUDO_EDITOR=vim
-export VISUAL=vim
-export EDITOR=vim
+export VISUAL=nvim
+export EDITOR=nvim
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
 
@@ -73,6 +73,11 @@ check_software ripgrep
 check_software crontab
 check_software tldr
 check_software lsd
+check_software xclip
+check_software node
+check_software npm
+check_software php
+check_software python3
 
 # sudo snap install --classic nvim zelli
 
@@ -81,6 +86,13 @@ check_software lsd
 # check_software zsh
 # curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 # echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
+
+# zim
+
+## neovim with lazy vim
+
+# kitty
+# zelli
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -121,7 +133,7 @@ check_dotfiles .alias
 check_dotfiles .zshrc_input
 
 search() {
-	grep -ni --color=auto $1 ~/cheatsheets/* ~/dotfiles/.*
+	grep -ni --color=auto $1 ~/cheatsheets/*
 }
 
 if [[ "$HOSTNAME" == "pcp" ]]; then
@@ -249,26 +261,26 @@ lspasswd() {
 }
 
 # systemctl shortcuts
-status() { systemctl status "$1" }
-stop() { sudo systemctl stop "$1"; status "$1" }
-start() { sudo systemctl start "$1"; status "$1" }
-restart() { sudo systemctl restart "$1"; status "$1" }
-reload() { sudo systemctl reload "$1"; status "$1" }
-enable() { sudo systemctl enable "$1"; status "$1" }
-disable() { sudo systemctl disable "$1"; status "$1" }
-log() { sudo journalctl -u "$1" }
-daemonreload() { sudo systemctl daemon-reload }
-lssystemctl() { sudo systemctl --list-unit-files }
+#status() { systemctl status "$1" }
+#stop() { sudo systemctl stop "$1"; status "$1" }
+#start() { sudo systemctl start "$1"; status "$1" }
+#restart() { sudo systemctl restart "$1"; status "$1" }
+#reload() { sudo systemctl reload "$1"; status "$1" }
+#enable() { sudo systemctl enable "$1"; status "$1" }
+#disable() { sudo systemctl disable "$1"; status "$1" }
+#log() { sudo journalctl -u "$1" }
+#daemonreload() { sudo systemctl daemon-reload }
+#lssystemctl() { sudo systemctl --list-unit-files }
 
-# grc functions
-ip() { grc ip $1 }
-ping() { grc ping $1 }
-nmap() { grc nmap $1 }
-ps() { grc ps $1 }
-lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
-uptime() { grc uptime }
-free() { grc free -h }
-unalias du
-unalias df
- df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
- du() { grc du -ha -d1 }
+## grc functions
+#ip() { grc ip "$1" }
+#ping() { grc ping "$1" }
+#nmap() { grc nmap "$1" }
+#ps() { grc ps "$1" }
+#lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
+#uptime() { grc uptime }
+#free() { grc free -h }
+#unalias du
+#unalias df
+#df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
+#du() { grc du -ha -d1 }
