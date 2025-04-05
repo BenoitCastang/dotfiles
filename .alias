@@ -65,9 +65,11 @@ install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xcl
 # install keychain nvim zelli ansible node npm php python3
 
 # zsh config with zim
-sudo rm -rf /etc/zsh/ /etc/zshrc
-curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
-echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
+if [[ ! -e .zim ]]; then
+  sudo rm -rf /etc/zsh/ /etc/zshrc
+  curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+  echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
+fi
 
 ## neovim with lazy vim
 
@@ -77,7 +79,7 @@ echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
   if [ -d ~/"$1" ]; then
-		cd ~/$1
+		cd ~/"$1"
 		git pull https://github.com/BenoitCastang/"$1" > /dev/null 2>&1
 	else
 	 	echo -e "\e[33mRepository $1 not found.\e[0m"
