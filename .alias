@@ -1,7 +1,9 @@
 # TODO: make it valid for root
 # TODO: make it work for rhel
 
-sudo update-alternatives --set editor /usr/bin/vim.basic ## set system editor to vim
+if [[ "$distro" = "debian" ]]; then 
+  sudo update-alternatives --set editor /usr/bin/vim.basic ## set system editor to vim
+fi
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
 
