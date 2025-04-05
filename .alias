@@ -119,6 +119,8 @@ search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
 
+chsh -s /usr/bin/zsh
+
 if [[ "$HOSTNAME" == "pcp" ]]; then
   eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
 fi
