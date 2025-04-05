@@ -62,13 +62,12 @@ install() {
 }
 
 install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils
-## install keychain nvim zelli ansible node npm php python3
+# install keychain nvim zelli ansible node npm php python3
 
-# install zsh with zim
-# sudo rm -rf /etc/zsh/
-# check_software zsh
-# curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
-# echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
+# zsh config
+sudo rm -rf /etc/zsh/ /etc/zshrc
+curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
 
 # zim
 
