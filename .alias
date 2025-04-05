@@ -64,12 +64,10 @@ install() {
 install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils
 # install keychain nvim zelli ansible node npm php python3
 
-# zsh config
+# zsh config with zim
 sudo rm -rf /etc/zsh/ /etc/zshrc
 curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
-
-# zim
 
 ## neovim with lazy vim
 
@@ -112,6 +110,7 @@ check_dotfiles .inputrc
 # check_dotfiles .tmux
 check_dotfiles .vimrc
 check_dotfiles .alias
+check_dotfiles .zshrc
 check_dotfiles .zshrc_input
 
 search() {
