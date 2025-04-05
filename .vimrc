@@ -230,7 +230,7 @@ augroup END
 
 " COLORS " -------------------------------------------------------------------------------------------
 
-colorscheme symfony
+" colorscheme symfony
 " Changing some symfony defaults
 highlight Normal ctermbg=none
 highlight LineNr ctermbg=none ctermfg=7
