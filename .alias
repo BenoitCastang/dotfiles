@@ -1,85 +1,68 @@
-# set vim as the default editor export SUDO_EDITOR=vim
-export VISUAL=nvim
-export EDITOR=nvim
+# TODO: make it valid for root
+# TODO: make it work for rhel
+
+sudo update-alternatives --set editor /usr/bin/vim.basic ## set system editor to vim
 
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
 
-# check if software is installed, install it if not
-check_software() {
-	. /etc/os-release
-	if [[ $ID = "rhel" ]]; then # when distribution is redhat
-		if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then
-			sudo subscription-manager repos --enable codeready-builder-for-rhel-9-"$(arch)"-rpms
-			sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-		fi
-		if ! which "$1" > /dev/null 2>&1; then
-			if [[ "$1" == "ansible" ]]; then
-				sudo dnf install -y ansible-core
-			else
-				sudo dnf install -y "$1"
-			fi
-		fi
-	else # when distribution is debian
-		if [[ "$1" == "snap" ]]; then # special treatment for snap
-			if ! which snap > /dev/null 2>&1; then
-				echo -e "\e[33msnap is not installed. Installing...\e[0m"
-				if [[ "$(whoami)" == "root" ]]; then
-					apt-get install -y snapd
-				else
-					sudo apt-get install -y snapd
-				fi
-			fi
-		elif [[ "$1" == "crontab" ]]; then # special treatment for crontab
-			if ! which crontab > /dev/null 2>&1; then
-				echo -e "\e[33mcrontab is not installed. Installing...\e[0m"
-				if [[ "$(whoami)" == "root" ]]; then
-					apt-get install -y cron
-				else
-					sudo apt-get install -y cron
-				fi
-			fi
-		elif [[ "$1" == "ripgrep" ]]; then # special treatment for ripgrep
-			if ! which rg > /dev/null 2>&1; then
-				echo -e "\e[33mripgrep is not installed. Installing...\e[0m"
-				if [[ "$(whoami)" == "root" ]]; then
-					apt-get install -y ripgrep
-				else
-					sudo apt-get install -y ripgrep
-				fi
-			fi
-		elif ! which "$1" > /dev/null 2>&1; then
-			echo -e "\e[33m$1 is not installed. Installing...\e[0m"
-			if [[ "$(whoami)" == "root" ]]; then
-				apt-get install -y "$1"
-			else
-				sudo apt-get install -y "$1"
-			fi
-		fi
-	fi
+source /etc/os-release
+distro="$ID"
+
+if [[ "$distro" = "rhel" ]]; then
+  if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then
+    sudo subscription-manager repos --enable codeready-builder-for-rhel-9-"$(arch)"-rpms
+    sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+  fi
+fi
+
+update() { if [[ "$distro" = "debian" ]]; then sudo apt update; fi; if [[ "$distro" = "rhel" ]]; then sudo dnf check-update; fi }
+upgrade() { if [[ "$distro" = "debian" ]]; then sudo apt dist-upgrade -y; fi; if [[ "$distro" = "rhel" ]]; then sudo dnf upgrade; fi }
+remove() {
+  while (( "$#" > 0 )); do
+    package="$1"
+    if [[ "$distro" = "debian" ]]; then 
+      sudo apt remove -y --purge "$package"
+      sudo apt autoremove -y --purge
+      shift
+    fi
+    if [[ "$distro" = "rhel" ]]; then 
+      sudo dnf remove -y "$package"
+      sudo dnf autoremove -y
+      shift
+    fi
+  done
+}
+isNotInstalled() {
+  package="$1"
+  if [[ "$package" = 'snapd' ]]; then package='snap'
+    elif [[ "$package" = 'cron' ]]; then package='crontab'
+    elif [[ "$package" = 'ripgrep' ]]; then package='rg'
+    elif [[ "$package" = 'dnsutils' ]]; then package='dig'
+  fi
+	if which "$package" > /dev/null 2>&1; then return 1; else return 0; fi
+}
+install() {
+  while (( "$#" > 0 )); do
+    package="$1"
+    if isNotInstalled "$package"; then
+      if [[ "$distro" = "debian" ]]; then
+        if [[ "$package" =~ .deb$ ]]; then sudo dpkg -i "$package"
+        elif [[ "$package" = "nvim" || "$package" = "zelli" ]]; then sudo snap install --classic "$package"
+        else sudo apt install -y "$package"
+        fi
+      fi
+      if [[ "$distro" = "rhel" ]]; then
+        if [[ "$package" = "ansible" ]]; then sudo dnf install -y ansible-core
+        else sudo dnf install -y "$package"
+        fi
+      fi
+    fi
+    shift
+  done
 }
 
-check_software ssh
-check_software curl
-check_software vim
-check_software tmux
-check_software snap
-check_software htop
-check_software keychain
-check_software ansible
-check_software tree
-check_software ncdu
-check_software neofetch
-check_software ripgrep
-check_software crontab
-check_software tldr
-check_software lsd
-check_software xclip
-check_software node
-check_software npm
-check_software php
-check_software python3
-
-# sudo snap install --classic nvim zelli
+install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils
+## install keychain nvim zelli ansible node npm php python3
 
 # install zsh with zim
 # sudo rm -rf /etc/zsh/
@@ -92,7 +75,7 @@ check_software python3
 ## neovim with lazy vim
 
 # kitty
-# zelli
+# zellij
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -126,7 +109,7 @@ check_dotfiles() {
 
 check_dotfiles .bashrc
 check_dotfiles .inputrc
-check_dotfiles .tmux.conf
+# check_dotfiles .tmux.conf
 # check_dotfiles .tmux
 check_dotfiles .vimrc
 check_dotfiles .alias
@@ -137,7 +120,7 @@ search() {
 }
 
 if [[ "$HOSTNAME" == "pcp" ]]; then
- 	eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
+  eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
 fi
 
 # system update cron job added if not on the crontab
@@ -151,22 +134,6 @@ alias ll='ls -Alh'
 alias pgrep='pgrep -l'
 alias gzip='gzip -v'
 
-#  packages aliases
-alias update='sudo apt update'
-alias upgrade='sudo apt dist-upgrade -y'
-install() {
-  sudo apt update > /dev/null 2>&1
-  if [[ "$1" =~ .deb$ ]]; then
-    sudo dpkg -i "$1"
-	elif [[ $ID = "rhel" ]]; then
-		sudo dnf install -y "$1"
-	else
-		sudo apt install -y "$1"
-	fi
-}
-alias remove='sudo apt remove --purge; sudo apt autoremove -y'
-alias lsunit='systemctl list-unit-files'
-
 # cyberghost vpn aliases
 alias vpn='sudo cyberghostvpn'
 alias vpnconnect='sudo cyberghostvpn --connect --country-code'
@@ -178,6 +145,7 @@ alias mdstat='cat /proc/mdstat'
 
 # tree aliases
 alias tree='tree -a'
+alias type='type -a'
 
 # rsync aliases
 # alias rsync='rsync -avh'
@@ -260,27 +228,28 @@ lspasswd() {
 	done
 }
 
-# systemctl shortcuts
-#status() { systemctl status "$1" }
-#stop() { sudo systemctl stop "$1"; status "$1" }
-#start() { sudo systemctl start "$1"; status "$1" }
-#restart() { sudo systemctl restart "$1"; status "$1" }
-#reload() { sudo systemctl reload "$1"; status "$1" }
-#enable() { sudo systemctl enable "$1"; status "$1" }
-#disable() { sudo systemctl disable "$1"; status "$1" }
-#log() { sudo journalctl -u "$1" }
-#daemonreload() { sudo systemctl daemon-reload }
-#lssystemctl() { sudo systemctl --list-unit-files }
+# systemctl functions
+status() { systemctl status "$1" }
+stop() { sudo systemctl stop "$1"; status "$1" }
+start() { sudo systemctl start "$1"; status "$1" }
+restart() { sudo systemctl restart "$1"; status "$1" }
+reload() { sudo systemctl reload "$1"; status "$1" }
+enable() { sudo systemctl enable "$1"; status "$1" }
+disable() { sudo systemctl disable "$1"; status "$1" }
+log() { sudo journalctl -u "$1" }
+daemonreload() { sudo systemctl daemon-reload }
+lssystemctl() { sudo systemctl --list-unit-files }
+lsunit() { systemctl list-unit-files }
 
 ## grc functions
-#ip() { grc ip "$1" }
-#ping() { grc ping "$1" }
-#nmap() { grc nmap "$1" }
-#ps() { grc ps "$1" }
-#lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
-#uptime() { grc uptime }
-#free() { grc free -h }
-#unalias du
-#unalias df
-#df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
-#du() { grc du -ha -d1 }
+ip() { grc ip "$1" }
+ping() { grc ping "$1" }
+nmap() { grc nmap "$1" }
+ps() { grc ps "$1" }
+lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
+uptime() { grc uptime }
+free() { grc free -h }
+unalias du
+unalias df
+df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
+du() { grc du -ha -d1 }

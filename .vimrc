@@ -19,8 +19,8 @@ endif
 " call list of plugins
 call plug#begin()
 Plug 'vim-scripts/symfony'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'jbgutierrez/vim-better-comments'
