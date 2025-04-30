@@ -63,7 +63,7 @@ install() {
   done
 }
 
-install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils nvim
+install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils nvim retroarch
 # install keychain nvim zelli ansible node npm php python3
 
 # zsh config with zim
