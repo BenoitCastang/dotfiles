@@ -134,7 +134,11 @@ fi
 crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * sudo apt update; sudo apt autoremove -y; sudo apt dist-upgrade -y") | crontab
 alias cron='crontab -e'
 
-alias vim='nvim'
+
+if [[ "$HOSTNAME" == "pcp" ]]; then
+	alias vim='nvim'
+fi
+
 # some more ls aliases
 alias cat='batcat'
 alias ll='ls -Alh'
