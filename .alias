@@ -1,37 +1,38 @@
 # TODO: make it valid for root
-# TODO: make it work for rhel
 
-if [[ "$distro" = "debian" ]]; then 
+source /etc/os-release
+host="$HOSTNAME"
+distribution="$ID"
+if [[ "$distribution" = "ubuntu" ]]; then
+  distribution="debian"
+fi
+
+if [[ "$distribution" = "debian" ]]; then 
   sudo update-alternatives --set editor /usr/bin/vim.basic ## set system editor to vim
 fi
 
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
-
-source /etc/os-release
-distro="$ID"
-
-if [[ "$distro" = "rhel" ]]; then
+if [[ "$distribution" = "rhel" ]]; then
   if [[ ! -f /etc/yum.repos.d/epel.repo ]]; then
     sudo subscription-manager repos --enable codeready-builder-for-rhel-9-"$(arch)"-rpms
     sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
   fi
 fi
 
-update() { if [[ "$distro" = "debian" ]]; then sudo apt update; fi; if [[ "$distro" = "rhel" ]]; then sudo dnf check-update; fi }
-upgrade() { if [[ "$distro" = "debian" ]]; then sudo apt dist-upgrade -y; fi; if [[ "$distro" = "rhel" ]]; then sudo dnf upgrade; fi }
+update() { if [[ "$distribution" = "debian" ]]; then sudo apt update; elif [[ "$distribution" = "rhel" ]]; then sudo dnf check-update; fi }
+upgrade() { if [[ "$distribution" = "debian" ]]; then sudo apt dist-upgrade -y; elif [[ "$distribution" = "rhel" ]]; then sudo dnf upgrade; fi }
 remove() {
   while (( "$#" > 0 )); do
     package="$1"
-    if [[ "$distro" = "debian" ]]; then 
+    if [[ "$distribution" = "debian" ]]; then 
       sudo apt remove -y --purge "$package"
       sudo apt autoremove -y --purge
       shift
-    fi
-    if [[ "$distro" = "rhel" ]]; then 
+    elif [[ "$distribution" = "rhel" ]]; then 
       sudo dnf remove -y "$package"
       sudo dnf autoremove -y
       shift
     fi
+## snap
   done
 }
 isNotInstalled() {
@@ -47,13 +48,13 @@ install() {
   while (( "$#" > 0 )); do
     package="$1"
     if isNotInstalled "$package"; then
-      if [[ "$distro" = "debian" ]]; then
+      if [[ "$distribution" = "debian" ]]; then
         if [[ "$package" =~ .deb$ ]]; then sudo dpkg -i "$package"
         elif [[ "$package" = "nvim" || "$package" = "zelli" ]]; then sudo snap install --classic "$package"
         else sudo apt install -y "$package"
         fi
       fi
-      if [[ "$distro" = "rhel" ]]; then
+      if [[ "$distribution" = "rhel" ]]; then
         if [[ "$package" = "ansible" ]]; then sudo dnf install -y ansible-core
         else sudo dnf install -y "$package"
         fi
@@ -77,7 +78,8 @@ fi
 ## neovim with lazy vim
 
 # kitty
-# zellij
+
+# zellij config
 
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
@@ -118,6 +120,10 @@ check_dotfiles .alias
 check_dotfiles .zshrc
 check_dotfiles .zshrc_input
 
+if [[ "$host" = "pcp" ]]; then
+	PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
+fi
+
 search() {
 	grep -ni --color=auto $1 ~/cheatsheets/*
 }
@@ -126,7 +132,7 @@ if [[ ! "$SHELL" =~ zsh$ ]]; then
   sudo chsh -s /usr/bin/zsh
 fi
 
-if [[ "$HOSTNAME" == "pcp" ]]; then
+if [[ "$host" == "pcp" ]]; then
   eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
 fi
 
@@ -135,13 +141,13 @@ crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * 
 alias cron='crontab -e'
 
 
-if [[ "$HOSTNAME" == "pcp" ]]; then
+if [[ "$host" == "pcp" ]]; then
 	alias vim='nvim'
 fi
 
 # some more ls aliases
 alias cat='batcat'
-alias ll='ls -Alh'
+alias ll='ls -Alh --color=auto'
 alias pgrep='pgrep -l'
 alias gzip='gzip -v'
 
