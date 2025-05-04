@@ -116,9 +116,7 @@ check_dotfiles() {
 check_dotfiles .bashrc .inputrc .vimrc .alias .zshrc .zshrc_input
 # check_dotfiles .tmux.conf .tmux
 
-if [[ "$host" = "pcp" ]]; then
-	PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/porco/.local/kitty.app/bin/"
-fi
+PATH="/snap/bin:~/.local/kitty.app/bin/:$PATH"
 
 search() {
 	grep -ni --color=auto "$1" ~/cheatsheets/*
