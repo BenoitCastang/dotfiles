@@ -83,6 +83,10 @@ fi
 
 # zellij config
 
+# Cascadia Code nerd font
+
+# zimrc
+
 # check if repository exists on the home directory, update it if so, download it if not
 update_repository() {
 	while (( "$#" > 0 )); do
@@ -114,7 +118,7 @@ check_dotfiles() {
 	done
 }
 
-check_dotfiles .bashrc .inputrc .vimrc .alias .zshrc .zshrc_input .zimrc
+check_dotfiles .bashrc .inputrc .vimrc .alias .zshrc .zshrc_input .zimrc .zshenv
 # check_dotfiles .tmux.conf .tmux
 
 PATH="/snap/bin:~/.local/kitty.app/bin/:$PATH"
@@ -261,6 +265,8 @@ nmap() { grc nmap "$1" }
 lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
 uptime() { grc uptime }
 free() { grc free -h }
+unalias df
+unalias du
 df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
 du() { grc du -ha -d1 }
 ps() { 
