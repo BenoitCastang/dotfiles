@@ -42,6 +42,7 @@ isNotInstalled() {
     elif [[ "$package" = 'cron' ]]; then package='crontab'
     elif [[ "$package" = 'ripgrep' ]]; then package='rg'
     elif [[ "$package" = 'dnsutils' ]]; then package='dig'
+    elif [[ "$package" = 'bat' ]]; then package='batcat'
   fi
 	if which "$package" > /dev/null 2>&1; then return 1; else return 0; fi
 }
@@ -65,7 +66,7 @@ install() {
   done
 }
 
-install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils 
+install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat
 # install keychain nvim zellij ansible node npm php python3 retroarch
 
 # zsh config with zim
@@ -143,6 +144,7 @@ fi
 alias cat='batcat'
 alias ll='ls -Alh --color=auto'
 alias pgrep='pgrep -l'
+alias grep='grep --color=auto'
 alias gzip='gzip -v'
 
 # cyberghost vpn aliases
@@ -256,9 +258,15 @@ lsunit() { systemctl list-unit-files }
 ip() { grc ip "$1" }
 ping() { grc ping "$1" }
 nmap() { grc nmap "$1" }
-ps() { grc ps "$1" }
 lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
 uptime() { grc uptime }
 free() { grc free -h }
 df() { grc df -h --output=source,fstype,size,pcent,target -x tmpfs -x devtmpfs -x squashfs }
 du() { grc du -ha -d1 }
+ps() { 
+	if (( "$#" == 0 )); then
+		grc ps -ef
+	else
+		echo -e "\e[35m$(grc ps -ef | head -n 1)\e[0m"; grc ps -ef | tail -n +1 | grep -v grep | grep "$1"
+	fi
+}
