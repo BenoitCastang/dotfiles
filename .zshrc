@@ -136,3 +136,6 @@ if [ "$HOST" = "pcp" ]; then
     zellij a $(zellij ls | awk '{ print $1 }' | sed -E 's/\x1B\[[0-9;]*[mK]//g' | tail -n 1)
   fi
 fi
+if [ "$HOST" = "win" ]; then
+	zellij a delighted-foxglov
+fi

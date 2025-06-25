@@ -66,7 +66,7 @@ install() {
   done
 }
 
-install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat
+install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat nmap
 # install keychain nvim zellij ansible node npm php python3 retroarch
 
 # zsh config with zim
@@ -144,6 +144,8 @@ if [[ "$host" == "pcp" ]]; then
 	alias vim='nvim'
 fi
 
+alias sudo='sudo -E' # keep user environment - vim config etc
+
 # some more ls aliases
 alias cat='batcat'
 alias ll='ls -Alh --color=auto'
@@ -210,9 +212,6 @@ alias txa='tmux a -t'
 alias lshost='hostnamectl status'
 
 # network aliases
-alias lamp='cd /opt/lampp/ && sudo ./lampp start'
-alias mysql='/opt/lampp/bin/mysql -p test'
-alias mysqldump='/opt/lampp/bin/mysqldump -p --opt'
 alias nc='nc -v'
 alias iptables='sudo iptables'
 
@@ -261,7 +260,7 @@ lsunit() { systemctl list-unit-files }
 # grc functions
 ip() { grc ip "$1" }
 ping() { grc ping "$1" }
-nmap() { grc nmap "$1" }
+nmap() { grc nmap $* }
 lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
 uptime() { grc uptime }
 free() { grc free -h }
