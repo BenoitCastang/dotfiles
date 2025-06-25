@@ -261,6 +261,7 @@ lsunit() { systemctl list-unit-files }
 ip() { grc ip "$1" }
 ping() { grc ping "$1" }
 nmap() { grc nmap $* }
+ss() { grc ss -tuln }
 lsblk() { grc lsblk -e 7 -o NAME,SIZE,FSTYPE,MOUNTPOINTS }
 uptime() { grc uptime }
 free() { grc free -h }
