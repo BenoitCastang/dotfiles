@@ -137,5 +137,7 @@ if [ "$HOST" = "pcp" ]; then
   fi
 fi
 if [ "$HOST" = "win" ]; then
-	zellij a delighted-foxglov
+  if [ $ZELLIJ_SESSION_NAME ]; then
+	else zellij a delighted-foxglov
+	fi
 fi
