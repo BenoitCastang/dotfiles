@@ -1,5 +1,5 @@
 set nocompatible " disables vi compatibility
-syntax enable " enables syntax highlighting
+syntax on " enables syntax highlighting
 filetype plugin on " allows filetype script to detect file type and enables plugins only used with a specific type of file
 set path+=** " find into all directories and sub directories
 
@@ -23,7 +23,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'jbgutierrez/vim-better-comments'
+" Plug 'jbgutierrez/vim-better-comments'
 Plug 'dense-analysis/ale'
 Plug 'kien/ctrlp.vim'
 Plug 'preservim/nerdtree'
@@ -230,6 +230,9 @@ augroup END
 
 " COLORS " -------------------------------------------------------------------------------------------
 
+nnoremap <F2> :echo 'Syntax group = ' . synIDattr(synID(line('.'), col('.'), 1), 'name') . ', highlight group = ' . synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')<CR>
+" f2 shortcut to show syntax and highlight group of the character under the cursor
+
 colorscheme symfony
 " Changing some symfony defaults
 highlight Normal ctermbg=none
@@ -262,6 +265,22 @@ highlight ALEInfoSign ctermfg=15
 let g:ale_virtualtext_cursor=0
 let g:ale_virtualtext=0
 
+augroup TextFilesSyntax
+	autocmd!
+	autocmd BufRead,BufNewFile *.txt call TextFilesSyntax()
+augroup END
+
+function! TextFilesSyntax()
+	syntax match MyHeader /#?.*/
+	highlight MyHeader ctermfg=blue
+	syntax match MyHeader2 /#!.*/
+	highlight MyHeader2 ctermfg=cyan
+	syntax match MyComment /##.*/
+	highlight MyComment ctermfg=red
+	syntax match MyComment2 /  ##.*/
+		highlight MyComment2 ctermfg=magenta
+endfunction
+
 " CONFIG " ------------------------------------------------------------------------------------------
 
 set number " Displays line numbers
@@ -289,3 +308,4 @@ set foldmethod=indent " Sets indentation folding
 autocmd BufRead * normal zR
 let g:ctrl_show_hidden=1 " show hidden files in ctrlp plugin
 set virtualedit=onemore " add onw virtual space to the end of the line
+
