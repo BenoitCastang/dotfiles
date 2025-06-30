@@ -103,7 +103,7 @@ update_repository() {
 	cd
 }
 
-update_repository dotfiles cheatsheets
+update_repository dotfiles cheatsheets personal-website
 # update_repository ansible bash-files python-files c-files personal-website
 
 # check if symlink to dotfile exists on the home directory, create it if not
