@@ -78,10 +78,17 @@ if [[ ! -e .zimrc ]]; then
 fi
 
 # neovim with lazy vim
+if [[ ! -f ~/.config/nvim/lazyvim.json ]]; then
+  git clone https://github.com/LazyVim/starter ~/.config/nvim
+fi
 
 # kitty config
 
 # zellij config
+if [[ ! -L ~/.config/zellij/config.kdl ]]; then
+  rm ~/.config/zellij/config.kdl
+	ln -s ~/dotfiles/zellij-config.kdl ~/.config/zellij/config.kdl
+fi
 
 # Cascadia Code nerd font
 
@@ -140,7 +147,7 @@ crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * 
 alias cron='crontab -e'
 
 
-if [[ "$host" == "pcp" ]]; then
+if [[ "$host" == "pcp" || "$host" == "win" ]]; then
 	alias vim='nvim'
 fi
 
