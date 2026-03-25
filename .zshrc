@@ -123,21 +123,21 @@ for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 # }}} End configuration added by Zim install
+#
+# open last session
+# if [ "$host" = "pcp" ]; then
+  # if [ $zellij_session_name ]; then
+  # elif ! zellij ls > /dev/null 2>&1; then
+    # zellij
+  # else
+    # zellij a $(zellij ls | awk '{ print $1 }' | sed -e 's/\x1b\[[0-9;]*[mk]//g' | tail -n 1)
+  # fi
+# fi
+# if [ "$host" = "win" ]; then
+  # if [ $zellij_session_name ]; then
+	# else zellij a delighted-foxglov
+	# fi
+# fi
 
 source ~/.zshrc_input
 source ~/.alias
-
-# open last session
-if [ "$HOST" = "pcp" ]; then
-  if [ $ZELLIJ_SESSION_NAME ]; then
-  elif ! zellij ls > /dev/null 2>&1; then
-    zellij
-  else
-    zellij a $(zellij ls | awk '{ print $1 }' | sed -E 's/\x1B\[[0-9;]*[mK]//g' | tail -n 1)
-  fi
-fi
-if [ "$HOST" = "win" ]; then
-  if [ $ZELLIJ_SESSION_NAME ]; then
-	else zellij a delighted-foxglov
-	fi
-fi
