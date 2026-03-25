@@ -174,7 +174,7 @@ alias compress="tar -czvf"
 alias extract="tar -xvf"
 
 # miscellaneous aliases
-alias music="cmus"
+# alias music="cmus"
 # alias man="tldr" # command man to go over it
 # alias rm="rm -i"
 alias srcprofile="source ~/.profile"
