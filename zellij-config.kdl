@@ -1,6 +1,6 @@
 keybinds clear-defaults=true {
     normal {
-        bind "Ctrl h" { FocusNextPane; SwitchToMode "normal"; }
+        // bind "Ctrl h" { FocusNextPane; SwitchToMode "normal"; }
         bind "Ctrl j" { GoToNextTab; }
         bind "Ctrl k" { GoToPreviousTab; }
         bind "Ctrl t" { NewTab; SwitchToMode "normal"; }
