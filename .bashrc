@@ -46,29 +46,29 @@ shopt -s checkwinsize
 
 # if [ -n "${force_color_prompt-}" ]; then
 #   if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    # color_prompt=yes
-  # else
-    # color_prompt=
-  # fi
+# We have color support; assume it's compliant with Ecma-48
+# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+# a case would tend to support setf rather than setaf.)
+# color_prompt=yes
+# else
+# color_prompt=
+# fi
 # fi
 
 # if [ "$color_prompt" = yes ]; then
-  prompt_color="\[\e[0m\]"
-	if [[ "$HOSTNAME" == "debian2" ]]; then
-		prompt_color="\[\e[33;1m\]"
-	elif [[ "$HOSTNAME" == "pcp" ]]; then
-		prompt_color="\[\e[32;1m\]"
-	elif [[ "$HOSTNAME" == "kdebian12" ]]; then
-		prompt_color="\[\e[36;1m\]"
-	elif [[ "$HOSTNAME" =~ rhel ]]; then
-		prompt_color="\[\e[35;1m\]"
-	fi
-	PS1="${prompt_color}\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
+prompt_color="\[\e[0m\]"
+if [[ "$HOSTNAME" == "debian2" ]]; then
+  prompt_color="\[\e[33;1m\]"
+elif [[ "$HOSTNAME" == "pcp" ]]; then
+  prompt_color="\[\e[32;1m\]"
+elif [[ "$HOSTNAME" == "kdebian12" ]]; then
+  prompt_color="\[\e[36;1m\]"
+elif [[ "$HOSTNAME" =~ rhel ]]; then
+  prompt_color="\[\e[35;1m\]"
+fi
+PS1="${prompt_color}\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ "
 # else
-  # PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+# PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
 # fi
 # unset color_prompt force_color_prompt
 
@@ -94,13 +94,13 @@ fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  est -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
   alias dir='dir --color=auto'
   alias vdir='vdir -h --color=auto'
-	alias grep='grep -i --color=auto'
+  alias grep='grep -i --color=auto'
   alias fgrep='fgrep --color=auto' # like grep -F : grep but "fixed strings" ie eliminating metacharacters as * or .
-	alias egrep='egrep --color=auto' # like grep -E : grep plus the extend support of regular expressions (+, ?, |, parenthesis etc)
+  alias egrep='egrep --color=auto' # like grep -E : grep plus the extend support of regular expressions (+, ?, |, parenthesis etc)
 fi
 
 # colored GCC warnings and errors

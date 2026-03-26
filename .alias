@@ -81,7 +81,6 @@ fi
 # neovim with lazy vim
 if [[ ! -L ~/.config/nvim ]]; then
   ln -s ~/dotfiles/nvim ~/.config/nvim
-  install npm
 fi
 
 # zellij config
