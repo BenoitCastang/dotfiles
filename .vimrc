@@ -31,28 +31,15 @@ call plug#end()
 
 " MAPPING -------------------------------------------------------------------------------------------
 
-let mapleader = " " " Map the leader key to a comma
+let mapleader = " " " Map the leader key to a space
 " cancel space bar default behavior
 nnoremap <space> <nop>
 vnoremap <space> <nop>
 onoremap <space> <nop>
 
-let maplocalleader = "," " Map the leader key to a comma
-
-
 " Sets jj to perform Esc input
 inoremap jj <esc>
 cnoremap jj <esc>
-
-" Disable arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
 
 " command-line window by default
 nnoremap : q:i
@@ -75,9 +62,6 @@ let NERDTreeQuitOnOpen=1
 
 " ctrlp
 let g:ctrlp_show_hidden=1
-
-" copy cut paste outside vim
-
 
 " ctrl d to edit current word
 noremap <c-d> viw

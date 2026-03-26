@@ -5,6 +5,7 @@ host="$HOSTNAME"
 distribution="$ID"
 if [[ "$distribution" = "ubuntu" ]]; then
   distribution="debian"
+  host="$(hostname)"
 fi
 
 if [[ "$distribution" = "debian" ]]; then 
@@ -78,11 +79,10 @@ if [[ ! -e .zimrc ]]; then
 fi
 
 # neovim with lazy vim
-if [[ ! -f ~/.config/nvim/lazyvim.json ]]; then
-  git clone https://github.com/LazyVim/starter ~/.config/nvim
+if [[ ! -L ~/.config/nvim ]]; then
+  ln -s ~/dotfiles/nvim ~/.config/nvim
+  install npm
 fi
-
-# kitty config
 
 # zellij config
 if [[ ! -L ~/.config/zellij/config.kdl ]]; then
