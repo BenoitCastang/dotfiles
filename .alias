@@ -141,7 +141,7 @@ search() {
 }
 
 if [[ ! "$SHELL" =~ zsh$ ]]; then
-  sudo chsh -s /usr/bin/zsh
+  chsh -s /usr/bin/zsh
 fi
 
 if [[ "$host" == "pcp" ]]; then
