@@ -102,6 +102,9 @@ if [[ ! -L ~/.config/zellij/config.kdl ]]; then
   if [[ -f ~/.config/zellij/config.kdl ]]; then
     rm ~/.config/zellij/config.kdl
   fi
+  if [[ ! -d ~/.config/zellij/ ]]; then
+    mkdir ~/.config/zellij
+  fi
 	ln -s ~/dotfiles/zellij-config.kdl ~/.config/zellij/config.kdl
 fi
 
