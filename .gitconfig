@@ -1,0 +1,7 @@
+[credential]
+	helper = store
+[user]
+	email = castang.benoit@gmail.com
+	name = BenoitCastang
+[core]
+	editor = nvim

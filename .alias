@@ -70,6 +70,13 @@ install() {
 install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat nmap
 # install keychain nvim zellij ansible node npm php python3 retroarch
 
+# git config
+
+if [[ ! -L ~/.gitconfig ]]; then
+  rm ~/.gitconfig
+  ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+fi
+
 # zsh config with zim
 cd
 if [[ ! -e .zimrc ]]; then
