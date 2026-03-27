@@ -19,6 +19,8 @@ if [[ "$distribution" = "rhel" ]]; then
   fi
 fi
 
+touch ~/.hushlogin ## remove welcoming messages at session startup
+
 update() { if [[ "$distribution" = "debian" ]]; then sudo apt update; elif [[ "$distribution" = "rhel" ]]; then sudo dnf check-update; fi }
 upgrade() { if [[ "$distribution" = "debian" ]]; then sudo apt dist-upgrade -y; elif [[ "$distribution" = "rhel" ]]; then sudo dnf upgrade; fi }
 remove() {
