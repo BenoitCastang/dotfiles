@@ -69,7 +69,7 @@ install() {
   done
 }
 
-install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat nmap
+install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat nmap keychain
 # install keychain nvim zellij ansible node npm php python3 retroarch
 
 # git config
@@ -146,7 +146,7 @@ if [[ ! "$SHELL" =~ zsh$ ]]; then
   chsh -s /usr/bin/zsh
 fi
 
-if [[ "$host" == "pcp" ]]; then
+if [[ "$host" == "pcp"  || "$host" == "win" ]]; then
   eval "$(keychain --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
 fi
 
