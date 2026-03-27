@@ -165,7 +165,7 @@ crontab -l | grep dist-upgrade > /dev/null 2>&1 || (crontab -l; echo "0 0 * * * 
 alias cron='crontab -e'
 
 
-if [[ "$host" == "pcp" || "$host" == "win" ]]; then
+if which nvim; then
 	alias vim='nvim'
 fi
 
