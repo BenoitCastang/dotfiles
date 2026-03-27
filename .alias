@@ -87,6 +87,11 @@ if [[ ! -e .zimrc ]]; then
   echo -e '\nzmodule prompt-pwd\nzmodule eriner' >> .zimrc
 fi
 
+## create .config dir
+if [[ ! -d ~/.config ]]; then
+  mkdir ~/.config
+fi
+
 # neovim with lazy vim
 if [[ ! -L ~/.config/nvim ]]; then
   ln -s ~/dotfiles/nvim ~/.config/nvim
