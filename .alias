@@ -99,7 +99,9 @@ fi
 
 # zellij config
 if [[ ! -L ~/.config/zellij/config.kdl ]]; then
-  rm ~/.config/zellij/config.kdl
+  if [[ -f ~/.config/zellij/config.kdl ]]; then
+    rm ~/.config/zellij/config.kdl
+  fi
 	ln -s ~/dotfiles/zellij-config.kdl ~/.config/zellij/config.kdl
 fi
 
