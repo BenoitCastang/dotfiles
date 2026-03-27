@@ -69,8 +69,8 @@ install() {
   done
 }
 
-install ssh vim curl snapd zsh htop tree ncdu ripgrep cron neofetch tldr lsd xclip dnsutils bat nmap keychain
-# install keychain nvim zellij ansible node npm php python3 retroarch
+install ssh vim curl snapd zsh htop tree ncdu ripgrep cron lsd xclip dnsutils bat nmap keychain
+# install keychain nvim zellij ansible node npm php python3 retroarch neofetch tldr
 
 # git config
 
