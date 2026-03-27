@@ -158,7 +158,7 @@ if [[ ! "$SHELL" =~ zsh$ ]]; then
 fi
 
 if [[ "$host" == "pcp"  || "$host" == "win" ]]; then
-  eval "$(keychain --eval --agents ssh ~/.ssh/*id* > /dev/null 2>&1)" # keychain activation to manage ssh key authentication
+  eval "$(keychain --quiet --eval --agents ssh ~/.ssh/*id*)" # keychain activation to manage ssh key authentication
 fi
 
 # system update cron job added if not on the crontab
