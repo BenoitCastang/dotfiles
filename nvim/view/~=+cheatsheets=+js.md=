@@ -1,0 +1,34 @@
+let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
+argglobal
+setlocal foldmethod=manual
+setlocal foldexpr=0
+setlocal foldmarker={{{,}}}
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldenable
+silent! normal! zE
+sil! 2,13fold
+sil! 14,34fold
+sil! 35,42fold
+sil! 43,51fold
+sil! 52,58fold
+sil! 59,98fold
+sil! 1,98fold
+sil! 99,131fold
+sil! 132,159fold
+sil! 160,165fold
+sil! 166,252fold
+let &fdl = &fdl
+let s:l = 163 - ((162 * winheight(0) + 25) / 51)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 163
+normal! 038|
+let &g:so = s:so_save | let &g:siso = s:siso_save
+set hlsearch
+nohlsearch
+doautoall SessionLoadPost
+" vim: set ft=vim :
