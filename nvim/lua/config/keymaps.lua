@@ -5,4 +5,6 @@
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true })
 vim.keymap.set({ 'n', 'v', 'o' }, 'H', '^', { noremap = true })
 vim.keymap.set({ 'n', 'v', 'o' }, 'L', '$', { noremap = true })
-vim.keymap.set('n', '<CR>', 'zA', { noremap = true })
+vim.keymap.set('n', '<CR>', 'za', { noremap = true })
+vim.keymap.set({ 'n', 'v', 'o' }, '<Tab>', '>', { noremap = true })
+vim.keymap.set({ 'n', 'v', 'o' }, '<S-Tab>', '<', { noremap = true })
